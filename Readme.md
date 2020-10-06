@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов» [![Build status][travis-image]][travis-url]
 
 * Студент: [Максим Тимофеев](https://up.htmlacademy.ru/react/5/user/1449935).
-* Наставник: [Захар Овчаров](https://htmlacademy.ru/profile/id906939).
+* Наставник: [Сергей Вохмянин](https://htmlacademy.ru/profile/id530823).
 
 ---
 
