@@ -1,17 +1,16 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 
 const INITIAL_STATE = {
   rating: null,
   text: ``,
 };
 
-const Rating = {
-  VALUE_1: 1,
-  VALUE_2: 2,
-  VALUE_3: 3,
-  VALUE_4: 4,
-  VALUE_5: 5
+const starLabelTitle = {
+  5: `perfect`,
+  4: `good`,
+  3: `not bad`,
+  2: `badly`,
+  1: `terribly`
 };
 
 class ReviewForm extends React.PureComponent {
@@ -53,70 +52,34 @@ class ReviewForm extends React.PureComponent {
         <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
         <div className="reviews__rating-form form__rating">
-          <input className="form__rating-input visually-hidden" name="rating" id="5-stars" type="radio"
-            defaultValue={Rating.VALUE_5}
-            checked={rating === Rating.VALUE_5}
-            onChange={this.handleRatingClick}
-          />
+          {Array(5).fill().map((val, i) => i + 1).reverse().map((starValue) => (
+            <React.Fragment key={starValue}>
+              <input
+                className="form__rating-input visually-hidden"
+                name="rating"
+                id={`${starValue}-stars`}
+                type="radio"
+                defaultValue={starValue}
+                checked={rating === starValue}
+                onChange={this.handleRatingClick}
+              />
 
-          <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-            <svg className="form__star-image" width={37} height={33}>
-              <use xlinkHref="#icon-star" />
-            </svg>
-          </label>
-
-          <input className="form__rating-input visually-hidden" name="rating" id="4-stars" type="radio"
-            defaultValue={Rating.VALUE_4}
-            checked={rating === Rating.VALUE_4}
-            onChange={this.handleRatingClick}
-          />
-
-          <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-            <svg className="form__star-image" width={37} height={33}>
-              <use xlinkHref="#icon-star" />
-            </svg>
-          </label>
-
-          <input className="form__rating-input visually-hidden" name="rating" id="3-stars" type="radio"
-            defaultValue={Rating.VALUE_3}
-            checked={rating === Rating.VALUE_3}
-            onChange={this.handleRatingClick}
-          />
-
-          <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-            <svg className="form__star-image" width={37} height={33}>
-              <use xlinkHref="#icon-star" />
-            </svg>
-          </label>
-
-          <input className="form__rating-input visually-hidden" name="rating" id="2-stars" type="radio"
-            defaultValue={Rating.VALUE_2}
-            checked={rating === Rating.VALUE_2}
-            onChange={this.handleRatingClick}
-          />
-
-          <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-            <svg className="form__star-image" width={37} height={33}>
-              <use xlinkHref="#icon-star" />
-            </svg>
-          </label>
-
-          <input className="form__rating-input visually-hidden" name="rating" id="1-star" type="radio"
-            defaultValue={Rating.VALUE_1}
-            checked={rating === Rating.VALUE_1}
-            onChange={this.handleRatingClick}
-          />
-
-          <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-            <svg className="form__star-image" width={37} height={33}>
-              <use xlinkHref="#icon-star" />
-            </svg>
-          </label>
+              <label
+                htmlFor={`${starValue}-stars`}
+                className="reviews__rating-label form__rating-label"
+                title={starLabelTitle[starValue]}>
+                <svg className="form__star-image" width={37} height={33}>
+                  <use xlinkHref="#icon-star" />
+                </svg>
+              </label>
+            </React.Fragment>
+          ))}
         </div>
 
         <textarea
           className="reviews__textarea form__textarea"
-          id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"
+          id="review" name="review"
+          placeholder="Tell how was your stay, what you like and what can be improved"
           value={text}
           onChange={this.handleTextChange}
         />
@@ -125,7 +88,12 @@ class ReviewForm extends React.PureComponent {
           <p className="reviews__help">
             To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
           </p>
-          <button className="reviews__submit form__submit button" type="submit" disabled={!this.validate()}>Submit</button>
+          <button
+            className="reviews__submit form__submit button"
+            type="submit"
+            disabled={!this.validate()}>
+            Submit
+          </button>
         </div>
       </form>
     );
