@@ -8,6 +8,17 @@ const MAX_GUESTS = 4;
 const MIN_PRICE = 30;
 const MAX_PRICE = 1000;
 
+const MAX_COORD_DELTA = 0.05;
+
+const placesCoordinates = {
+  'Amsterdam': [
+    [52.3909553943508, 4.85309666406198],
+    [52.369553943508, 4.85309666406198],
+    [52.3909553943508, 4.929309666406198],
+    [52.3809553943508, 4.939309666406198]
+  ]
+};
+
 const PHOTOS = [
   `img/apartment-01.jpg`,
   `img/apartment-02.jpg`,
@@ -52,12 +63,30 @@ const FEATURES = [
 ];
 
 const CITIES = [
-  `Paris`,
-  `Cologne`,
-  `Brussels`,
-  `Amsterdam`,
-  `Hamburg`,
-  `Dusseldorf`
+  {
+    name: `Paris`,
+    coordinates: [48.8566, 2.3522]
+  },
+  {
+    name: `Cologne`,
+    coordinates: [50.9375, 6.9603]
+  },
+  {
+    name: `Brussels`,
+    coordinates: [50.8503, 4.3517]
+  },
+  {
+    name: `Amsterdam`,
+    coordinates: [52.38333, 4.9]
+  },
+  {
+    name: `Hamburg`,
+    coordinates: [53.5511, 9.9937]
+  },
+  {
+    name: `Dusseldorf`,
+    coordinates: [51.2277, 6.7735]
+  },
 ];
 
 const generateRandomBoolean = () => Boolean(generateRandomInteger(0, 1));
@@ -74,25 +103,45 @@ const createHost = () => ({
   super: generateRandomBoolean()
 });
 
+const addDistortion = (number, maxOffset) => {
+  const random = Math.random();
+
+  return random > 0.5
+    ? number + Math.random() * maxOffset
+    : number - Math.random() * maxOffset;
+};
+
+const calcNeighbourhoodCoord = (coord, maxDelta) => coord.map((value) => addDistortion(value, maxDelta));
+
 let id = 0;
 
-export default () => ({
-  id: String(id++),
-  thumbnail: getRandomArrayElements(THUMBNAILS)[0],
-  photos: getRandomArrayElements(PHOTOS, MAX_PHOTOS_COUNT),
-  title: getRandomArrayElements(TITLES)[0],
-  description: generateDescription(),
-  premium: generateRandomBoolean(),
-  type: getRandomArrayElements(TYPES)[0],
-  rating: Number((Math.random() * MAX_RATING).toFixed(1)),
-  bedrooms: generateRandomInteger(1, MAX_BEDROOMS),
-  maxAdults: generateRandomInteger(1, MAX_GUESTS),
-  price: generateRandomInteger(MIN_PRICE, MAX_PRICE),
-  features: getRandomArrayElements(FEATURES, generateRandomInteger(1, FEATURES.length)),
-  host: createHost(),
-  location: {
-    city: getRandomArrayElements(CITIES)[0]
-  },
-  favorite: generateRandomBoolean(),
-  reviews: []
-});
+export default () => {
+  const city = getRandomArrayElements(CITIES)[0];
+  const cityPlacesCoordinates = placesCoordinates[city.name];
+
+  const placeCoordinates = cityPlacesCoordinates
+    ? getRandomArrayElements(cityPlacesCoordinates)[0]
+    : calcNeighbourhoodCoord(city.coordinates, MAX_COORD_DELTA);
+
+  return {
+    id: String(id++),
+    thumbnail: getRandomArrayElements(THUMBNAILS)[0],
+    photos: getRandomArrayElements(PHOTOS, MAX_PHOTOS_COUNT),
+    title: getRandomArrayElements(TITLES)[0],
+    description: generateDescription(),
+    premium: generateRandomBoolean(),
+    type: getRandomArrayElements(TYPES)[0],
+    rating: Number((Math.random() * MAX_RATING).toFixed(1)),
+    bedrooms: generateRandomInteger(1, MAX_BEDROOMS),
+    maxAdults: generateRandomInteger(1, MAX_GUESTS),
+    price: generateRandomInteger(MIN_PRICE, MAX_PRICE),
+    features: getRandomArrayElements(FEATURES, generateRandomInteger(1, FEATURES.length)),
+    host: createHost(),
+    location: {
+      city,
+      coordinates: placeCoordinates
+    },
+    favorite: generateRandomBoolean(),
+    reviews: []
+  };
+};

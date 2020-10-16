@@ -9,7 +9,7 @@ const collectOffersByCity = (offers) => {
   const offersByCity = {};
 
   offers.forEach((offer) => {
-    const offerCity = offer.location.city;
+    const offerCity = offer.location.city.name;
     const offersInCity = offersByCity[offerCity] || [];
 
     offersByCity[offerCity] = [...offersInCity, offer];

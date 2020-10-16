@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import offerPropTypes from '../../../prop-types/offer-prop-types';
+import {offerPropTypes, cityPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
 import SortDropdownList from './sort-dropdown-list/sort-dropdown-list';
+import CityMap from '../../city-map/city-map';
 
 const SortOption = {
   POPULAR: `popular`,
@@ -55,7 +56,7 @@ class Cities extends React.PureComponent {
         <section className="cities__places places">
           <h2 className="visually-hidden">Places</h2>
           <b className="places__found">
-            {sortedOffers.length} places to stay in {city}
+            {sortedOffers.length} places to stay in {city.name}
           </b>
 
           {/* При каждом рендере SortDropdownList должен закрываться, а для этого нужно сбрасывать его текущее состояние.
@@ -74,7 +75,7 @@ class Cities extends React.PureComponent {
         </section>
 
         <div className="cities__right-section">
-          <section className="cities__map map"></section>
+          <CityMap city={city} offers={offers}/>
         </div>
       </div>
     );
@@ -84,7 +85,7 @@ class Cities extends React.PureComponent {
 
 Cities.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes),
-  city: PropTypes.string.isRequired
+  city: cityPropTypes.isRequired
 };
 
 export default Cities;

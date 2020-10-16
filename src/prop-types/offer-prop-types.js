@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import cityPropTypes from './city-prop-types';
 import {validateRating} from './utils';
 
 const HOST_PROP_TYPE = PropTypes.shape({
@@ -22,7 +23,8 @@ export default PropTypes.shape({
   features: PropTypes.arrayOf(PropTypes.string).isRequired,
   host: HOST_PROP_TYPE,
   location: PropTypes.shape({
-    city: PropTypes.string.isRequired
+    city: cityPropTypes.isRequired,
+    coordinates: PropTypes.arrayOf(PropTypes.number).isRequired
   }),
   nearPlaces: PropTypes.arrayOf(PropTypes.string).isRequired,
   favorite: PropTypes.bool.isRequired,

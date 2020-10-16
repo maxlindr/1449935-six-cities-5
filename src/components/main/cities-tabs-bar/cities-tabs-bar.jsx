@@ -7,7 +7,7 @@ class CitiesTabsBar extends React.Component {
     super(props);
 
     this.state = {
-      activeCity: props.cities[0]
+      activeCity: props.initialCity
     };
 
     this.clickHandler = this.clickHandler.bind(this);
@@ -42,7 +42,8 @@ class CitiesTabsBar extends React.Component {
 
 CitiesTabsBar.propTypes = {
   cities: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  initialCity: PropTypes.string
 };
 
 export default CitiesTabsBar;

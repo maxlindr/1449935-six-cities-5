@@ -29,7 +29,7 @@ class Main extends React.PureComponent {
   render() {
     const {offers, user} = this.props;
     const activeCity = this.state.activeCity;
-    const cityOffers = offers.filter((offer) => offer.location.city === activeCity);
+    const cityOffers = offers.filter((offer) => offer.location.city.name === activeCity);
 
     const mainElementClassname = cityOffers.length > 0
       ? `page__main page__main--index`
@@ -40,10 +40,10 @@ class Main extends React.PureComponent {
         <PageHeader user={user}/>
         <main className={mainElementClassname}>
           <h1 className="visually-hidden">Cities</h1>
-          <CitiesTabsBar cities={CITIES} onChange={this.onCityChange}/>
+          <CitiesTabsBar cities={CITIES} initialCity={activeCity} onChange={this.onCityChange}/>
           <div className="cities">
             {cityOffers.length > 0
-              ? <Cities offers={cityOffers} city={activeCity}/>
+              ? <Cities offers={cityOffers} city={cityOffers[0].location.city}/>
               : <CitiesNoPlaces city={activeCity}/>}
           </div>
         </main>
