@@ -4,18 +4,15 @@ import {userPropTypes, offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
 import {capitalizeFirstLetter} from '../offer-card-utils';
 import NearPlaceCard from '../near-place-card/near-place-card';
-import ReviewForm from './review-form/review-form';
 import RatingStars from '../rating-stars/rating-stars';
 import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
+import OfferReviewsSection from '../offer-reviews-section/offer-reviews-section';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
     <span>Premium</span>
   </div>
 );
-
-const formatDate = (date) => date.toLocaleDateString(`en-US`, {month: `long`, year: `numeric`});
-const formatDateTimeAttribute = (date) => date.toISOString().substring(0, 10);
 
 class Room extends React.PureComponent {
   render() {
@@ -101,31 +98,7 @@ class Room extends React.PureComponent {
                   </div>
                 </div>
 
-                <section className="property__reviews reviews">
-                  <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviews.length}</span></h2>
-
-                  <ul className="reviews__list">
-                    {reviews.map((review) => (
-                      <li key={review.id} className="reviews__item">
-                        <div className="reviews__user user">
-                          <div className="reviews__avatar-wrapper user__avatar-wrapper">
-                            <img className="reviews__avatar user__avatar" src={review.avatar} alt="Reviews avatar" width={54} height={54} />
-                          </div>
-                          <span className="reviews__user-name">
-                            {review.author}
-                          </span>
-                        </div>
-                        <div className="reviews__info">
-                          <RatingStars type={RatingStars.TYPE_REVIEW} rating={review.rating}/>
-                          <p className="reviews__text">{review.text}</p>
-                          <time className="reviews__time" dateTime={formatDateTimeAttribute(review.date)}>{formatDate(review.date)}</time>
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {user ? <ReviewForm /> : null}
-                </section>
+                <OfferReviewsSection user={user} reviews={reviews}/>
               </div>
             </div>
             <section className="property__map map" />
