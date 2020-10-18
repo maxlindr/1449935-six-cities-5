@@ -31,6 +31,7 @@ class Room extends React.PureComponent {
     return (
       <div className="page">
         <PageHeader user={this.props.user}/>
+
         <main className="page__main page__main--property">
           <section className="property">
             <OfferGallery photos={photos}/>
@@ -57,6 +58,7 @@ class Room extends React.PureComponent {
                 <OfferReviewsSection user={user} reviews={reviews}/>
               </div>
             </div>
+
             <section className="property__map map" />
           </section>
 
