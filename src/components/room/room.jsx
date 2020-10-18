@@ -8,6 +8,7 @@ import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
 import OfferReviewsSection from '../offer-reviews-section/offer-reviews-section';
 import OfferEssentials from '../offer-essentials/offer-essentials';
 import OfferFeatures from '../offer-features/offer-features';
+import OfferGallery from '../offer-gallery/offer-gallery';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -35,15 +36,7 @@ class Room extends React.PureComponent {
         <PageHeader user={this.props.user}/>
         <main className="page__main page__main--property">
           <section className="property">
-            <div className="property__gallery-container container">
-              <div className="property__gallery">
-                {photos.map((url, i) => (
-                  <div key={url + i} className="property__image-wrapper">
-                    <img className="property__image" src={url} alt="Photo studio" />
-                  </div>
-                ))}
-              </div>
-            </div>
+            <OfferGallery photos={photos}/>
 
             <div className="property__container container">
               <div className="property__wrapper">
