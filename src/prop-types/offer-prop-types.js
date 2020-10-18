@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
 import cityPropTypes from './city-prop-types';
+import hostPropTypes from './host-prop-types';
 import {validateRating} from './utils';
-
-const HOST_PROP_TYPE = PropTypes.shape({
-  avatar: PropTypes.string.isRequired,
-  name: PropTypes.string.isRequired,
-  super: PropTypes.bool.isRequired
-});
 
 export default PropTypes.shape({
   id: PropTypes.string.isRequired,
@@ -21,7 +16,7 @@ export default PropTypes.shape({
   maxAdults: PropTypes.number.isRequired,
   price: PropTypes.number.isRequired,
   features: PropTypes.arrayOf(PropTypes.string).isRequired,
-  host: HOST_PROP_TYPE,
+  host: hostPropTypes,
   location: PropTypes.shape({
     city: cityPropTypes.isRequired,
     coordinates: PropTypes.arrayOf(PropTypes.number).isRequired
