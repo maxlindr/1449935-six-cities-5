@@ -10,6 +10,7 @@ import OfferFeatures from '../offer-features/offer-features';
 import OfferGallery from '../offer-gallery/offer-gallery';
 import NearPlaces from '../near-places/near-places';
 import OfferHost from '../offer-host/offer-host';
+import CityMap from '../city-map/city-map';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -21,7 +22,7 @@ class Room extends React.PureComponent {
   render() {
     const {user, offer} = this.props;
     const {photos, premium, title, favorite, rating, price, features, host,
-      description, reviews: reviewIds, nearPlaces: nearPlacesIds} = offer;
+      description, reviews: reviewIds, nearPlaces: nearPlacesIds, location} = offer;
 
     const reviews = reviewIds.map((id) => this.props.reviews.find((review) => review.id === id));
     reviews.sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -59,7 +60,7 @@ class Room extends React.PureComponent {
               </div>
             </div>
 
-            <section className="property__map map" />
+            <CityMap type={CityMap.TYPE_OFFER} city={location.city} offers={nearPlaces}/>
           </section>
 
           <div className="container">
