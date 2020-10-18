@@ -2,7 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import offerPropTypes from '../../prop-types/offer-prop-types';
-import {generateOfferPageEndpoint, convertRatingToPerc, capitalizeFirstLetter} from '../offer-card-utils';
+import {generateOfferPageEndpoint, capitalizeFirstLetter} from '../offer-card-utils';
+import RatingStars from '../rating-stars/rating-stars';
 
 const OfferCardInfo = (props) => {
   const {id, price, title, type, rating, favorite} = props.offer;
@@ -30,12 +31,7 @@ const OfferCardInfo = (props) => {
         </button>
       </div>
 
-      <div className="place-card__rating rating">
-        <div className="place-card__stars rating__stars">
-          <span style={{width: `${convertRatingToPerc(rating)}%`}} />
-          <span className="visually-hidden">Rating</span>
-        </div>
-      </div>
+      <RatingStars type={RatingStars.TYPE_CARD} rating={rating}/>
 
       <h2 className="place-card__name">
         <Link to={generateOfferPageEndpoint(id)}>

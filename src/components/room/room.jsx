@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {userPropTypes, offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
-import {convertRatingToPerc, capitalizeFirstLetter} from '../offer-card-utils';
+import {capitalizeFirstLetter} from '../offer-card-utils';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import ReviewForm from './review-form/review-form';
+import RatingStars from '../rating-stars/rating-stars';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -55,25 +56,19 @@ class Room extends React.PureComponent {
 
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
+
                   <button className={bookmarkBtnClassname} type="button">
                     <svg className="property__bookmark-icon" width={31} height={33}>
                       <use xlinkHref="#icon-bookmark" />
                     </svg>
-                    {
-                      favorite
-                        ? <span className="visually-hidden">In bookmarks</span>
-                        : <span className="visually-hidden">To bookmarks</span>
-                    }
+
+                    <span className="visually-hidden">
+                      {favorite ? `In bookmarks` : `To bookmarks`}
+                    </span>
                   </button>
                 </div>
 
-                <div className="property__rating rating">
-                  <div className="property__stars rating__stars">
-                    <span style={{width: `${convertRatingToPerc(rating)}%`}} />
-                    <span className="visually-hidden">Rating</span>
-                  </div>
-                  <span className="property__rating-value rating__value">{rating}</span>
-                </div>
+                <RatingStars type={RatingStars.TYPE_OFFER} rating={rating}/>
 
                 <ul className="property__features">
                   <li className="property__feature property__feature--entire">
@@ -133,12 +128,7 @@ class Room extends React.PureComponent {
                           </span>
                         </div>
                         <div className="reviews__info">
-                          <div className="reviews__rating rating">
-                            <div className="reviews__stars rating__stars">
-                              <span style={{width: `${convertRatingToPerc(review.rating)}%`}} />
-                              <span className="visually-hidden">Rating</span>
-                            </div>
-                          </div>
+                          <RatingStars type={RatingStars.TYPE_REVIEW} rating={review.rating}/>
                           <p className="reviews__text">{review.text}</p>
                           <time className="reviews__time" dateTime={formatDateTimeAttribute(review.date)}>{formatDate(review.date)}</time>
                         </div>
