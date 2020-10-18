@@ -7,6 +7,7 @@ import RatingStars from '../rating-stars/rating-stars';
 import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
 import OfferReviewsSection from '../offer-reviews-section/offer-reviews-section';
 import OfferEssentials from '../offer-essentials/offer-essentials';
+import OfferFeatures from '../offer-features/offer-features';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -61,16 +62,7 @@ class Room extends React.PureComponent {
                   <span className="property__price-text">&nbsp;night</span>
                 </div>
 
-                <div className="property__inside">
-                  <h2 className="property__inside-title">What&apos;s inside</h2>
-                  <ul className="property__inside-list">
-                    {features.map((feature) => (
-                      <li key={feature} className="property__inside-item">
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+                <OfferFeatures features={features}/>
 
                 <div className="property__host">
                   <h2 className="property__host-title">Meet the host</h2>
