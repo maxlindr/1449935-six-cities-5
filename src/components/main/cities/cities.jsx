@@ -75,12 +75,11 @@ class Cities extends React.PureComponent {
         </section>
 
         <div className="cities__right-section">
-          <CityMap city={city} offers={offers}/>
+          <CityMap type={CityMap.TYPE_MAIN} city={city} offers={offers}/>
         </div>
       </div>
     );
   }
-
 }
 
 Cities.propTypes = {

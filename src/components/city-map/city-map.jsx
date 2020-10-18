@@ -64,7 +64,7 @@ class CityMap extends React.PureComponent {
   }
 
   render() {
-    const {offers, city} = this.props;
+    const {type, offers, city} = this.props;
     const map = this.map;
 
     if (map) {
@@ -81,11 +81,18 @@ class CityMap extends React.PureComponent {
       });
     }
 
-    return <section ref={this.mapRef} className="cities__map map"></section>;
+    return <section ref={this.mapRef} className={`${type}__map map`} />;
   }
 }
 
+CityMap.TYPE_MAIN = `cities`;
+CityMap.TYPE_OFFER = `property`;
+
 CityMap.propTypes = {
+  type: PropTypes.oneOf([
+    CityMap.TYPE_MAIN,
+    CityMap.TYPE_OFFER
+  ]).isRequired,
   city: cityPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired
 };
