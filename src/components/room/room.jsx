@@ -9,6 +9,7 @@ import OfferEssentials from '../offer-essentials/offer-essentials';
 import OfferFeatures from '../offer-features/offer-features';
 import OfferGallery from '../offer-gallery/offer-gallery';
 import NearPlaces from '../near-places/near-places';
+import OfferHost from '../offer-host/offer-host';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -24,10 +25,6 @@ class Room extends React.PureComponent {
 
     const reviews = reviewIds.map((id) => this.props.reviews.find((review) => review.id === id));
     reviews.sort((a, b) => b.date.getTime() - a.date.getTime());
-
-    const avatarWrapperClassname = host.super
-      ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper`
-      : `property__avatar-wrapper user__avatar-wrapper`;
 
     const nearPlaces = nearPlacesIds.map((placeId) => this.props.offers.find((item) => item.id === placeId));
 
@@ -56,22 +53,7 @@ class Room extends React.PureComponent {
                 </div>
 
                 <OfferFeatures features={features}/>
-
-                <div className="property__host">
-                  <h2 className="property__host-title">Meet the host</h2>
-                  <div className="property__host-user user">
-                    <div className={avatarWrapperClassname}>
-                      <img className="property__avatar user__avatar" src={host.avatar} alt="Host avatar" width={74} height={74} />
-                    </div>
-                    <span className="property__user-name">
-                      {host.name}
-                    </span>
-                  </div>
-                  <div className="property__description">
-                    {description.map((paragraph, i) => <p key={i} className="property__text">{paragraph}</p>)}
-                  </div>
-                </div>
-
+                <OfferHost host={host} description={description}/>
                 <OfferReviewsSection user={user} reviews={reviews}/>
               </div>
             </div>
