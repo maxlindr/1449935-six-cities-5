@@ -5,7 +5,6 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 const PIN_SIZE = [27, 39];
-const MAP_CONTAINER_ID = `map`;
 const DEFAULT_ZOOM_LEVEL = 12;
 
 const PIN = leaflet.icon({
@@ -23,6 +22,7 @@ class CityMap extends React.PureComponent {
     super(props);
 
     this.map = null;
+    this.mapRef = React.createRef();
     this.pinsGroup = null;
 
     this.state = {
@@ -33,7 +33,7 @@ class CityMap extends React.PureComponent {
   componentDidMount() {
     const {city} = this.props;
 
-    const map = this.map = leaflet.map(MAP_CONTAINER_ID, {
+    const map = this.map = leaflet.map(this.mapRef.current, {
       center: city.coordinates,
       zoom: DEFAULT_ZOOM_LEVEL,
       zoomControl: false,
@@ -81,7 +81,7 @@ class CityMap extends React.PureComponent {
       });
     }
 
-    return <section className="cities__map map" id={MAP_CONTAINER_ID}></section>;
+    return <section ref={this.mapRef} className="cities__map map"></section>;
   }
 }
 
