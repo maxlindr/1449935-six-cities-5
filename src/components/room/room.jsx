@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {userPropTypes, offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
-import {capitalizeFirstLetter} from '../offer-card-utils';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import RatingStars from '../rating-stars/rating-stars';
 import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
 import OfferReviewsSection from '../offer-reviews-section/offer-reviews-section';
+import OfferEssentials from '../offer-essentials/offer-essentials';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -17,7 +17,7 @@ const PREMIUM_MARK_ELEMENT = (
 class Room extends React.PureComponent {
   render() {
     const {user, offer} = this.props;
-    const {photos, premium, title, favorite, rating, type, bedrooms, maxAdults, price, features, host,
+    const {photos, premium, title, favorite, rating, price, features, host,
       description, reviews: reviewIds, nearPlaces: nearPlacesIds} = offer;
 
     const reviews = reviewIds.map((id) => this.props.reviews.find((review) => review.id === id));
@@ -54,18 +54,7 @@ class Room extends React.PureComponent {
                 </div>
 
                 <RatingStars type={RatingStars.TYPE_OFFER} rating={rating}/>
-
-                <ul className="property__features">
-                  <li className="property__feature property__feature--entire">
-                    {capitalizeFirstLetter(type)}
-                  </li>
-                  <li className="property__feature property__feature--bedrooms">
-                    {bedrooms} Bedrooms
-                  </li>
-                  <li className="property__feature property__feature--adults">
-                    Max {maxAdults} adults
-                  </li>
-                </ul>
+                <OfferEssentials offer={offer}/>
 
                 <div className="property__price">
                   <b className="property__price-value">€{price}</b>
