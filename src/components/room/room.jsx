@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {userPropTypes, offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
-import NearPlaceCard from '../near-place-card/near-place-card';
 import RatingStars from '../rating-stars/rating-stars';
 import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
 import OfferReviewsSection from '../offer-reviews-section/offer-reviews-section';
 import OfferEssentials from '../offer-essentials/offer-essentials';
 import OfferFeatures from '../offer-features/offer-features';
 import OfferGallery from '../offer-gallery/offer-gallery';
+import NearPlaces from '../near-places/near-places';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -79,19 +79,7 @@ class Room extends React.PureComponent {
           </section>
 
           <div className="container">
-            <section className="near-places places">
-              <h2 className="near-places__title">Other places in the neighbourhood</h2>
-              <div className="near-places__list places__list">
-                {nearPlaces.map((place) => (
-                  <NearPlaceCard
-                    key={place.id}
-                    offer={place}
-                    onMouseOver={() => {}}
-                    onMouseLeave={() => {}}
-                  />
-                ))}
-              </div>
-            </section>
+            <NearPlaces offers={nearPlaces}/>
           </div>
         </main>
       </div>
