@@ -10,15 +10,6 @@ const MAX_PRICE = 1000;
 
 const MAX_COORD_DELTA = 0.05;
 
-const placesCoordinates = {
-  'Amsterdam': [
-    [52.3909553943508, 4.85309666406198],
-    [52.369553943508, 4.85309666406198],
-    [52.3909553943508, 4.929309666406198],
-    [52.3809553943508, 4.939309666406198]
-  ]
-};
-
 const PHOTOS = [
   `img/apartment-01.jpg`,
   `img/apartment-02.jpg`,
@@ -114,14 +105,14 @@ const addDistortion = (number, maxOffset) => {
 const calcNeighbourhoodCoord = (coord, maxDelta) => coord.map((value) => addDistortion(value, maxDelta));
 
 let id = 0;
+let createdCount = 0;
 
 export default () => {
-  const city = getRandomArrayElements(CITIES)[0];
-  const cityPlacesCoordinates = placesCoordinates[city.name];
+  const city = createdCount < 4
+    ? CITIES.find((item) => item.name === `Amsterdam`)
+    : getRandomArrayElements(CITIES)[0];
 
-  const placeCoordinates = cityPlacesCoordinates
-    ? getRandomArrayElements(cityPlacesCoordinates)[0]
-    : calcNeighbourhoodCoord(city.coordinates, MAX_COORD_DELTA);
+  createdCount++;
 
   return {
     id: String(id++),
@@ -139,7 +130,7 @@ export default () => {
     host: createHost(),
     location: {
       city,
-      coordinates: placeCoordinates
+      coordinates: calcNeighbourhoodCoord(city.coordinates, MAX_COORD_DELTA)
     },
     favorite: generateRandomBoolean(),
     reviews: []

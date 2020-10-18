@@ -17,7 +17,15 @@ const createOfferWithReviews = () => {
 
 export const offers = new Array(OFFERS_COUNT).fill().map(createOfferWithReviews);
 
+const amsterdamOffers = offers.filter((offer) => offer.location.city.name === `Amsterdam`);
+
+const extractOfferId = (item) => item.id;
+const excludeOneFrom = (collection, exclude) => collection.filter((item) => item.id !== exclude.id);
+
 offers.forEach((offer) => {
-  const otherOffers = offers.filter((item) => item.id !== offer.id);
-  offer.nearPlaces = getRandomArrayElements(otherOffers, 3).map((item) => item.id);
+  const otherOffers = offer.location.city.name === `Amsterdam`
+    ? excludeOneFrom(amsterdamOffers, offer.id)
+    : excludeOneFrom(offers, offer.id);
+
+  offer.nearPlaces = getRandomArrayElements(otherOffers, 3).map(extractOfferId);
 });
