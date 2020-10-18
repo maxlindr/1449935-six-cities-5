@@ -6,6 +6,7 @@ import {capitalizeFirstLetter} from '../offer-card-utils';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import ReviewForm from './review-form/review-form';
 import RatingStars from '../rating-stars/rating-stars';
+import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -24,10 +25,6 @@ class Room extends React.PureComponent {
 
     const reviews = reviewIds.map((id) => this.props.reviews.find((review) => review.id === id));
     reviews.sort((a, b) => b.date.getTime() - a.date.getTime());
-
-    const bookmarkBtnClassname = favorite
-      ? `property__bookmark-button property__bookmark-button--active button`
-      : `property__bookmark-button button`;
 
     const avatarWrapperClassname = host.super
       ? `property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper`
@@ -56,16 +53,7 @@ class Room extends React.PureComponent {
 
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
-
-                  <button className={bookmarkBtnClassname} type="button">
-                    <svg className="property__bookmark-icon" width={31} height={33}>
-                      <use xlinkHref="#icon-bookmark" />
-                    </svg>
-
-                    <span className="visually-hidden">
-                      {favorite ? `In bookmarks` : `To bookmarks`}
-                    </span>
-                  </button>
+                  <BookmarkToggle type={BookmarkToggle.TYPE_OFFER} active={favorite}/>
                 </div>
 
                 <RatingStars type={RatingStars.TYPE_OFFER} rating={rating}/>
