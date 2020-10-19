@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import offerPropTypes from '../../prop-types/offer-prop-types';
 import {generateOfferPageEndpoint, capitalizeFirstLetter} from '../offer-card-utils';
-import RatingStars from '../rating-stars/rating-stars';
-import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
+import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
+import BookmarkToggle, {BookmarkToggleType} from '../bookmark-toggle/bookmark-toggle';
 
 const OfferCardInfo = (props) => {
   const {id, price, title, type, rating, favorite} = props.offer;
@@ -17,10 +17,10 @@ const OfferCardInfo = (props) => {
           <span className="place-card__price-text">/&nbsp;night</span>
         </div>
 
-        <BookmarkToggle type={BookmarkToggle.TYPE_CARD} active={favorite}/>
+        <BookmarkToggle type={BookmarkToggleType.CARD} active={favorite}/>
       </div>
 
-      <RatingStars type={RatingStars.TYPE_CARD} rating={rating}/>
+      <RatingStars type={RatingStarsType.CARD} rating={rating}/>
 
       <h2 className="place-card__name">
         <Link to={generateOfferPageEndpoint(id)}>

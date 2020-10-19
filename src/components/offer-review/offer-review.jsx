@@ -1,6 +1,6 @@
 import React from 'react';
 import {reviewPropTypes} from '../../prop-types';
-import RatingStars from '../rating-stars/rating-stars';
+import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
 
 const formatDate = (date) => date.toLocaleDateString(`en-US`, {month: `long`, year: `numeric`});
 const formatDateTimeAttribute = (date) => date.toISOString().substring(0, 10);
@@ -21,7 +21,7 @@ function OfferReview(props) {
       </div>
 
       <div className="reviews__info">
-        <RatingStars type={RatingStars.TYPE_REVIEW} rating={rating}/>
+        <RatingStars type={RatingStarsType.REVIEW} rating={rating}/>
         <p className="reviews__text">{text}</p>
 
         <time className="reviews__time" dateTime={formatDateTimeAttribute(date)}>

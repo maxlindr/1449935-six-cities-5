@@ -2,6 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const MAX_RATING = 5;
+
+export const RatingStarsType = {
+  CARD: `place-card`,
+  OFFER: `property`,
+  REVIEW: `reviews`,
+};
+
 const convertRatingToPerc = (rating) => (rating / MAX_RATING) * 100;
 
 const RatingStars = (props) => {
@@ -14,7 +21,7 @@ const RatingStars = (props) => {
         <span className="visually-hidden">Rating</span>
       </div>
       {
-        type === RatingStars.TYPE_OFFER
+        type === RatingStarsType.OFFER
           ? <span className="property__rating-value rating__value">{rating}</span>
           : null
       }
@@ -22,16 +29,12 @@ const RatingStars = (props) => {
   );
 };
 
-RatingStars.TYPE_CARD = `place-card`;
-RatingStars.TYPE_OFFER = `property`;
-RatingStars.TYPE_REVIEW = `reviews`;
-
 RatingStars.propTypes = {
   rating: PropTypes.number.isRequired,
   type: PropTypes.oneOf([
-    RatingStars.TYPE_CARD,
-    RatingStars.TYPE_OFFER,
-    RatingStars.TYPE_REVIEW
+    RatingStarsType.CARD,
+    RatingStarsType.OFFER,
+    RatingStarsType.REVIEW
   ]).isRequired,
 };
 

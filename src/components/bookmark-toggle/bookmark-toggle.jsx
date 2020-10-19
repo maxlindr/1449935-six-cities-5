@@ -1,6 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+export const BookmarkToggleType = {
+  OFFER: `property`,
+  CARD: `place-card`
+};
+
+const bookmarkSize = {
+  [BookmarkToggleType.OFFER]: {width: 31, height: 33},
+  [BookmarkToggleType.CARD]: {width: 18, height: 19},
+};
+
 const BookmarkToggle = (props) => {
   const {active, type} = props;
 
@@ -23,19 +33,11 @@ const BookmarkToggle = (props) => {
   );
 };
 
-BookmarkToggle.TYPE_OFFER = `property`;
-BookmarkToggle.TYPE_CARD = `place-card`;
-
-const bookmarkSize = {
-  [BookmarkToggle.TYPE_OFFER]: {width: 31, height: 33},
-  [BookmarkToggle.TYPE_CARD]: {width: 18, height: 19},
-};
-
 BookmarkToggle.propTypes = {
   active: PropTypes.bool.isRequired,
   type: PropTypes.oneOf([
-    BookmarkToggle.TYPE_OFFER,
-    BookmarkToggle.TYPE_CARD
+    BookmarkToggleType.OFFER,
+    BookmarkToggleType.CARD
   ]).isRequired
 };
 

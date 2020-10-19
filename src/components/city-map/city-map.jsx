@@ -4,6 +4,11 @@ import {cityPropTypes, offerPropTypes} from '../../prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
+export const CityMapType = {
+  MAIN: `cities`,
+  OFFER: `property`
+};
+
 const PIN_SIZE = [27, 39];
 const DEFAULT_ZOOM_LEVEL = 12;
 
@@ -85,13 +90,10 @@ class CityMap extends React.PureComponent {
   }
 }
 
-CityMap.TYPE_MAIN = `cities`;
-CityMap.TYPE_OFFER = `property`;
-
 CityMap.propTypes = {
   type: PropTypes.oneOf([
-    CityMap.TYPE_MAIN,
-    CityMap.TYPE_OFFER
+    CityMapType.MAIN,
+    CityMapType.OFFER
   ]).isRequired,
   city: cityPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired

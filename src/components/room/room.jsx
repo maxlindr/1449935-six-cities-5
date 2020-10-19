@@ -2,15 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {userPropTypes, offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
-import RatingStars from '../rating-stars/rating-stars';
-import BookmarkToggle from '../bookmark-toggle/bookmark-toggle';
+import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
+import BookmarkToggle, {BookmarkToggleType} from '../bookmark-toggle/bookmark-toggle';
 import OfferReviewsSection from '../offer-reviews-section/offer-reviews-section';
 import OfferEssentials from '../offer-essentials/offer-essentials';
 import OfferFeatures from '../offer-features/offer-features';
 import OfferGallery from '../offer-gallery/offer-gallery';
 import NearPlaces from '../near-places/near-places';
 import OfferHost from '../offer-host/offer-host';
-import CityMap from '../city-map/city-map';
+import CityMap, {CityMapType} from '../city-map/city-map';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -43,10 +43,10 @@ class Room extends React.PureComponent {
 
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
-                  <BookmarkToggle type={BookmarkToggle.TYPE_OFFER} active={favorite}/>
+                  <BookmarkToggle type={BookmarkToggleType.OFFER} active={favorite}/>
                 </div>
 
-                <RatingStars type={RatingStars.TYPE_OFFER} rating={rating}/>
+                <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
                 <OfferEssentials offer={offer}/>
 
                 <div className="property__price">
@@ -60,7 +60,7 @@ class Room extends React.PureComponent {
               </div>
             </div>
 
-            <CityMap type={CityMap.TYPE_OFFER} city={location.city} offers={nearPlaces}/>
+            <CityMap type={CityMapType.OFFER} city={location.city} offers={nearPlaces}/>
           </section>
 
           <div className="container">

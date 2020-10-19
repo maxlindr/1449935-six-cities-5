@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {offerPropTypes, cityPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
 import SortDropdownList from './sort-dropdown-list/sort-dropdown-list';
-import CityMap from '../../city-map/city-map';
+import CityMap, {CityMapType} from '../../city-map/city-map';
 
 const SortOption = {
   POPULAR: `popular`,
@@ -75,7 +75,7 @@ class Cities extends React.PureComponent {
         </section>
 
         <div className="cities__right-section">
-          <CityMap type={CityMap.TYPE_MAIN} city={city} offers={offers}/>
+          <CityMap type={CityMapType.MAIN} city={city} offers={offers}/>
         </div>
       </div>
     );
