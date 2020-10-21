@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import userPropTypes from '../../prop-types/user-prop-types';
+import {connect} from 'react-redux';
 
 const PageHeader = (props) => {
   const {user} = props;
@@ -34,4 +35,9 @@ PageHeader.propTypes = {
   user: userPropTypes
 };
 
-export default PageHeader;
+const mapStateToProps = (state) => ({
+  user: state.user,
+});
+
+export {PageHeader};
+export default connect(mapStateToProps)(PageHeader);

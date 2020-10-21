@@ -11,6 +11,7 @@ import OfferGallery from '../offer-gallery/offer-gallery';
 import NearPlaces from '../near-places/near-places';
 import OfferHost from '../offer-host/offer-host';
 import CityMap, {CityMapType} from '../city-map/city-map';
+import {connect} from 'react-redux';
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -20,14 +21,14 @@ const PREMIUM_MARK_ELEMENT = (
 
 class Room extends React.PureComponent {
   render() {
-    const {user, offer} = this.props;
+    const {user, offer, offers, reviews} = this.props;
     const {photos, premium, title, favorite, rating, price, features, host,
       description, reviews: reviewIds, nearPlaces: nearPlacesIds, location} = offer;
 
-    const reviews = reviewIds.map((id) => this.props.reviews.find((review) => review.id === id));
-    reviews.sort((a, b) => b.date.getTime() - a.date.getTime());
+    const offerReviews = reviewIds.map((id) => reviews.find((review) => review.id === id));
+    offerReviews.sort((a, b) => b.date.getTime() - a.date.getTime());
 
-    const nearPlaces = nearPlacesIds.map((placeId) => this.props.offers.find((item) => item.id === placeId));
+    const nearPlaces = nearPlacesIds.map((placeId) => offers.find((item) => item.id === placeId));
 
     return (
       <div className="page">
@@ -56,7 +57,7 @@ class Room extends React.PureComponent {
 
                 <OfferFeatures features={features}/>
                 <OfferHost host={host} description={description}/>
-                <OfferReviewsSection user={user} reviews={reviews}/>
+                <OfferReviewsSection user={user} reviews={offerReviews}/>
               </div>
             </div>
 
@@ -79,4 +80,11 @@ Room.propTypes = {
   reviews: PropTypes.arrayOf(reviewPropTypes).isRequired,
 };
 
-export default Room;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  offers: state.offers,
+  reviews: state.reviews
+});
+
+export {Room};
+export default connect(mapStateToProps)(Room);

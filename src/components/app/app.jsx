@@ -1,22 +1,21 @@
 import React from 'react';
 import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {offerPropTypes, reviewPropTypes} from '../../prop-types';
+import {offerPropTypes, userPropTypes} from '../../prop-types';
 import Main from '../main/main';
 import Login from '../login/login';
 import FavoritesRouter from '../favorites-router/favorites-router';
 import Room from '../room/room';
-
-let user = {login: `Oliver.conner@gmail.com`};
+import {connect} from 'react-redux';
 
 const App = (props) => {
-  const {offers, reviews} = props;
+  const {offers, user} = props;
 
   return (
     <BrowserRouter>
       <Switch>
         <Route exact path="/">
-          <Main user={user} offers={offers} reviews={reviews} />
+          <Main />
         </Route>
 
         <Route exact path="/login">
@@ -30,7 +29,6 @@ const App = (props) => {
             user
               ? (
                 <FavoritesRouter
-                  user={user}
                   offers={offers.filter((offer) => offer.favorite)}
                 />
               )
@@ -43,10 +41,7 @@ const App = (props) => {
           path="/offer/:id"
           render={({match}) => (
             <Room
-              user={user}
               offer={offers.find((offer) => offer.id === match.params.id)}
-              offers={offers}
-              reviews={reviews}
             />
           )}
         />
@@ -56,8 +51,14 @@ const App = (props) => {
 };
 
 App.propTypes = {
+  user: userPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
-  reviews: PropTypes.arrayOf(reviewPropTypes).isRequired,
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  user: state.user,
+  offers: state.offers,
+});
+
+export {App};
+export default connect(mapStateToProps)(App);

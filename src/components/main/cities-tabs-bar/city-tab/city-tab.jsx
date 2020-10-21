@@ -1,13 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const createClickHandler = (city, cb) => (evt) => {
-  evt.preventDefault();
-  cb(city);
-};
-
 const CityTab = (props) => {
   const {city, active, onClick} = props;
+
+  const clickHandler = (evt) => {
+    evt.preventDefault();
+    onClick(city);
+  };
 
   const anchorClassName = active
     ? `locations__item-link tabs__item tabs__item--active`
@@ -15,7 +15,7 @@ const CityTab = (props) => {
 
   return (
     <li className="locations__item">
-      <a className={anchorClassName} href="#" onClick={createClickHandler(city, onClick)}>
+      <a className={anchorClassName} href="#" onClick={clickHandler}>
         <span>{city}</span>
       </a>
     </li>

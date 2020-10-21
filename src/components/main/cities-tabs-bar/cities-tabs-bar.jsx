@@ -1,49 +1,58 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import CityTab from './city-tab/city-tab';
+import {connect} from 'react-redux';
+import {ActionCreator} from "../../../store/action";
+import {cityPropTypes} from '../../../prop-types';
 
-class CitiesTabsBar extends React.Component {
-  constructor(props) {
-    super(props);
+const CitiesTabsBar = (props) => {
+  const {activeCity, changeCity, cities} = props;
 
-    this.state = {
-      activeCity: props.initialCity
-    };
+  const cityNames = cities.map((city) => city.name);
 
-    this.clickHandler = this.clickHandler.bind(this);
-  }
+  return (
+    <div className="tabs">
+      <section className="locations container">
+        <ul className="locations__list tabs__list">
+          {cityNames.map((city) => {
 
-  clickHandler(city) {
-    if (city !== this.state.activeCity) {
-      this.setState({activeCity: city});
-      this.props.onChange(city);
-    }
-  }
+            const tabClickHandler = () => {
+              if (city !== activeCity) {
+                changeCity(city);
+              }
+            };
 
-  render() {
-    return (
-      <div className="tabs">
-        <section className="locations container">
-          <ul className="locations__list tabs__list">
-            {this.props.cities.map((city) => (
+            return (
               <CityTab
                 key={city}
                 city={city}
-                active={city === this.state.activeCity}
-                onClick={this.clickHandler}
+                active={city === activeCity}
+                onClick={tabClickHandler}
               />
-            ))}
-          </ul>
-        </section>
-      </div>
-    );
-  }
-}
-
-CitiesTabsBar.propTypes = {
-  cities: PropTypes.arrayOf(PropTypes.string).isRequired,
-  onChange: PropTypes.func.isRequired,
-  initialCity: PropTypes.string
+            );
+          })}
+        </ul>
+      </section>
+    </div>
+  );
 };
 
-export default CitiesTabsBar;
+CitiesTabsBar.propTypes = {
+  cities: PropTypes.arrayOf(cityPropTypes).isRequired,
+  changeCity: PropTypes.func.isRequired,
+  activeCity: PropTypes.string,
+};
+
+const mapStateToProps = (state) => ({
+  activeCity: state.currentCity,
+  cities: state.cities,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  changeCity(city) {
+    dispatch(ActionCreator.changeCity(city));
+  },
+});
+
+export {CitiesTabsBar};
+export default connect(mapStateToProps, mapDispatchToProps)(CitiesTabsBar);
