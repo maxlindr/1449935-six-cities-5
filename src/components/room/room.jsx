@@ -19,59 +19,57 @@ const PREMIUM_MARK_ELEMENT = (
   </div>
 );
 
-class Room extends React.PureComponent {
-  render() {
-    const {user, offer, offers, reviews} = this.props;
-    const {photos, premium, title, favorite, rating, price, features, host,
-      description, reviews: reviewIds, nearPlaces: nearPlacesIds, location} = offer;
+const Room = (props) => {
+  const {user, offer, offers, reviews} = props;
+  const {photos, premium, title, favorite, rating, price, features, host,
+    description, reviews: reviewIds, nearPlaces: nearPlacesIds, location} = offer;
 
-    const offerReviews = reviewIds.map((id) => reviews.find((review) => review.id === id));
-    offerReviews.sort((a, b) => b.date.getTime() - a.date.getTime());
+  const offerReviews = reviewIds.map((id) => reviews.find((review) => review.id === id));
+  offerReviews.sort((a, b) => b.date.getTime() - a.date.getTime());
 
-    const nearPlaces = nearPlacesIds.map((placeId) => offers.find((item) => item.id === placeId));
+  const nearPlaces = nearPlacesIds.map((placeId) => offers.find((item) => item.id === placeId));
 
-    return (
-      <div className="page">
-        <PageHeader user={this.props.user}/>
+  return (
+    <div className="page">
+      <PageHeader user={user}/>
 
-        <main className="page__main page__main--property">
-          <section className="property">
-            <OfferGallery photos={photos}/>
+      <main className="page__main page__main--property">
+        <section className="property">
+          <OfferGallery photos={photos}/>
 
-            <div className="property__container container">
-              <div className="property__wrapper">
-                {premium ? PREMIUM_MARK_ELEMENT : null}
+          <div className="property__container container">
+            <div className="property__wrapper">
+              {premium ? PREMIUM_MARK_ELEMENT : null}
 
-                <div className="property__name-wrapper">
-                  <h1 className="property__name">{title}</h1>
-                  <BookmarkToggle type={BookmarkToggleType.OFFER} active={favorite}/>
-                </div>
-
-                <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
-                <OfferEssentials offer={offer}/>
-
-                <div className="property__price">
-                  <b className="property__price-value">€{price}</b>
-                  <span className="property__price-text">&nbsp;night</span>
-                </div>
-
-                <OfferFeatures features={features}/>
-                <OfferHost host={host} description={description}/>
-                <OfferReviewsSection user={user} reviews={offerReviews}/>
+              <div className="property__name-wrapper">
+                <h1 className="property__name">{title}</h1>
+                <BookmarkToggle type={BookmarkToggleType.OFFER} active={favorite}/>
               </div>
+
+              <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
+              <OfferEssentials offer={offer}/>
+
+              <div className="property__price">
+                <b className="property__price-value">€{price}</b>
+                <span className="property__price-text">&nbsp;night</span>
+              </div>
+
+              <OfferFeatures features={features}/>
+              <OfferHost host={host} description={description}/>
+              <OfferReviewsSection user={user} reviews={offerReviews}/>
             </div>
-
-            <CityMap type={CityMapType.OFFER} city={location.city} offers={nearPlaces}/>
-          </section>
-
-          <div className="container">
-            <NearPlaces offers={nearPlaces}/>
           </div>
-        </main>
-      </div>
-    );
-  }
-}
+
+          <CityMap type={CityMapType.OFFER} city={location.city} offers={nearPlaces}/>
+        </section>
+
+        <div className="container">
+          <NearPlaces offers={nearPlaces}/>
+        </div>
+      </main>
+    </div>
+  );
+};
 
 Room.propTypes = {
   user: userPropTypes,
