@@ -5,11 +5,13 @@ import OffersList from '../../offers-list/offers-list';
 import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
 import SortDropdownList from './sort-dropdown-list/sort-dropdown-list';
 import withDropdownBehavior from '../../../hocs/with-dropdown-behavior/with-dropdown-behavior';
-import CityMap, {CityMapType} from '../../city-map/city-map';
+import withLeafletMap from '../../../hocs/with-leaflet-map/with-leaflet-map';
+import cityMapFactory, {CityMapType} from '../../city-map-factory/city-map-factory';
 import {connect} from 'react-redux';
 
 const OffersSortDropdownList = withDropdownBehavior(SortDropdownList);
 const OffersListWithActiveCard = withActiveOffer(OffersList);
+const CityMap = withLeafletMap(cityMapFactory(CityMapType.MAIN));
 
 const SortType = {
   POPULAR: `popular`,
@@ -85,7 +87,7 @@ class Cities extends React.PureComponent {
         </section>
 
         <div className="cities__right-section">
-          <CityMap type={CityMapType.MAIN} city={city} offers={offers}/>
+          <CityMap city={city} offers={offers}/>
         </div>
       </div>
     );

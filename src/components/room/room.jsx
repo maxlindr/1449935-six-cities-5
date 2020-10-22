@@ -10,8 +10,11 @@ import OfferFeatures from '../offer-features/offer-features';
 import OfferGallery from '../offer-gallery/offer-gallery';
 import NearPlaces from '../near-places/near-places';
 import OfferHost from '../offer-host/offer-host';
-import CityMap, {CityMapType} from '../city-map/city-map';
+import withLeafletMap from '../../hocs/with-leaflet-map/with-leaflet-map';
+import cityMapFactory, {CityMapType} from '../city-map-factory/city-map-factory';
 import {connect} from 'react-redux';
+
+const CityMap = withLeafletMap(cityMapFactory(CityMapType.OFFER));
 
 const PREMIUM_MARK_ELEMENT = (
   <div className="property__mark">
@@ -60,7 +63,7 @@ const Room = (props) => {
             </div>
           </div>
 
-          <CityMap type={CityMapType.OFFER} city={location.city} offers={nearPlaces}/>
+          <CityMap city={location.city} offers={nearPlaces}/>
         </section>
 
         <div className="container">
