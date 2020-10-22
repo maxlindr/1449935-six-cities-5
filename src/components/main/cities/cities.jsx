@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import {offerPropTypes, cityPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
 import SortDropdownList from './sort-dropdown-list/sort-dropdown-list';
+import withDropdownBehavior from '../../../hocs/with-dropdown-behavior/with-dropdown-behavior';
 import CityMap, {CityMapType} from '../../city-map/city-map';
 import {connect} from 'react-redux';
+
+const OffersSortDropdownList = withDropdownBehavior(SortDropdownList);
 
 const SortType = {
   POPULAR: `popular`,
@@ -64,7 +67,7 @@ class Cities extends React.PureComponent {
 
           {/* При каждом рендере SortDropdownList должен закрываться, а для этого нужно сбрасывать его текущее состояние.
           Это решается с помощью генерации нового 'key' */}
-          <SortDropdownList
+          <OffersSortDropdownList
             key={Math.random()}
             activeOption={this.state.sortType}
             options={DROPDOWN_OPTIONS}
