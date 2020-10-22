@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes, cityPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
+import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
 import SortDropdownList from './sort-dropdown-list/sort-dropdown-list';
 import withDropdownBehavior from '../../../hocs/with-dropdown-behavior/with-dropdown-behavior';
 import CityMap, {CityMapType} from '../../city-map/city-map';
 import {connect} from 'react-redux';
 
 const OffersSortDropdownList = withDropdownBehavior(SortDropdownList);
+const OffersListWithActiveCard = withActiveOffer(OffersList);
 
 const SortType = {
   POPULAR: `popular`,
@@ -24,6 +26,7 @@ const DROPDOWN_OPTIONS = {
 };
 
 const onCardMouseOver = () => {};
+const onCardMouseLeave = () => {};
 
 const sortOffers = (offers, sortType) => {
   switch (sortType) {
@@ -74,9 +77,10 @@ class Cities extends React.PureComponent {
             onChange={this.onSortOptionChange}
           />
 
-          <OffersList
+          <OffersListWithActiveCard
             offers={sortedOffers}
-            onCardMouseOver={onCardMouseOver}
+            onActivate={onCardMouseOver}
+            onDeactivate={onCardMouseLeave}
           />
         </section>
 
