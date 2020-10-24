@@ -25,4 +25,4 @@ OfferCard.propTypes = {
   onMouseLeave: PropTypes.func.isRequired,
 };
 
-export default OfferCard;
+export default React.memo(OfferCard);
