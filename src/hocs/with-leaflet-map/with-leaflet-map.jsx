@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {cityPropTypes, offerPropTypes} from '../../prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import {connect} from 'react-redux';
 
 const PIN_SIZE = [27, 39];
 const DEFAULT_ZOOM_LEVEL = 12;
@@ -16,6 +17,8 @@ const PIN_ACTIVE = leaflet.icon({
   iconUrl: `img/pin-active.svg`,
   iconSize: PIN_SIZE
 });
+
+const findCityObject = (cityName, collection) => collection.find((item) => item.name === cityName);
 
 const withLeafletMap = (Component) => {
   class WithLeafletMap extends React.PureComponent {
@@ -88,11 +91,16 @@ const withLeafletMap = (Component) => {
 
   WithLeafletMap.propTypes = {
     city: cityPropTypes,
+    cities: PropTypes.arrayOf(cityPropTypes).isRequired,
     offers: PropTypes.arrayOf(offerPropTypes).isRequired
   };
 
-  return WithLeafletMap;
+  return connect(mapStateToProps)(WithLeafletMap);
 };
 
+const mapStateToProps = (state) => ({
+  city: findCityObject(state.currentCity, state.cities),
+  cities: state.cities,
+});
 
 export default withLeafletMap;

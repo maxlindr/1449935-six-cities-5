@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes, cityPropTypes} from '../../../prop-types';
+import {offerPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
 import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
 import withLeafletMap from '../../../hocs/with-leaflet-map/with-leaflet-map';
@@ -14,9 +14,7 @@ const onCardMouseOver = () => {};
 const onCardMouseLeave = () => {};
 
 const Cities = (props) => {
-  const {currentCity, offers, cities, children} = props;
-
-  const city = cities.find((item) => item.name === currentCity);
+  const {currentCity, offers, children} = props;
 
   return (
     <div className="cities__places-container container">
@@ -37,7 +35,7 @@ const Cities = (props) => {
       </section>
 
       <div className="cities__right-section">
-        <CityMap city={city} offers={offers}/>
+        <CityMap offers={offers}/>
       </div>
     </div>
   );
@@ -46,12 +44,10 @@ const Cities = (props) => {
 Cities.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes),
   currentCity: PropTypes.string.isRequired,
-  cities: PropTypes.arrayOf(cityPropTypes).isRequired,
   children: PropTypes.element
 };
 
 const mapStateToProps = (state) => ({
-  cities: state.cities,
   currentCity: state.currentCity
 });
 

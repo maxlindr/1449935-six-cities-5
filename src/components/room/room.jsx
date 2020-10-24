@@ -25,7 +25,7 @@ const PREMIUM_MARK_ELEMENT = (
 const Room = (props) => {
   const {user, offer, offers, reviews} = props;
   const {photos, premium, title, favorite, rating, price, features, host,
-    description, reviews: reviewIds, nearPlaces: nearPlacesIds, location} = offer;
+    description, reviews: reviewIds, nearPlaces: nearPlacesIds} = offer;
 
   const offerReviews = reviewIds.map((id) => reviews.find((review) => review.id === id));
   offerReviews.sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -63,7 +63,7 @@ const Room = (props) => {
             </div>
           </div>
 
-          <CityMap city={location.city} offers={nearPlaces}/>
+          <CityMap offers={nearPlaces}/>
         </section>
 
         <div className="container">
