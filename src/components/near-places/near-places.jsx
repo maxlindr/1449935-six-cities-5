@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import {offerPropTypes} from '../../prop-types';
 
+const emptyFunc = (f) => f;
+
 function NearPlaces(props) {
   return (
     <section className="near-places places">
@@ -12,8 +14,8 @@ function NearPlaces(props) {
           <NearPlaceCard
             key={offer.id}
             offer={offer}
-            onMouseOver={() => {}}
-            onMouseLeave={() => {}}
+            onMouseOver={emptyFunc}
+            onMouseLeave={emptyFunc}
           />
         ))}
       </div>
