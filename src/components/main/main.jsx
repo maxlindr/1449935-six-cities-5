@@ -4,8 +4,11 @@ import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
 import CitiesTabsBar from './cities-tabs-bar/cities-tabs-bar';
 import Cities from './cities/cities';
+import withSorting from '../../hocs/with-sorting/with-sorting';
 import CitiesNoPlaces from './cities-no-places/cities-no-places';
 import {connect} from 'react-redux';
+
+const CitiesWithSorting = withSorting(Cities);
 
 const Main = (props) => {
   const {offers, currentCity} = props;
@@ -24,7 +27,7 @@ const Main = (props) => {
         <CitiesTabsBar />
         <div className="cities">
           {cityOffers.length > 0
-            ? <Cities offers={cityOffers}/>
+            ? <CitiesWithSorting offers={cityOffers}/>
             : <CitiesNoPlaces city={currentCity}/>}
         </div>
       </main>

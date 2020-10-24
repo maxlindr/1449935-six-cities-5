@@ -3,101 +3,51 @@ import PropTypes from 'prop-types';
 import {offerPropTypes, cityPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
 import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
-import SortDropdownList from './sort-dropdown-list/sort-dropdown-list';
-import withDropdownBehavior from '../../../hocs/with-dropdown-behavior/with-dropdown-behavior';
 import withLeafletMap from '../../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../../city-map-factory/city-map-factory';
 import {connect} from 'react-redux';
 
-const OffersSortDropdownList = withDropdownBehavior(SortDropdownList);
 const OffersListWithActiveCard = withActiveOffer(OffersList);
 const CityMap = withLeafletMap(cityMapFactory(CityMapType.MAIN));
-
-const SortType = {
-  POPULAR: `popular`,
-  TO_HIGH: `low-to-high`,
-  TO_LOW: `high-to-low`,
-  TOP_RATED: `top-rated`
-};
-
-const DROPDOWN_OPTIONS = {
-  [SortType.POPULAR]: `Popular`,
-  [SortType.TO_HIGH]: `Price: low to high`,
-  [SortType.TO_LOW]: `Price: high to low`,
-  [SortType.TOP_RATED]: `Top rated first`,
-};
 
 const onCardMouseOver = () => {};
 const onCardMouseLeave = () => {};
 
-const sortOffers = (offers, sortType) => {
-  switch (sortType) {
-    case SortType.POPULAR:
-      return offers;
-    case SortType.TO_HIGH:
-      return offers.slice().sort((a, b) => a.price - b.price);
-    case SortType.TO_LOW:
-      return offers.slice().sort((a, b) => b.price - a.price);
-    case SortType.TOP_RATED:
-      return offers.slice().sort((a, b) => b.rating - a.rating);
-    default:
-      throw new Error(`Bad sort type: ${sortType}`);
-  }
-};
+const Cities = (props) => {
+  const {currentCity, offers, cities, children} = props;
 
-class Cities extends React.PureComponent {
-  constructor(props) {
-    super(props);
+  const city = cities.find((item) => item.name === currentCity);
 
-    this.state = {
-      sortType: SortType.POPULAR,
-    };
+  return (
+    <div className="cities__places-container container">
+      <section className="cities__places places">
+        <h2 className="visually-hidden">Places</h2>
+        <b className="places__found">
+          {offers.length} places to stay in {currentCity}
+        </b>
 
-    this.onSortOptionChange = (option) => this.setState({sortType: option});
-  }
+        {/* sort dropdown list */}
+        {children}
 
-  render() {
-    const {currentCity, offers, cities} = this.props;
-    const sortedOffers = sortOffers(offers, this.state.sortType);
+        <OffersListWithActiveCard
+          offers={offers}
+          onActivate={onCardMouseOver}
+          onDeactivate={onCardMouseLeave}
+        />
+      </section>
 
-    const city = cities.find((item) => item.name === currentCity);
-
-    return (
-      <div className="cities__places-container container">
-        <section className="cities__places places">
-          <h2 className="visually-hidden">Places</h2>
-          <b className="places__found">
-            {sortedOffers.length} places to stay in {currentCity}
-          </b>
-
-          {/* При каждом рендере SortDropdownList должен закрываться, а для этого нужно сбрасывать его текущее состояние.
-          Это решается с помощью генерации нового 'key' */}
-          <OffersSortDropdownList
-            key={Math.random()}
-            activeOption={this.state.sortType}
-            options={DROPDOWN_OPTIONS}
-            onChange={this.onSortOptionChange}
-          />
-
-          <OffersListWithActiveCard
-            offers={sortedOffers}
-            onActivate={onCardMouseOver}
-            onDeactivate={onCardMouseLeave}
-          />
-        </section>
-
-        <div className="cities__right-section">
-          <CityMap city={city} offers={offers}/>
-        </div>
+      <div className="cities__right-section">
+        <CityMap city={city} offers={offers}/>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 Cities.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes),
   currentCity: PropTypes.string.isRequired,
   cities: PropTypes.arrayOf(cityPropTypes).isRequired,
+  children: PropTypes.element
 };
 
 const mapStateToProps = (state) => ({
