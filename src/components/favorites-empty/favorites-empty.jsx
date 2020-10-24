@@ -3,10 +3,10 @@ import {userPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
 import PageFooter from '../page-footer/page-footer';
 
-const FavoritesEmpty = (props) => {
+const FavoritesEmpty = () => {
   return (
     <div className="page page--favorites-empty">
-      <PageHeader user={props.user}/>
+      <PageHeader />
       <main className="page__main page__main--favorites page__main--favorites-empty">
         <div className="page__favorites-container container">
           <section className="favorites favorites--empty">

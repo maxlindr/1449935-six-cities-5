@@ -34,7 +34,7 @@ const Room = (props) => {
 
   return (
     <div className="page">
-      <PageHeader user={user}/>
+      <PageHeader />
 
       <main className="page__main page__main--property">
         <section className="property">
