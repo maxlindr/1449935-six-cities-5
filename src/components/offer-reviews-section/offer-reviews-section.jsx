@@ -1,8 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {userPropTypes, reviewPropTypes} from '../../prop-types';
+import withReviewFormController from '../../hocs/with-review-form-controller/with-review-form-controller';
 import ReviewForm from '../review-form/review-form';
 import OfferReview from '../offer-review/offer-review';
+
+const ReviewFormComponent = withReviewFormController(ReviewForm);
 
 const OfferReviewsSection = (props) => {
   const {user, reviews} = props;
@@ -15,7 +18,7 @@ const OfferReviewsSection = (props) => {
         {reviews.map((review) => <OfferReview key={review.id} review={review}/>)}
       </ul>
 
-      {user ? <ReviewForm /> : null}
+      {user ? <ReviewFormComponent /> : null}
     </section>
   );
 };
