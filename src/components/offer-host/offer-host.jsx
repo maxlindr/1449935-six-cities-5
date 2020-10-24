@@ -32,4 +32,4 @@ OfferHost.propTypes = {
   description: PropTypes.arrayOf(PropTypes.string)
 };
 
-export default OfferHost;
+export default React.memo(OfferHost);

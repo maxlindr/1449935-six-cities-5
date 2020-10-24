@@ -28,4 +28,4 @@ OfferReviewsSection.propTypes = {
   user: userPropTypes,
 };
 
-export default OfferReviewsSection;
+export default React.memo(OfferReviewsSection);

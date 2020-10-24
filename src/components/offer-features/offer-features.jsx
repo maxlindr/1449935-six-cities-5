@@ -20,4 +20,4 @@ OfferFeatures.propTypes = {
   features: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-export default OfferFeatures;
+export default React.memo(OfferFeatures);

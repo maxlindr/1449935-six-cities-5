@@ -25,4 +25,4 @@ NearPlaces.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
 };
 
-export default NearPlaces;
+export default React.memo(NearPlaces);

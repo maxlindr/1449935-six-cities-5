@@ -24,4 +24,4 @@ OfferEssentials.propTypes = {
   offer: offerPropTypes
 };
 
-export default OfferEssentials;
+export default React.memo(OfferEssentials);

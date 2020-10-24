@@ -15,4 +15,4 @@ NearPlaceCard.propTypes = {
   offer: offerPropTypes,
 };
 
-export default NearPlaceCard;
+export default React.memo(NearPlaceCard);
