@@ -13,6 +13,7 @@ import OfferHost from '../offer-host/offer-host';
 import withLeafletMap from '../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../city-map-factory/city-map-factory';
 import {connect} from 'react-redux';
+import {ActionCreator} from "../../store/action";
 
 const CityMap = withLeafletMap(cityMapFactory(CityMapType.OFFER));
 
@@ -23,7 +24,7 @@ const PREMIUM_MARK_ELEMENT = (
 );
 
 const Room = (props) => {
-  const {user, offer, offers, reviews} = props;
+  const {user, offer, offers, reviews, updateOffer} = props;
   const {photos, premium, title, favorite, rating, price, features, host,
     description, reviews: reviewIds, nearPlaces: nearPlacesIds} = offer;
 
@@ -46,7 +47,10 @@ const Room = (props) => {
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <BookmarkToggle type={BookmarkToggleType.OFFER} active={favorite}/>
+                <BookmarkToggle type={BookmarkToggleType.OFFER} active={favorite} onToggle={() => {
+                  const newOffer = Object.assign({}, offer, {favorite: !offer.favorite});
+                  updateOffer(newOffer);
+                }}/>
               </div>
 
               <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
@@ -79,6 +83,7 @@ Room.propTypes = {
   offer: offerPropTypes.isRequired,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewPropTypes).isRequired,
+  updateOffer: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -87,5 +92,11 @@ const mapStateToProps = (state) => ({
   reviews: state.reviews
 });
 
+const mapDispatchToProps = (dispatch) => ({
+  updateOffer(offer) {
+    dispatch(ActionCreator.updateOffer(offer));
+  },
+});
+
 export {Room};
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps, mapDispatchToProps)(Room);

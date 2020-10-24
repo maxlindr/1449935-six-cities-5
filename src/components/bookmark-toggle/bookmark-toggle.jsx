@@ -12,7 +12,7 @@ const bookmarkSize = {
 };
 
 const BookmarkToggle = (props) => {
-  const {active, type} = props;
+  const {active, type, onToggle} = props;
 
   const bookmarkBtnClassname = active
     ? `${type}__bookmark-button ${type}__bookmark-button--active button`
@@ -21,7 +21,7 @@ const BookmarkToggle = (props) => {
   const {width, height} = bookmarkSize[type];
 
   return (
-    <button className={bookmarkBtnClassname} type="button">
+    <button className={bookmarkBtnClassname} type="button" onClick={onToggle}>
       <svg className={`${type}__bookmark-icon`} width={width} height={height}>
         <use xlinkHref="#icon-bookmark" />
       </svg>
@@ -38,7 +38,8 @@ BookmarkToggle.propTypes = {
   type: PropTypes.oneOf([
     BookmarkToggleType.OFFER,
     BookmarkToggleType.CARD
-  ]).isRequired
+  ]).isRequired,
+  onToggle: PropTypes.func.isRequired
 };
 
 export default BookmarkToggle;
