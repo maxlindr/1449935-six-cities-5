@@ -21,13 +21,43 @@ const PIN_ACTIVE = leaflet.icon({
 const findCityObject = (cityName, collection) => collection.find((item) => item.name === cityName);
 
 const withLeafletMap = (Component) => {
-  class WithLeafletMap extends React.PureComponent {
+  class WithLeafletMap extends React.Component {
     constructor(props) {
       super(props);
+
+      this.state = {
+        prevCity: null,
+        reset: true
+      };
 
       this.map = null;
       this.mapRef = React.createRef();
       this.pinsGroup = null;
+      this.pins = new Map();
+    }
+
+    static getDerivedStateFromProps(props, state) {
+      if (props.city !== state.prevCity) {
+        return {
+          prevCity: props.city,
+          reset: true,
+        };
+      }
+
+      return {
+        reset: false,
+      };
+    }
+
+    componentWillUnmount() {
+      this.pins.clear();
+    }
+
+    shouldComponentUpdate(nextProps) {
+      const {offers, city, activeOffer} = this.props;
+      return nextProps.offers !== offers
+        || nextProps.city !== city
+        || nextProps.activeOffer !== activeOffer;
     }
 
     componentDidMount() {
@@ -53,14 +83,22 @@ const withLeafletMap = (Component) => {
     }
 
     addPin(pin) {
-      const {coordinates, isActive} = pin;
+      const {coordinates, isActive, id} = pin;
 
       const marker = leaflet.marker(coordinates, {icon: isActive ? PIN_ACTIVE : PIN});
       this.pinsGroup.addLayer(marker);
+      this.pins.set(id, {pin, marker});
     }
 
     clear() {
+      this.pins.clear();
       this.pinsGroup.clearLayers();
+    }
+
+    updatePin(pin) {
+      const oldPin = this.pins.get(pin.id);
+      const icon = pin.isActive ? PIN_ACTIVE : PIN;
+      oldPin.marker.setIcon(icon);
     }
 
     render() {
@@ -68,16 +106,29 @@ const withLeafletMap = (Component) => {
       const map = this.map;
 
       if (map) {
-        map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
-        this.clear();
+        if (this.state.reset) {
+          map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
+          this.clear();
+        }
 
         offers.forEach((offer) => {
-          const isActive = activeOffer ? offer.id === activeOffer.id : false;
+          const {id, location} = offer;
 
-          this.addPin({
-            coordinates: offer.location.coordinates,
-            isActive
-          });
+          const pinActualData = {
+            id,
+            coordinates: location.coordinates,
+            isActive: activeOffer ? id === activeOffer.id : false
+          };
+
+          const placedMapPin = this.pins.get(pinActualData.id);
+
+          if (placedMapPin) {
+            if (placedMapPin.isActive !== pinActualData.isActive) {
+              this.updatePin(pinActualData);
+            }
+          } else {
+            this.addPin(pinActualData);
+          }
         });
       }
 
