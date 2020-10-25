@@ -2,19 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../../prop-types';
 import OffersList from '../../offers-list/offers-list';
-import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
 import withLeafletMap from '../../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../../city-map-factory/city-map-factory';
+import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
 import {connect} from 'react-redux';
 
-const OffersListWithActiveCard = withActiveOffer(OffersList);
 const CityMap = withLeafletMap(cityMapFactory(CityMapType.MAIN));
 
-const onCardMouseOver = () => {};
-const onCardMouseLeave = () => {};
-
 const Cities = (props) => {
-  const {currentCity, offers, children} = props;
+  const {currentCity, offers, children, onActivate, onDeactivate, activeOffer} = props;
 
   return (
     <div className="cities__places-container container">
@@ -27,15 +23,15 @@ const Cities = (props) => {
         {/* sort dropdown list */}
         {children}
 
-        <OffersListWithActiveCard
+        <OffersList
           offers={offers}
-          onActivate={onCardMouseOver}
-          onDeactivate={onCardMouseLeave}
+          onActivate={onActivate}
+          onDeactivate={onDeactivate}
         />
       </section>
 
       <div className="cities__right-section">
-        <CityMap offers={offers}/>
+        <CityMap activeOffer={activeOffer} offers={offers}/>
       </div>
     </div>
   );
@@ -44,7 +40,10 @@ const Cities = (props) => {
 Cities.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes),
   currentCity: PropTypes.string.isRequired,
-  children: PropTypes.element
+  activeOffer: offerPropTypes,
+  children: PropTypes.element,
+  onActivate: PropTypes.func.isRequired,
+  onDeactivate: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -52,4 +51,4 @@ const mapStateToProps = (state) => ({
 });
 
 export {Cities};
-export default connect(mapStateToProps)(Cities);
+export default connect(mapStateToProps)(withActiveOffer(Cities));

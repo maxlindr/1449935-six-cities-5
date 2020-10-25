@@ -25,7 +25,8 @@ const withActiveOffer = (Component) => {
     render() {
       return (
         <Component
-          offers={this.props.offers}
+          {...this.props}
+          activeOffer={this.state.activeOffer}
           onActivate={this.handleCardMouseOver}
           onDeactivate={this.handleCardMouseLeave}
         />
@@ -35,8 +36,6 @@ const withActiveOffer = (Component) => {
 
   WithActiveOffer.propTypes = {
     offers: PropTypes.arrayOf(offerPropTypes).isRequired,
-    onActivate: PropTypes.func.isRequired,
-    onDeactivate: PropTypes.func.isRequired,
   };
 
   return WithActiveOffer;

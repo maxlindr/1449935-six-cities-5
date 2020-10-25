@@ -28,10 +28,6 @@ const withLeafletMap = (Component) => {
       this.map = null;
       this.mapRef = React.createRef();
       this.pinsGroup = null;
-
-      this.state = {
-        activeOffer: null,
-      };
     }
 
     componentDidMount() {
@@ -68,7 +64,7 @@ const withLeafletMap = (Component) => {
     }
 
     render() {
-      const {offers, city} = this.props;
+      const {offers, city, activeOffer} = this.props;
       const map = this.map;
 
       if (map) {
@@ -76,7 +72,7 @@ const withLeafletMap = (Component) => {
         this.clear();
 
         offers.forEach((offer) => {
-          const isActive = this.state.activeOffer ? offer.id === this.state.activeOffer.id : false;
+          const isActive = activeOffer ? offer.id === activeOffer.id : false;
 
           this.addPin({
             coordinates: offer.location.coordinates,
@@ -90,9 +86,10 @@ const withLeafletMap = (Component) => {
   }
 
   WithLeafletMap.propTypes = {
-    city: cityPropTypes,
+    city: cityPropTypes.isRequired,
     cities: PropTypes.arrayOf(cityPropTypes).isRequired,
-    offers: PropTypes.arrayOf(offerPropTypes).isRequired
+    offers: PropTypes.arrayOf(offerPropTypes).isRequired,
+    activeOffer: offerPropTypes,
   };
 
   return connect(mapStateToProps)(WithLeafletMap);

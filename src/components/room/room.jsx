@@ -14,6 +14,7 @@ import withLeafletMap from '../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../city-map-factory/city-map-factory';
 import {connect} from 'react-redux';
 import withUpdateOfferOnFavoriteToggle from '../../hocs/with-update-offer-on-favorite-toggle/with-update-offer-on-favorite-toggle';
+import withActiveOffer from '../../hocs/with-active-offer/with-active-offer';
 
 const BookmarkToggleWithUpdateOffer = withUpdateOfferOnFavoriteToggle(BookmarkToggle);
 
@@ -26,7 +27,7 @@ const PREMIUM_MARK_ELEMENT = (
 );
 
 const Room = (props) => {
-  const {user, offer, offers, reviews} = props;
+  const {user, offer, offers, reviews, activeOffer, onActivate, onDeactivate} = props;
   const {photos, premium, title, favorite, rating, price, features, host,
     description, reviews: reviewIds, nearPlaces: nearPlacesIds} = offer;
 
@@ -66,11 +67,11 @@ const Room = (props) => {
             </div>
           </div>
 
-          <CityMap offers={nearPlaces}/>
+          <CityMap activeOffer={activeOffer} offers={nearPlaces}/>
         </section>
 
         <div className="container">
-          <NearPlaces offers={nearPlaces}/>
+          <NearPlaces offers={nearPlaces} onCardOver={onActivate} onCardLeave={onDeactivate}/>
         </div>
       </main>
     </div>
@@ -80,8 +81,11 @@ const Room = (props) => {
 Room.propTypes = {
   user: userPropTypes,
   offer: offerPropTypes.isRequired,
+  activeOffer: offerPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewPropTypes).isRequired,
+  onActivate: PropTypes.func.isRequired,
+  onDeactivate: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -91,4 +95,4 @@ const mapStateToProps = (state) => ({
 });
 
 export {Room};
-export default connect(mapStateToProps)(Room);
+export default connect(mapStateToProps)(withActiveOffer(Room));

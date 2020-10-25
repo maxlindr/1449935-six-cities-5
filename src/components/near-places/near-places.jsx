@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import NearPlaceCard from '../near-place-card/near-place-card';
 import {offerPropTypes} from '../../prop-types';
 
-const emptyFunc = (f) => f;
+const NearPlaces = (props) => {
+  const {onCardOver, onCardLeave} = props;
 
-function NearPlaces(props) {
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
@@ -14,17 +14,19 @@ function NearPlaces(props) {
           <NearPlaceCard
             key={offer.id}
             offer={offer}
-            onMouseOver={emptyFunc}
-            onMouseLeave={emptyFunc}
+            onMouseOver={onCardOver}
+            onMouseLeave={onCardLeave}
           />
         ))}
       </div>
     </section>
   );
-}
+};
 
 NearPlaces.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
+  onCardOver: PropTypes.func.isRequired,
+  onCardLeave: PropTypes.func.isRequired,
 };
 
 export default React.memo(NearPlaces);
