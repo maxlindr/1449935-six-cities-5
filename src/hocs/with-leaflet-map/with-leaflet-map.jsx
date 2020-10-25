@@ -18,6 +18,14 @@ const PIN_ACTIVE = leaflet.icon({
   iconSize: PIN_SIZE
 });
 
+const checkOffersListsEquals = (offers1, offers2) => {
+  if (offers1.length !== offers2.length) {
+    return false;
+  }
+
+  return offers1.every((offer) => offers2.includes(offer));
+};
+
 const findCityObject = (cityName, collection) => collection.find((item) => item.name === cityName);
 
 const withLeafletMap = (Component) => {
@@ -55,9 +63,10 @@ const withLeafletMap = (Component) => {
 
     shouldComponentUpdate(nextProps) {
       const {offers, city, activeOffer} = this.props;
-      return nextProps.offers !== offers
-        || nextProps.city !== city
-        || nextProps.activeOffer !== activeOffer;
+
+      return nextProps.city !== city
+        || nextProps.activeOffer !== activeOffer
+        || !checkOffersListsEquals(nextProps.offers, offers);
     }
 
     componentDidMount() {
