@@ -61,6 +61,38 @@ const withLeafletMap = (Component) => {
       this.pins.clear();
     }
 
+    componentDidUpdate() {
+      const {offers, city, activeOffer} = this.props;
+      const map = this.map;
+
+      if (map) {
+        if (this.state.reset) {
+          map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
+          this.clear();
+        }
+
+        offers.forEach((offer) => {
+          const {id, location} = offer;
+
+          const pinActualData = {
+            id,
+            coordinates: location.coordinates,
+            isActive: activeOffer ? (id === activeOffer.id) : false
+          };
+
+          const placedMapPin = this.pins.get(pinActualData.id);
+
+          if (placedMapPin) {
+            if (placedMapPin.isActive !== pinActualData.isActive) {
+              this.updatePin(pinActualData);
+            }
+          } else {
+            this.addPin(pinActualData);
+          }
+        });
+      }
+    }
+
     shouldComponentUpdate(nextProps) {
       const {offers, city, activeOffer} = this.props;
 
@@ -111,36 +143,6 @@ const withLeafletMap = (Component) => {
     }
 
     render() {
-      const {offers, city, activeOffer} = this.props;
-      const map = this.map;
-
-      if (map) {
-        if (this.state.reset) {
-          map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
-          this.clear();
-        }
-
-        offers.forEach((offer) => {
-          const {id, location} = offer;
-
-          const pinActualData = {
-            id,
-            coordinates: location.coordinates,
-            isActive: activeOffer ? id === activeOffer.id : false
-          };
-
-          const placedMapPin = this.pins.get(pinActualData.id);
-
-          if (placedMapPin) {
-            if (placedMapPin.isActive !== pinActualData.isActive) {
-              this.updatePin(pinActualData);
-            }
-          } else {
-            this.addPin(pinActualData);
-          }
-        });
-      }
-
       return <Component reference={this.mapRef}/>;
     }
   }
