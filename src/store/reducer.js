@@ -8,8 +8,10 @@ const reducer = (state, action) => {
       return Object.assign({}, state, {localOffers: action.payload});
     case ActionType.UPDATE_OFFER:
       const newOffer = action.payload;
-      const newOffers = state.offers.map((item) => (item.id === newOffer.id) ? newOffer : item);
-      return Object.assign({}, state, {offers: newOffers});
+      const offersCopy = state.offers.slice();
+      const targetOfferIndex = offersCopy.findIndex((item) => item.id === newOffer.id);
+      offersCopy[targetOfferIndex] = newOffer;
+      return Object.assign({}, state, {offers: offersCopy});
   }
 
   return state;
