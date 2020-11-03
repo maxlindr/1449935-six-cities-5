@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
 
 export default PropTypes.shape({
-  login: PropTypes.string.isRequired
+  email: PropTypes.string.isRequired
 });

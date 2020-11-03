@@ -25,8 +25,8 @@ const NearPlaces = (props) => {
 
 NearPlaces.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
-  onCardOver: PropTypes.func.isRequired,
-  onCardLeave: PropTypes.func.isRequired,
+  onCardOver: PropTypes.func,
+  onCardLeave: PropTypes.func,
 };
 
 export default React.memo(NearPlaces);

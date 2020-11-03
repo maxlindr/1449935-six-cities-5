@@ -4,6 +4,7 @@ import {cityPropTypes, offerPropTypes} from '../../prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {connect} from 'react-redux';
+import {getCurrentCity} from '../../store/selectors';
 
 const PIN_SIZE = [27, 39];
 const DEFAULT_ZOOM_LEVEL = 12;
@@ -25,8 +26,6 @@ const checkOffersListsEquals = (offers1, offers2) => {
 
   return offers1.every((offer) => offers2.includes(offer));
 };
-
-const findCityObject = (cityName, collection) => collection.find((item) => item.name === cityName);
 
 const withLeafletMap = (Component) => {
   class WithLeafletMap extends React.Component {
@@ -62,7 +61,7 @@ const withLeafletMap = (Component) => {
     }
 
     componentDidUpdate() {
-      const {offers, city, activeOffer} = this.props;
+      const {offers, city, activeOffer, maxOffers} = this.props;
       const map = this.map;
 
       if (map) {
@@ -71,7 +70,9 @@ const withLeafletMap = (Component) => {
           this.clear();
         }
 
-        offers.forEach((offer) => {
+        const offersToShow = maxOffers ? offers.slice(0, maxOffers) : offers;
+
+        offersToShow.slice(0).forEach((offer) => {
           const {id, location} = offer;
 
           const pinActualData = {
@@ -149,17 +150,16 @@ const withLeafletMap = (Component) => {
 
   WithLeafletMap.propTypes = {
     city: cityPropTypes.isRequired,
-    cities: PropTypes.arrayOf(cityPropTypes).isRequired,
     offers: PropTypes.arrayOf(offerPropTypes).isRequired,
     activeOffer: offerPropTypes,
+    maxOffers: PropTypes.number
   };
 
   return connect(mapStateToProps)(WithLeafletMap);
 };
 
 const mapStateToProps = (state) => ({
-  city: findCityObject(state.currentCity, state.cities),
-  cities: state.cities,
+  city: getCurrentCity(state),
 });
 
 export default withLeafletMap;

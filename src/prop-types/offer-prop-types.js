@@ -8,7 +8,7 @@ export default PropTypes.shape({
   thumbnail: PropTypes.string.isRequired,
   photos: PropTypes.arrayOf(PropTypes.string).isRequired,
   title: PropTypes.string.isRequired,
-  description: PropTypes.arrayOf(PropTypes.string).isRequired,
+  description: PropTypes.string.isRequired,
   premium: PropTypes.bool.isRequired,
   type: PropTypes.oneOf([`apartment`, `room`, `house`, `hotel`]).isRequired,
   rating: validateRating,
@@ -21,7 +21,5 @@ export default PropTypes.shape({
     city: cityPropTypes.isRequired,
     coordinates: PropTypes.arrayOf(PropTypes.number).isRequired
   }),
-  nearPlaces: PropTypes.arrayOf(PropTypes.string).isRequired,
   favorite: PropTypes.bool.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.string).isRequired
 });

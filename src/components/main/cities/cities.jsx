@@ -6,6 +6,7 @@ import withLeafletMap from '../../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../../city-map-factory/city-map-factory';
 import withActiveOffer from '../../../hocs/with-active-offer/with-active-offer';
 import {connect} from 'react-redux';
+import {getCurrentCity} from '../../../store/selectors';
 
 const CityMap = withLeafletMap(cityMapFactory(CityMapType.MAIN));
 
@@ -47,7 +48,7 @@ Cities.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentCity: state.currentCity
+  currentCity: getCurrentCity(state).name
 });
 
 export {Cities};

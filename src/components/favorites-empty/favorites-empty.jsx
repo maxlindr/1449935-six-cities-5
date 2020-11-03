@@ -1,5 +1,4 @@
 import React from 'react';
-import {userPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
 import PageFooter from '../page-footer/page-footer';
 
@@ -24,7 +23,6 @@ const FavoritesEmpty = () => {
 };
 
 FavoritesEmpty.propTypes = {
-  user: userPropTypes
 };
 
 export default FavoritesEmpty;

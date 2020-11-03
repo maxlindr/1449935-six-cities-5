@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {userPropTypes, offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
 import FavoritesOfferCard from '../favorites-offer-card/favorites-offer-card';
 import PageFooter from '../page-footer/page-footer';
@@ -58,7 +58,6 @@ const Favorites = (props) => {
 
 Favorites.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
-  user: userPropTypes
 };
 
 export default Favorites;

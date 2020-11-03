@@ -12,9 +12,10 @@ import NearPlaces from '../near-places/near-places';
 import OfferHost from '../offer-host/offer-host';
 import withLeafletMap from '../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../city-map-factory/city-map-factory';
-import {connect} from 'react-redux';
 import withUpdateOfferOnFavoriteToggle from '../../hocs/with-update-offer-on-favorite-toggle/with-update-offer-on-favorite-toggle';
-import withActiveOffer from '../../hocs/with-active-offer/with-active-offer';
+import withExtraOfferData from '../../hocs/with-extra-offer-data/with-extra-offer-data';
+
+const MAX_VISIBLE_OFFERS_ON_MAP = 4;
 
 const BookmarkToggleWithUpdateOffer = withUpdateOfferOnFavoriteToggle(BookmarkToggle);
 
@@ -27,14 +28,12 @@ const PREMIUM_MARK_ELEMENT = (
 );
 
 const Room = (props) => {
-  const {user, offer, offers, reviews, activeOffer, onActivate, onDeactivate} = props;
-  const {photos, premium, title, favorite, rating, price, features, host,
-    description, reviews: reviewIds, nearPlaces: nearPlacesIds} = offer;
+  const {user, offer, reviews, offers} = props;
+  const {photos, premium, title, favorite, rating, price, features, host, description} = offer;
 
-  const offerReviews = reviewIds.map((id) => reviews.find((review) => review.id === id));
-  offerReviews.sort((a, b) => b.date.getTime() - a.date.getTime());
-
-  const nearPlaces = nearPlacesIds.map((placeId) => offers.find((item) => item.id === placeId));
+  const offerReviews = reviews
+    ? reviews.slice().sort((a, b) => b.date.getTime() - a.date.getTime())
+    : null;
 
   return (
     <div className="page">
@@ -63,15 +62,22 @@ const Room = (props) => {
 
               <OfferFeatures features={features}/>
               <OfferHost host={host} description={description}/>
-              <OfferReviewsSection user={user} reviews={offerReviews}/>
+              {offerReviews
+                ? <OfferReviewsSection user={user} reviews={offerReviews}/>
+                : null
+              }
             </div>
           </div>
 
-          <CityMap activeOffer={activeOffer} offers={nearPlaces}/>
+          <CityMap activeOffer={offer} offers={[offer, ...offers]} maxOffers={MAX_VISIBLE_OFFERS_ON_MAP}/>
         </section>
 
         <div className="container">
-          <NearPlaces offers={nearPlaces} onCardOver={onActivate} onCardLeave={onDeactivate}/>
+          {
+            offers.length > 0
+              ? <NearPlaces offers={offers}/>
+              : null
+          }
         </div>
       </main>
     </div>
@@ -83,16 +89,8 @@ Room.propTypes = {
   offer: offerPropTypes.isRequired,
   activeOffer: offerPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
-  reviews: PropTypes.arrayOf(reviewPropTypes).isRequired,
-  onActivate: PropTypes.func.isRequired,
-  onDeactivate: PropTypes.func.isRequired
+  reviews: PropTypes.arrayOf(reviewPropTypes),
 };
 
-const mapStateToProps = (state) => ({
-  user: state.user,
-  offers: state.offers,
-  reviews: state.reviews
-});
-
 export {Room};
-export default connect(mapStateToProps)(withActiveOffer(Room));
+export default withExtraOfferData(Room);

@@ -2,6 +2,8 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import userPropTypes from '../../prop-types/user-prop-types';
 import {connect} from 'react-redux';
+import {AppRoute} from '../../constants';
+import {getUser} from '../../store/selectors';
 
 const PageHeader = (props) => {
   const {user} = props;
@@ -18,9 +20,9 @@ const PageHeader = (props) => {
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <Link to="/favorites" className="header__nav-link header__nav-link--profile">
+                <Link to={user ? AppRoute.FAVORITES : `#`} className="header__nav-link header__nav-link--profile">
                   <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                  <span className="header__user-name user__name">{user ? user.login : `Sign in`}</span>
+                  <span className="header__user-name user__name">{user ? user.email : `Sign in`}</span>
                 </Link>
               </li>
             </ul>
@@ -32,11 +34,11 @@ const PageHeader = (props) => {
 };
 
 PageHeader.propTypes = {
-  user: userPropTypes
+  user: userPropTypes,
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
+  user: getUser(state),
 });
 
 export {PageHeader};

@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CityTab from './city-tab/city-tab';
 import {connect} from 'react-redux';
-import {ActionCreator} from "../../../store/action";
+import {ActionCreator} from '../../../store/action';
 import {cityPropTypes} from '../../../prop-types';
+import {getCities, getCurrentCityName} from '../../../store/selectors';
 
 const CitiesTabsBar = (props) => {
   const {activeCity, changeCity, cities} = props;
@@ -44,8 +45,8 @@ CitiesTabsBar.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeCity: state.currentCity,
-  cities: state.cities,
+  activeCity: getCurrentCityName(state),
+  cities: getCities(state),
 });
 
 const mapDispatchToProps = (dispatch) => ({

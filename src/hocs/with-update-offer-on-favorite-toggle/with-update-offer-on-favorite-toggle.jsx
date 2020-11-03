@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import {ActionCreator} from "../../store/action";
 import {connect} from 'react-redux';
+import {updateFavoriteStatus} from '../../store/api-actions';
 
 const excludeProperty = (from, name) => {
   const entries = Object.entries(from).filter(([key]) => key !== name);
@@ -40,7 +41,8 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
 
   const mapDispatchToProps = (dispatch) => ({
     updateOffer(offer) {
-      dispatch(ActionCreator.updateOffer(offer));
+      dispatch(updateFavoriteStatus(offer.id, offer.favorite))
+        .then(() => dispatch(ActionCreator.updateOffer(offer)));
     },
   });
 

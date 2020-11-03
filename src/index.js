@@ -1,58 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {createStore} from "redux";
-import {Provider} from "react-redux";
-import {reducer} from "./store/reducer";
-import {offers, reviews} from './mocks/mocks';
+import {createStore, applyMiddleware} from 'redux';
+import {Provider} from 'react-redux';
+import thunk from 'redux-thunk';
+import {composeWithDevTools} from 'redux-devtools-extension';
+import reducer from './store/reducers/root-reducer';
+import {redirect} from './store/middlewares/redirect';
+import {createAPI} from './services/api';
+import {ActionCreator} from './store/action';
+import {fetchOffers, checkAuth} from './store/api-actions';
+import {AuthorizationStatus} from './constants';
 
-const CITIES = [
-  {
-    name: `Paris`,
-    coordinates: [48.8566, 2.3522]
-  },
-  {
-    name: `Cologne`,
-    coordinates: [50.9375, 6.9603]
-  },
-  {
-    name: `Brussels`,
-    coordinates: [50.8503, 4.3517]
-  },
-  {
-    name: `Amsterdam`,
-    coordinates: [52.38333, 4.9]
-  },
-  {
-    name: `Hamburg`,
-    coordinates: [53.5511, 9.9937]
-  },
-  {
-    name: `Dusseldorf`,
-    coordinates: [51.2277, 6.7735]
-  }
-];
-
-const initialState = {
-  user: {
-    login: `Oliver.conner@gmail.com`
-  },
-  currentCity: CITIES[0].name,
-  localOffers: [],
-  cities: CITIES,
-  offers,
-  reviews
-};
+const api = createAPI(
+    () => store.dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.NOT_AUTHORIZED))
+);
 
 const store = createStore(
     reducer,
-    initialState,
-    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f
+    composeWithDevTools(
+        applyMiddleware(thunk.withExtraArgument(api)),
+        applyMiddleware(redirect)
+    )
 );
 
-ReactDOM.render(
-    <Provider store={store}>
-      <App />
-    </Provider>,
-    document.querySelector(`#root`)
-);
+const initStoreData = store.dispatch(fetchOffers())
+  .then(() => store.dispatch(ActionCreator.initCities()));
+
+Promise.all([
+  initStoreData,
+  store.dispatch(checkAuth()),
+])
+.then(() => {
+  ReactDOM.render(
+      <Provider store={store}>
+        <App />
+      </Provider>,
+      document.querySelector(`#root`)
+  );
+});

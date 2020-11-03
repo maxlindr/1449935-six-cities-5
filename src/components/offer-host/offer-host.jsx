@@ -21,7 +21,7 @@ function OfferHost(props) {
         </span>
       </div>
       <div className="property__description">
-        {description.map((paragraph, i) => <p key={i} className="property__text">{paragraph}</p>)}
+        {description.split(`\n`).map((paragraph, i) => <p key={i} className="property__text">{paragraph}</p>)}
       </div>
     </div>
   );
@@ -29,7 +29,7 @@ function OfferHost(props) {
 
 OfferHost.propTypes = {
   host: hostPropTypes,
-  description: PropTypes.arrayOf(PropTypes.string)
+  description: PropTypes.string
 };
 
 export default React.memo(OfferHost);

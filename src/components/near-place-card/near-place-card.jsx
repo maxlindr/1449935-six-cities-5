@@ -8,7 +8,7 @@ import {OfferCardType} from '../../constants';
 const NearPlaceCard = ({offer, onMouseOver, onMouseLeave}) => (
   <article
     className="near-places__card place-card"
-    onMouseOver={() => onMouseOver(offer)}
+    onMouseOver={onMouseOver ? () => onMouseOver(offer) : null}
     onMouseLeave={onMouseLeave}
   >
     <OfferCardImage cardType={OfferCardType.NEAR_PLACE} offer={offer}/>
@@ -18,8 +18,8 @@ const NearPlaceCard = ({offer, onMouseOver, onMouseLeave}) => (
 
 NearPlaceCard.propTypes = {
   offer: offerPropTypes,
-  onMouseOver: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };
 
 export default React.memo(NearPlaceCard);

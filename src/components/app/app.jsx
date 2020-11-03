@@ -1,15 +1,17 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter, Redirect} from 'react-router-dom';
+import {Switch, Route, BrowserRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import {offerPropTypes, userPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types';
 import Main from '../main/main';
 import Login from '../login/login';
 import FavoritesRouter from '../favorites-router/favorites-router';
 import Room from '../room/room';
 import {connect} from 'react-redux';
+import PrivateRoute from '../private-route/private-route';
+import {getFavoriteOffers, getOfferById} from '../../store/selectors';
 
 const App = (props) => {
-  const {offers, user} = props;
+  const {favoriteOffers, findOfferById} = props;
 
   return (
     <BrowserRouter>
@@ -18,31 +20,24 @@ const App = (props) => {
           <Main />
         </Route>
 
-        <Route exact path="/login">
-          {/* Временно отключено для удобства тестирования */}
-          {/* {user ? <Redirect to="/"/> : <Login />} */}
+        <Route
+          exact
+          path="/login"
+        >
           <Login />
         </Route>
 
-        <Route exact path="/favorites">
-          {
-            user
-              ? (
-                <FavoritesRouter
-                  offers={offers.filter((offer) => offer.favorite)}
-                />
-              )
-              : <Redirect to="/"/>
-          }
-        </Route>
+        <PrivateRoute
+          exact
+          path="/favorites"
+          render={() => <FavoritesRouter offers={favoriteOffers} />}
+        />
 
         <Route
           exact
           path="/offer/:id"
           render={({match}) => (
-            <Room
-              offer={offers.find((offer) => offer.id === match.params.id)}
-            />
+            <Room offer={findOfferById(match.params.id)} />
           )}
         />
       </Switch>
@@ -51,13 +46,13 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  user: userPropTypes,
-  offers: PropTypes.arrayOf(offerPropTypes).isRequired,
+  findOfferById: PropTypes.func.isRequired,
+  favoriteOffers: PropTypes.arrayOf(offerPropTypes),
 };
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  offers: state.offers,
+  findOfferById: (id) => getOfferById(state, id),
+  favoriteOffers: getFavoriteOffers(state),
 });
 
 export {App};
