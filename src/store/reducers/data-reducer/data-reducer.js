@@ -1,5 +1,4 @@
 import {ActionType} from '../../action';
-import {} from '../../api-actions';
 import {replaceOffer, getCitiesLocationData} from './utils';
 
 const CITY_NAMES = [`Paris`, `Cologne`, `Brussels`, `Amsterdam`, `Hamburg`, `Dusseldorf`];

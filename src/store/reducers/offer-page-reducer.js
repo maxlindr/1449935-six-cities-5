@@ -1,5 +1,4 @@
 import {ActionType} from '../action';
-import {} from '../api-actions';
 
 const initialState = {
   reviews: null,
