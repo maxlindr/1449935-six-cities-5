@@ -7,6 +7,7 @@ export const getCurrentCityName = (state) => state[StateNameSpace.DATA].currentC
 export const getOfferById = (state, id) => getOffers(state).find((offer) => offer.id === id);
 export const getUser = (state) => state[StateNameSpace.USER].user;
 export const getAuthorizationStatus = (state) => state[StateNameSpace.USER].authorizationStatus;
+export const getErrorMessage = (state) => state[StateNameSpace.ERROR_PAGE].message;
 
 export const getIsLoginFailedWithUnauthorized = (state) =>
   state[StateNameSpace.LOGIN_PROCESSING].isLoginFailedWithUnauthorized;

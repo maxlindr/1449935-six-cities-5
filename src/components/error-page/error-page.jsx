@@ -1,28 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PageHeader from '../page-header/page-header';
+import './style.css';
+import {connect} from 'react-redux';
+import {getErrorMessage} from '../../store/selectors';
 
 const ErrorPage = (props) => {
-  const {message} = props;
+  const {message, globalMessage} = props;
 
   return (
-    <div className="page">
+    <div className="page error-page">
       <PageHeader />
 
       <main className="page__main">
-        <h1 className="property__name">{message}</h1>
+        <h1 className="error-page__message">{message || globalMessage}</h1>
       </main>
     </div>
   );
 };
 
-ErrorPage.defaultProps = {
-  message: `Oops! Something went wrong`
+ErrorPage.propTypes = {
+  message: PropTypes.string,
+  globalMessage: PropTypes.string,
 };
 
-ErrorPage.propTypes = {
-  message: PropTypes.string.isRequired
-};
+const mapStateToProps = (state) => ({
+  globalMessage: getErrorMessage(state)
+});
 
 export {ErrorPage};
-export default ErrorPage;
+export default connect(mapStateToProps)(ErrorPage);

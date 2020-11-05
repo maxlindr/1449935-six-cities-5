@@ -6,6 +6,8 @@ import {fetchReviewsList, fetchNearbyPlaces} from '../../store/api-actions';
 import {ActionCreator} from '../../store/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import {getUser} from '../../store/selectors';
+import ErrorPage from '../../components/error-page/error-page';
+import {ErrorMessage} from '../../constants';
 
 const withExtraOfferData = (WrappedComponent) => {
   class WithExtraOfferData extends React.PureComponent {
@@ -13,10 +15,13 @@ const withExtraOfferData = (WrappedComponent) => {
       super(props);
 
       const {offer, getReviews, getNearbyPlaces} = props;
-      const offerId = offer.id;
 
-      getReviews(offerId);
-      getNearbyPlaces(offerId);
+      if (offer) {
+        const offerId = offer.id;
+
+        getReviews(offerId);
+        getNearbyPlaces(offerId);
+      }
     }
 
     componentWillUnmount() {
@@ -24,7 +29,11 @@ const withExtraOfferData = (WrappedComponent) => {
     }
 
     render() {
-      return <WrappedComponent {...this.props} offers={this.props.offers || []} />;
+      if (this.props.offer) {
+        return <WrappedComponent {...this.props} offers={this.props.offers || []} />;
+      } else {
+        return <ErrorPage message={ErrorMessage.NOT_FOUND}/>;
+      }
     }
   }
 

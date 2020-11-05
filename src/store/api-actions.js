@@ -1,5 +1,5 @@
 import {ActionCreator} from './action';
-import {AuthorizationStatus, AppRoute, APIRoute} from '../constants';
+import {AuthorizationStatus, AppRoute, APIRoute, ErrorMessage} from '../constants';
 import {OfferAdapter, CommentAdapter} from '../services/api-data-adapters/';
 
 export const HttpCode = {
@@ -14,14 +14,12 @@ const processResponseError = (dispatch, err) => {
       break;
 
     case HttpCode.NOT_FOUND:
-      // const message = `Resource not found`;
-      // set message to redux store
+      dispatch(ActionCreator.setErrorMessage(ErrorMessage.NOT_FOUND));
       dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       break;
 
     default:
-      // const message1 = `Oops! Something went wrong`;
-      // set message to redux store
+      dispatch(ActionCreator.setErrorMessage(ErrorMessage.GENERAL));
       dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
   }
 };
@@ -72,6 +70,7 @@ export const checkAuth = () => (dispatch, _getState, api) => {
     })
     .catch((err) => {
       if (err.response.status !== HttpCode.UNAUTHORIZED) {
+        dispatch(ActionCreator.setErrorMessage(ErrorMessage.GENERAL));
         dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       }
     });
@@ -91,6 +90,7 @@ export const login = (email, password) => (dispatch, _getState, api) => {
       if (err.response.status === HttpCode.NOT_AUTHORIZED) {
         dispatch(ActionCreator.setLoginFailed(true));
       } else {
+        dispatch(ActionCreator.setErrorMessage(ErrorMessage.GENERAL));
         dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       }
     });

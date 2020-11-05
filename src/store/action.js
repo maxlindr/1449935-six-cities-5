@@ -9,7 +9,8 @@ export const ActionType = {
   INIT_CITIES: `INIT_CITIES`,
   SET_FETCHED_REVIEWS: `SET_FETCHED_REVIEWS`,
   SET_FETCHED_NEARBY_PLACES: `SET_FETCHED_NEARBY_PLACES`,
-  SET_LOGIN_FAILED: `SET_LOGIN_FAILED`
+  SET_LOGIN_FAILED: `SET_LOGIN_FAILED`,
+  SET_ERROR_MESSAGE: `SET_ERROR_MESSAGE`,
 };
 
 export const ActionCreator = {
@@ -51,5 +52,9 @@ export const ActionCreator = {
   setLoginFailed: (value) => ({
     type: ActionType.SET_LOGIN_FAILED,
     payload: value,
+  }),
+  setErrorMessage: (message) => ({
+    type: ActionType.SET_ERROR_MESSAGE,
+    payload: message,
   }),
 };
