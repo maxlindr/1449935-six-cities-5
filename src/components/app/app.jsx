@@ -1,5 +1,6 @@
 import React from 'react';
-import {Switch, Route, BrowserRouter} from 'react-router-dom';
+import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
+import browserHistory from '../../browser-history';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import Main from '../main/main';
@@ -15,16 +16,13 @@ const App = (props) => {
   const {favoriteOffers, findOfferById} = props;
 
   return (
-    <BrowserRouter>
+    <BrowserRouter history={browserHistory}>
       <Switch>
         <Route exact path="/">
           <Main />
         </Route>
 
-        <Route
-          exact
-          path="/login"
-        >
+        <Route exact path="/login">
           <Login />
         </Route>
 

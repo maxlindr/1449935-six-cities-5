@@ -81,8 +81,6 @@ export const login = (email, password) => (dispatch, _getState, api) => {
   dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.PENDING));
 
   api.post(APIRoute.LOGIN, {email, password})
-  // Если эмулировать ошибку в ответе сервера, например так...:
-  // Promise.reject({response: {status: 500}})
     .then(({data}) => {
       dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.AUTHORIZED));
       dispatch(ActionCreator.setUserData(data));
@@ -93,7 +91,6 @@ export const login = (email, password) => (dispatch, _getState, api) => {
       if (err.response.status === HttpCode.NOT_AUTHORIZED) {
         dispatch(ActionCreator.setLoginFailed(true));
       } else {
-        // ...то после выполнения кода в следующей строке URL в браузере меняется, но ничего не происходит (остается старая страница)
         dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       }
     });
