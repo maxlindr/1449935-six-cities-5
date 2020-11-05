@@ -7,25 +7,6 @@ import {ActionCreator} from '../../store/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import {getUser} from '../../store/selectors';
 
-const mapStateToProps = (state) => ({
-  user: getUser(state),
-  reviews: state[StateNameSpace.OFFER_PAGE].reviews,
-  offers: state[StateNameSpace.OFFER_PAGE].nearbyPlaces,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  getReviews(offerId) {
-    dispatch(fetchReviewsList(offerId));
-  },
-  getNearbyPlaces(offerId) {
-    dispatch(fetchNearbyPlaces(offerId));
-  },
-  reset() {
-    dispatch(ActionCreator.setFetchedReviews(null));
-    dispatch(ActionCreator.setFetchedNearbyPlaces(null));
-  }
-});
-
 const withExtraOfferData = (WrappedComponent) => {
   class WithExtraOfferData extends React.PureComponent {
     constructor(props) {
@@ -58,5 +39,24 @@ const withExtraOfferData = (WrappedComponent) => {
 
   return WithExtraOfferData;
 };
+
+const mapStateToProps = (state) => ({
+  user: getUser(state),
+  reviews: state[StateNameSpace.OFFER_PAGE].reviews,
+  offers: state[StateNameSpace.OFFER_PAGE].nearbyPlaces,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  getReviews(offerId) {
+    dispatch(fetchReviewsList(offerId));
+  },
+  getNearbyPlaces(offerId) {
+    dispatch(fetchNearbyPlaces(offerId));
+  },
+  reset() {
+    dispatch(ActionCreator.setFetchedReviews(null));
+    dispatch(ActionCreator.setFetchedNearbyPlaces(null));
+  }
+});
 
 export default (WrapperComponent) => connect(mapStateToProps, mapDispatchToProps)(withExtraOfferData(WrapperComponent));

@@ -2,17 +2,24 @@ import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import PageHeader from '../page-header/page-header';
 import withLoginFormController from '../../hocs/with-login-form-controller/with-login-form-controller';
-import {getUser} from '../../store/selectors';
+import {getAuthorizationStatus} from '../../store/selectors';
 import {connect} from 'react-redux';
 import {Redirect} from 'react-router-dom';
-import {AppRoute} from '../../constants';
+import {AppRoute, AuthorizationStatus} from '../../constants';
+import './animation.css';
+
+const ANIMATION_CLASSNAME = `shake`;
 
 const Login = (props) => {
-  const {email, password, isValid, user, onEmailChange, onPasswordChange, onSubmit} = props;
+  const {email, password, isValid, isAuthorized, isDisabled, isAnimationPlaying, onEmailChange, onPasswordChange, onSubmit} = props;
 
-  if (user) {
+  if (isAuthorized) {
     return <Redirect to={AppRoute.ROOT}/>;
   }
+
+  const formClassName = isAnimationPlaying
+    ? `login__form form ${ANIMATION_CLASSNAME}`
+    : `login__form form`;
 
   return (
     <div className="page page--gray page--login">
@@ -24,7 +31,7 @@ const Login = (props) => {
             <h1 className="login__title">Sign in</h1>
 
             <form
-              className="login__form form"
+              className={formClassName}
               action="#"
               method="post"
               onSubmit={onSubmit}
@@ -37,6 +44,7 @@ const Login = (props) => {
                   name="email"
                   placeholder="Email"
                   required
+                  disabled={isDisabled}
                   value={email}
                   onChange={onEmailChange}
                 />
@@ -50,6 +58,7 @@ const Login = (props) => {
                   name="password"
                   placeholder="Password"
                   required
+                  disabled={isDisabled}
                   value={password}
                   onChange={onPasswordChange}
                 />
@@ -58,7 +67,7 @@ const Login = (props) => {
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                disabled={!isValid}
+                disabled={!isValid || isDisabled}
               >
                 Sign in
               </button>
@@ -79,17 +88,19 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  user: PropTypes.object,
+  isAuthorized: PropTypes.bool.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   isValid: PropTypes.bool.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
+  isAnimationPlaying: PropTypes.bool.isRequired,
   onEmailChange: PropTypes.func.isRequired,
   onPasswordChange: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  isAuthorized: getUser(state),
+  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.AUTHORIZED,
 });
 
 export {Login};

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
-import {ActionCreator} from "../../store/action";
+import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
 import {updateFavoriteStatus} from '../../store/api-actions';
 

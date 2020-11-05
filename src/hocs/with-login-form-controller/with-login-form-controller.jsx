@@ -2,30 +2,49 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {login} from '../../store/api-actions';
+import {getAuthorizationStatus, getIsLoginFailedWithUnauthorized} from '../../store/selectors';
+import {AuthorizationStatus} from '../../constants';
+import {ActionCreator} from '../../store/action';
 
-const INITIAL_STATE = {
-  email: ``,
-  password: ``,
-  isValid: false
-};
+const ANIMATION_FINISH_DELAY = 50;
+const ANIMATION_DURATION = 600 + ANIMATION_FINISH_DELAY;
 
 const withLoginFormController = (Component) => {
   class WithLoginFormController extends React.PureComponent {
     constructor(props) {
       super(props);
 
-      this.state = INITIAL_STATE;
+      this.state = {
+        email: ``,
+        password: ``,
+        isValid: false,
+        isAnimationPlaying: false,
+      };
 
       this.handleSubmit = this.handleSubmit.bind(this);
       this.handleEmailChange = this.handleEmailChange.bind(this);
       this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
+    componentDidUpdate(prevProps) {
+      if (this.props.isLoginFailedWithUnauthorized && !prevProps.isLoginFailedWithUnauthorized) {
+        this.handleUnauthorizedResponse();
+      }
+    }
+
+    handleUnauthorizedResponse() {
+      this.props.setLoginFailed(false);
+      this.setState({isAnimationPlaying: true});
+
+      setTimeout(() => {
+        this.setState({isAnimationPlaying: false});
+      }, ANIMATION_DURATION);
+    }
+
     handleSubmit(evt) {
       evt.preventDefault();
       const {email, password} = this.state;
       this.props.loginToServer(email, password);
-      this.setState(INITIAL_STATE);
     }
 
     handleEmailChange(evt) {
@@ -43,7 +62,8 @@ const withLoginFormController = (Component) => {
     }
 
     render() {
-      const {email, password, isValid} = this.state;
+      const {email, password, isValid, isAnimationPlaying} = this.state;
+      const {isPending} = this.props;
 
       return (
         <Component
@@ -51,6 +71,8 @@ const withLoginFormController = (Component) => {
           email={email}
           password={password}
           isValid={isValid}
+          isDisabled={isPending}
+          isAnimationPlaying={isAnimationPlaying}
           onEmailChange={this.handleEmailChange}
           onPasswordChange={this.handlePasswordChange}
           onSubmit={this.handleSubmit}
@@ -60,17 +82,28 @@ const withLoginFormController = (Component) => {
   }
 
   WithLoginFormController.propTypes = {
-    loginToServer: PropTypes.func.isRequired
+    isPending: PropTypes.bool.isRequired,
+    isLoginFailedWithUnauthorized: PropTypes.bool.isRequired,
+    loginToServer: PropTypes.func.isRequired,
+    setLoginFailed: PropTypes.func.isRequired,
   };
 
   return WithLoginFormController;
 };
 
+const mapStateToProps = (state) => ({
+  isPending: getAuthorizationStatus(state) === AuthorizationStatus.PENDING,
+  isLoginFailedWithUnauthorized: getIsLoginFailedWithUnauthorized(state),
+});
+
 const mapDispatchToProps = (dispatch) => ({
   loginToServer(email, password) {
     dispatch(login(email, password));
   },
+  setLoginFailed(value) {
+    dispatch(ActionCreator.setLoginFailed(value));
+  }
 });
 
 export {withLoginFormController};
-export default (component) => connect(null, mapDispatchToProps)(withLoginFormController(component));
+export default (component) => connect(mapStateToProps, mapDispatchToProps)(withLoginFormController(component));

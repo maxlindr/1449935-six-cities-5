@@ -16,12 +16,14 @@ export const City = {
 export const AuthorizationStatus = {
   NOT_AUTHORIZED: `NOT_AUTHORIZED`,
   AUTHORIZED: `AUTHORIZED`,
+  PENDING: `PENDING`
 };
 
 export const AppRoute = {
   LOGIN: `/login`,
   ROOT: `/`,
-  FAVORITES: `/favorites`
+  FAVORITES: `/favorites`,
+  ERROR: `/error`
 };
 
 export const APIRoute = {

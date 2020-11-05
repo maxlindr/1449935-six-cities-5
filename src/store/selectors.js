@@ -8,6 +8,9 @@ export const getOfferById = (state, id) => getOffers(state).find((offer) => offe
 export const getUser = (state) => state[StateNameSpace.USER].user;
 export const getAuthorizationStatus = (state) => state[StateNameSpace.USER].authorizationStatus;
 
+export const getIsLoginFailedWithUnauthorized = (state) =>
+  state[StateNameSpace.LOGIN_PROCESSING].isLoginFailedWithUnauthorized;
+
 export const getCurrentCity = createSelector(
     getCities, getCurrentCityName,
     (cities, currentCityName) => cities.find((city) => city.name === currentCityName)

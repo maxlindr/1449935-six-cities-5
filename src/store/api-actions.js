@@ -14,11 +14,15 @@ const processResponseError = (dispatch, err) => {
       break;
 
     case HttpCode.NOT_FOUND:
-      // alert(`Service unavailable`);
+      // const message = `Resource not found`;
+      // set message to redux store
+      dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       break;
 
     default:
-      throw err;
+      // const message1 = `Oops! Something went wrong`;
+      // set message to redux store
+      dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
   }
 };
 
@@ -58,7 +62,9 @@ export const fetchReviewsList = (id) => (dispatch, _getState, api) => (
     })
 );
 
-export const checkAuth = () => (dispatch, _getState, api) => (
+export const checkAuth = () => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.PENDING));
+
   api.get(APIRoute.LOGIN)
     .then(({data}) => {
       dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.AUTHORIZED));
@@ -66,24 +72,32 @@ export const checkAuth = () => (dispatch, _getState, api) => (
     })
     .catch((err) => {
       if (err.response.status !== HttpCode.UNAUTHORIZED) {
-        throw err;
+        dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       }
-    })
-);
+    });
+};
 
-export const login = (email, password) => (dispatch, _getState, api) => (
+export const login = (email, password) => (dispatch, _getState, api) => {
+  dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.PENDING));
+
   api.post(APIRoute.LOGIN, {email, password})
+  // Если эмулировать ошибку в ответе сервера, например так...:
+  // Promise.reject({response: {status: 500}})
     .then(({data}) => {
       dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.AUTHORIZED));
       dispatch(ActionCreator.setUserData(data));
       dispatch(ActionCreator.redirectToRoute(AppRoute.ROOT));
     })
     .catch((err) => {
-      if (err.response.status !== HttpCode.UNAUTHORIZED) {
-        throw err;
+      dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.NOT_AUTHORIZED));
+      if (err.response.status === HttpCode.NOT_AUTHORIZED) {
+        dispatch(ActionCreator.setLoginFailed(true));
+      } else {
+        // ...то после выполнения кода в следующей строке URL в браузере меняется, но ничего не происходит (остается старая страница)
+        dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       }
-    })
-);
+    });
+};
 
 export const updateFavoriteStatus = (offerId, status) => (dispatch, _getState, api) => (
   api.post(`/favorite/${offerId}/${Number(status)}`)

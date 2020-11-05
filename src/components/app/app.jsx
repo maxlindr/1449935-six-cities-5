@@ -6,6 +6,7 @@ import Main from '../main/main';
 import Login from '../login/login';
 import FavoritesRouter from '../favorites-router/favorites-router';
 import Room from '../room/room';
+import ErrorPage from '../error-page/error-page';
 import {connect} from 'react-redux';
 import PrivateRoute from '../private-route/private-route';
 import {getFavoriteOffers, getOfferById} from '../../store/selectors';
@@ -40,6 +41,14 @@ const App = (props) => {
             <Room offer={findOfferById(match.params.id)} />
           )}
         />
+
+        <Route exact path="/error">
+          <ErrorPage />
+        </Route>
+
+        <Route >
+          <ErrorPage message={`Resource not found`}/>
+        </Route>
       </Switch>
     </BrowserRouter>
   );
