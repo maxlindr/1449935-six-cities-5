@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReviewFormRating from '../review-form-rating/review-form-rating';
 import ReviewFormButtonWrapper from '../review-form-button-wrapper/review-form-button-wrapper';
+import withReviewFormController from '../../hocs/with-review-form-controller/with-review-form-controller';
 
 const ReviewForm = (props) => {
   const {text, rating, isValid, onTextChange, onRatingClick, onSubmit} = props;
@@ -35,4 +36,5 @@ ReviewForm.propTypes = {
   onSubmit: PropTypes.func.isRequired
 };
 
-export default ReviewForm;
+export {ReviewForm};
+export default withReviewFormController(ReviewForm);
