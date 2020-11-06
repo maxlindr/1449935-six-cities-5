@@ -14,26 +14,37 @@ const deleteProperties = (from, names) => {
 };
 
 export const withAlertDialog = (WrappedComponent) => {
-  const WithAlertDialog = (props) => {
-    const {alertDialogMessage, alertDialogCloseHandler} = props;
+  class WithAlertDialog extends React.PureComponent {
+    componentWillUnmount() {
+      const {alertDialogMessage, closeAlertDialog} = this.props;
 
-    const wrappedComponentProps = deleteProperties(props, [`alertDialogMessage`, `alertDialogCloseHandler`]);
+      if (alertDialogMessage) {
+        closeAlertDialog();
+      }
+    }
 
-    return (
-      <React.Fragment>
-        <WrappedComponent {...wrappedComponentProps} />
-        {
-          alertDialogMessage
-            ? <Alert message={alertDialogMessage} onClose={alertDialogCloseHandler} />
-            : null
-        }
-      </React.Fragment>
-    );
-  };
+    render() {
+      const {alertDialogMessage, closeAlertDialog} = this.props;
+
+      const wrappedComponentProps = deleteProperties(this.props, [`alertDialogMessage`, `closeAlertDialog`]);
+
+      return (
+        <React.Fragment>
+          <WrappedComponent {...wrappedComponentProps} />
+          {
+            alertDialogMessage
+              ? <Alert message={alertDialogMessage} onClose={closeAlertDialog} />
+              : null
+          }
+        </React.Fragment>
+      );
+    }
+
+  }
 
   WithAlertDialog.propTypes = {
     alertDialogMessage: PropTypes.string,
-    alertDialogCloseHandler: PropTypes.func.isRequired,
+    closeAlertDialog: PropTypes.func.isRequired,
   };
 
   const mapStateToProps = (state) => ({
@@ -41,7 +52,7 @@ export const withAlertDialog = (WrappedComponent) => {
   });
 
   const mapDispatchToProps = (dispatch) => ({
-    alertDialogCloseHandler: () => dispatch(ActionCreator.closeAlert()),
+    closeAlertDialog: () => dispatch(ActionCreator.closeAlert()),
   });
 
   return connect(mapStateToProps, mapDispatchToProps)(WithAlertDialog);
