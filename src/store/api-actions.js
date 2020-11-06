@@ -102,3 +102,12 @@ export const updateFavoriteStatus = (offerId, status) => (dispatch, _getState, a
       processResponseError(dispatch, err);
     })
 );
+
+export const postComment = (offerId, comment) => (dispatch, _getState, api) => (
+  api.post(`/comments/${offerId}`, CommentAdapter.toServer(comment))
+    .then(({data}) => {
+      dispatch(ActionCreator.setFetchedReviews(
+          data.map(CommentAdapter.toClient)
+      ));
+    })
+);

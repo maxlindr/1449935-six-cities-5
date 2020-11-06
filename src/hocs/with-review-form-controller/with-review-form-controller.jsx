@@ -1,9 +1,14 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {connect} from 'react-redux';
+import {postComment} from '../../store/api-actions';
+import {ActionCreator} from '../../store/action';
 
 const INITIAL_STATE = {
   rating: null,
   text: ``,
-  isValid: false
+  isValid: false,
+  isDisabled: false,
 };
 
 const withReviewFormController = (Component) => {
@@ -20,8 +25,24 @@ const withReviewFormController = (Component) => {
 
     handleSubmit(evt) {
       evt.preventDefault();
-      // todo: отправляем данные
-      this.setState(INITIAL_STATE);
+
+      const {offerId, dispatch} = this.props;
+
+      const comment = {
+        text: this.state.text,
+        rating: this.state.rating
+      };
+
+      const submitComment = () => {
+        dispatch(postComment(offerId, comment))
+          .then(() => this.setState(INITIAL_STATE))
+          .catch((err) => {
+            this.setState({isDisabled: false});
+            dispatch(ActionCreator.showAlert(err.message));
+          });
+      };
+
+      this.setState({isDisabled: true}, submitComment);
     }
 
     handleRatingClick(evt) {
@@ -39,13 +60,14 @@ const withReviewFormController = (Component) => {
     }
 
     render() {
-      const {text, rating, isValid} = this.state;
+      const {text, rating, isValid, isDisabled} = this.state;
 
       return (
         <Component
           text={text}
           rating={rating}
           isValid={isValid}
+          disabled={isDisabled}
           onTextChange={this.handleTextChange}
           onRatingClick={this.handleRatingClick}
           onSubmit={this.handleSubmit}
@@ -54,7 +76,12 @@ const withReviewFormController = (Component) => {
     }
   }
 
-  return WithReviewFormController;
+  WithReviewFormController.propTypes = {
+    offerId: PropTypes.string.isRequired,
+    dispatch: PropTypes.func.isRequired,
+  };
+
+  return connect()(WithReviewFormController);
 };
 
 export default withReviewFormController;

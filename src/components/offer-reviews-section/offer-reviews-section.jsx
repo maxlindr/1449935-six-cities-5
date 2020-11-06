@@ -6,17 +6,25 @@ import OfferReview from '../offer-review/offer-review';
 
 
 const OfferReviewsSection = (props) => {
-  const {user, reviews} = props;
+  const {user, reviews, offerId} = props;
+
+  const reviewsAmountString = reviews ? reviews.length : `...`;
 
   return (
     <section className="property__reviews reviews">
-      <h2 className="reviews__title">Reviews · <span className="reviews__amount">{reviews.length}</span></h2>
+      <h2 className="reviews__title">
+        Reviews · <span className="reviews__amount">{reviewsAmountString}</span>
+      </h2>
 
       <ul className="reviews__list">
-        {reviews.map((review) => <OfferReview key={review.id} review={review}/>)}
+        {
+          reviews
+            ? reviews.map((review) => <OfferReview key={review.id} review={review}/>)
+            : null
+        }
       </ul>
 
-      {user ? <ReviewForm /> : null}
+      {user ? <ReviewForm offerId={offerId}/> : null}
     </section>
   );
 };
@@ -24,6 +32,7 @@ const OfferReviewsSection = (props) => {
 OfferReviewsSection.propTypes = {
   reviews: PropTypes.arrayOf(reviewPropTypes),
   user: userPropTypes,
+  offerId: PropTypes.string.isRequired
 };
 
 export default React.memo(OfferReviewsSection);

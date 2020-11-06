@@ -14,6 +14,7 @@ import withLeafletMap from '../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../city-map-factory/city-map-factory';
 import withUpdateOfferOnFavoriteToggle from '../../hocs/with-update-offer-on-favorite-toggle/with-update-offer-on-favorite-toggle';
 import withExtraOfferData from '../../hocs/with-extra-offer-data/with-extra-offer-data';
+import {withAlertDialog} from '../../hocs/with-alert-dialog/with-alert-dialog';
 
 const MAX_VISIBLE_OFFERS_ON_MAP = 4;
 
@@ -62,10 +63,7 @@ const Room = (props) => {
 
               <OfferFeatures features={features}/>
               <OfferHost host={host} description={description}/>
-              {offerReviews
-                ? <OfferReviewsSection user={user} reviews={offerReviews}/>
-                : null
-              }
+              <OfferReviewsSection user={user} offerId={offer.id} reviews={offerReviews}/>
             </div>
           </div>
 
@@ -93,4 +91,4 @@ Room.propTypes = {
 };
 
 export {Room};
-export default withExtraOfferData(Room);
+export default withExtraOfferData(withAlertDialog(Room));

@@ -10,7 +10,7 @@ const starLabelTitle = {
 };
 
 function ReviewFormRating(props) {
-  const {rating, onClick} = props;
+  const {rating, onClick, disabled} = props;
 
   return (
     <div className="reviews__rating-form form__rating">
@@ -24,6 +24,7 @@ function ReviewFormRating(props) {
             defaultValue={starValue}
             checked={rating === starValue}
             onChange={onClick}
+            disabled={disabled}
           />
 
           <label
@@ -42,6 +43,7 @@ function ReviewFormRating(props) {
 
 ReviewFormRating.propTypes = {
   rating: PropTypes.number,
+  disabled: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired
 };
 
