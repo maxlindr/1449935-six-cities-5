@@ -8,6 +8,7 @@ export const getOfferById = (state, id) => getOffers(state).find((offer) => offe
 export const getUser = (state) => state[StateNameSpace.USER].user;
 export const getAuthorizationStatus = (state) => state[StateNameSpace.USER].authorizationStatus;
 export const getErrorMessage = (state) => state[StateNameSpace.ERROR_PAGE].message;
+export const getAlertMessage = (state) => state[StateNameSpace.APP].alertMessage;
 
 export const getIsLoginFailedWithUnauthorized = (state) =>
   state[StateNameSpace.LOGIN_PROCESSING].isLoginFailedWithUnauthorized;

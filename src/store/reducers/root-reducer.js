@@ -4,6 +4,7 @@ import userReducer from './user-reducer';
 import offerPageReducer from './offer-page-reducer';
 import loginReducer from './login-reducer';
 import errorPageReducer from './error-page-reducer';
+import appReducer from './app-reducer';
 
 export const StateNameSpace = {
   DATA: `DATA`,
@@ -11,6 +12,7 @@ export const StateNameSpace = {
   OFFER_PAGE: `OFFER_PAGE`,
   LOGIN_PROCESSING: `LOGIN_PROCESSING`,
   ERROR_PAGE: `ERROR_PAGE`,
+  APP: `APP`
 };
 
 export default combineReducers({
@@ -19,4 +21,5 @@ export default combineReducers({
   [StateNameSpace.OFFER_PAGE]: offerPageReducer,
   [StateNameSpace.LOGIN_PROCESSING]: loginReducer,
   [StateNameSpace.ERROR_PAGE]: errorPageReducer,
+  [StateNameSpace.APP]: appReducer,
 });

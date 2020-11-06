@@ -11,6 +11,8 @@ export const ActionType = {
   SET_FETCHED_NEARBY_PLACES: `SET_FETCHED_NEARBY_PLACES`,
   SET_LOGIN_FAILED: `SET_LOGIN_FAILED`,
   SET_ERROR_MESSAGE: `SET_ERROR_MESSAGE`,
+  SHOW_ALERT: `SHOW_ALERT`,
+  CLOSE_ALERT: `CLOSE_ALERT`,
 };
 
 export const ActionCreator = {
@@ -56,5 +58,12 @@ export const ActionCreator = {
   setErrorMessage: (message) => ({
     type: ActionType.SET_ERROR_MESSAGE,
     payload: message,
+  }),
+  showAlert: (message) => ({
+    type: ActionType.SHOW_ALERT,
+    payload: message,
+  }),
+  closeAlert: () => ({
+    type: ActionType.CLOSE_ALERT,
   }),
 };
