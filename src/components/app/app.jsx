@@ -10,10 +10,10 @@ import Room from '../room/room';
 import ErrorPage from '../error-page/error-page';
 import {connect} from 'react-redux';
 import PrivateRoute from '../private-route/private-route';
-import {getFavoriteOffers, getOfferById} from '../../store/selectors';
+import {getFavoriteOffers} from '../../store/selectors';
 
 const App = (props) => {
-  const {favoriteOffers, findOfferById} = props;
+  const {favoriteOffers} = props;
 
   return (
     <BrowserRouter history={browserHistory}>
@@ -36,7 +36,7 @@ const App = (props) => {
           exact
           path="/offer/:id"
           render={({match}) => (
-            <Room offer={findOfferById(match.params.id)} />
+            <Room offerId={match.params.id} />
           )}
         />
 
@@ -53,12 +53,10 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  findOfferById: PropTypes.func.isRequired,
   favoriteOffers: PropTypes.arrayOf(offerPropTypes),
 };
 
 const mapStateToProps = (state) => ({
-  findOfferById: (id) => getOfferById(state, id),
   favoriteOffers: getFavoriteOffers(state),
 });
 

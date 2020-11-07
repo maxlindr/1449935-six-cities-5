@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {userPropTypes, offerPropTypes, reviewPropTypes} from '../../prop-types';
+import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
 import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
 import BookmarkToggle, {BookmarkToggleType} from '../bookmark-toggle/bookmark-toggle';
@@ -29,7 +29,7 @@ const PREMIUM_MARK_ELEMENT = (
 );
 
 const Room = (props) => {
-  const {user, offer, reviews, offers} = props;
+  const {offer, reviews, offers, onUpdate} = props;
   const {photos, premium, title, favorite, rating, price, features, host, description} = offer;
 
   const offerReviews = reviews
@@ -50,7 +50,7 @@ const Room = (props) => {
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <BookmarkToggleWithUpdateOffer offer={offer} type={BookmarkToggleType.OFFER} active={favorite} />
+                <BookmarkToggleWithUpdateOffer offer={offer} type={BookmarkToggleType.OFFER} active={favorite} onUpdate={onUpdate}/>
               </div>
 
               <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
@@ -63,7 +63,7 @@ const Room = (props) => {
 
               <OfferFeatures features={features}/>
               <OfferHost host={host} description={description}/>
-              <OfferReviewsSection user={user} offerId={offer.id} reviews={offerReviews}/>
+              <OfferReviewsSection offerId={offer.id} reviews={offerReviews}/>
             </div>
           </div>
 
@@ -83,11 +83,11 @@ const Room = (props) => {
 };
 
 Room.propTypes = {
-  user: userPropTypes,
   offer: offerPropTypes.isRequired,
   activeOffer: offerPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewPropTypes),
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export {Room};

@@ -39,4 +39,5 @@ export const HttpCode = {
 export const ErrorMessage = {
   NOT_FOUND: `Resource not found`,
   GENERAL: `Oops! Something went wrong`,
+  UNAUTHORIZED: `Unauthorized`,
 };

@@ -1,15 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
-import {ActionCreator} from '../../store/action';
 import {connect} from 'react-redux';
 import {updateFavoriteStatus} from '../../store/api-actions';
 
 const excludeProperty = (from, name) => {
-  const entries = Object.entries(from).filter(([key]) => key !== name);
+  const cloned = Object.assign({}, from);
+  delete cloned[name];
 
-  return Object.fromEntries(entries);
+  return cloned;
 };
+
+const doNothing = () => {};
 
 const withUpdateOfferOnFavoriteToggle = (Component) => {
   class WithUpdateOfferOnFavoriteToggle extends React.PureComponent {
@@ -20,9 +22,15 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
     }
 
     handleToggle() {
-      const {updateOffer, offer} = this.props;
-      const newOffer = Object.assign({}, offer, {favorite: !offer.favorite});
-      updateOffer(newOffer);
+      const {updateOffer, offer, onUpdate = doNothing} = this.props;
+
+      const newOffer = Object.assign({}, offer, {
+        favorite: !offer.favorite
+      });
+
+      updateOffer(newOffer)
+        .then(() => onUpdate(newOffer))
+        .catch(doNothing);
     }
 
     render() {
@@ -36,13 +44,13 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
 
   WithUpdateOfferOnFavoriteToggle.propTypes = {
     offer: offerPropTypes.isRequired,
-    updateOffer: PropTypes.func.isRequired
+    updateOffer: PropTypes.func.isRequired,
+    onUpdate: PropTypes.func,
   };
 
   const mapDispatchToProps = (dispatch) => ({
     updateOffer(offer) {
-      dispatch(updateFavoriteStatus(offer.id, offer.favorite))
-        .then(() => dispatch(ActionCreator.updateOffer(offer)));
+      return dispatch(updateFavoriteStatus(offer.id, offer.favorite));
     },
   });
 

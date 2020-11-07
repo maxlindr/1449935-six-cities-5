@@ -7,7 +7,22 @@ export const HttpCode = {
   NOT_FOUND: 404,
 };
 
-const processResponseError = (dispatch, err) => {
+const handleErrorWithAlert = (dispatch, err) => {
+  switch (err.response.status) {
+    case HttpCode.UNAUTHORIZED:
+      dispatch(ActionCreator.showAlert(ErrorMessage.UNAUTHORIZED));
+      break;
+
+    case HttpCode.NOT_FOUND:
+      dispatch(ActionCreator.showAlert(ErrorMessage.NOT_FOUND));
+      break;
+
+    default:
+      dispatch(ActionCreator.showAlert(ErrorMessage.GENERAL));
+  }
+};
+
+const handleErrorWithPage = (dispatch, err) => {
   switch (err.response.status) {
     case HttpCode.UNAUTHORIZED:
       dispatch(ActionCreator.redirectToRoute(AppRoute.LOGIN));
@@ -24,6 +39,18 @@ const processResponseError = (dispatch, err) => {
   }
 };
 
+export const fetchOffer = (id) => (dispatch, _getState, api) => (
+  api.get(`/hotels/${id}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.setFetchedOffer(
+          OfferAdapter.toClient(data)
+      ));
+    })
+    .catch((err) => {
+      handleErrorWithPage(dispatch, err);
+    })
+);
+
 export const fetchOffers = () => (dispatch, _getState, api) => (
   api.get(APIRoute.OFFERS)
     .then(({data}) => {
@@ -32,7 +59,7 @@ export const fetchOffers = () => (dispatch, _getState, api) => (
       ));
     })
     .catch((err) => {
-      processResponseError(dispatch, err);
+      handleErrorWithPage(dispatch, err);
     })
 );
 
@@ -43,8 +70,8 @@ export const fetchNearbyPlaces = (id) => (dispatch, _getState, api) => (
           OfferAdapter.arrayToClient(data)
       ));
     })
-    .catch((err) => {
-      processResponseError(dispatch, err);
+    .catch(() => {
+      dispatch(ActionCreator.showAlert(`Cannot fetch places in the neighbourhood`));
     })
 );
 
@@ -55,8 +82,8 @@ export const fetchReviewsList = (id) => (dispatch, _getState, api) => (
           data.map(CommentAdapter.toClient)
       ));
     })
-    .catch((err) => {
-      processResponseError(dispatch, err);
+    .catch(() => {
+      dispatch(ActionCreator.showAlert(`Cannot fetch reviews`));
     })
 );
 
@@ -87,6 +114,7 @@ export const login = (email, password) => (dispatch, _getState, api) => {
     })
     .catch((err) => {
       dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.NOT_AUTHORIZED));
+
       if (err.response.status === HttpCode.NOT_AUTHORIZED) {
         dispatch(ActionCreator.setLoginFailed(true));
       } else {
@@ -98,8 +126,14 @@ export const login = (email, password) => (dispatch, _getState, api) => {
 
 export const updateFavoriteStatus = (offerId, status) => (dispatch, _getState, api) => (
   api.post(`/favorite/${offerId}/${Number(status)}`)
+    .then(({data}) => {
+      dispatch(ActionCreator.updateOffer(
+          OfferAdapter.toClient(data))
+      );
+    })
     .catch((err) => {
-      processResponseError(dispatch, err);
+      handleErrorWithAlert(dispatch, err);
+      throw err;
     })
 );
 
@@ -109,5 +143,9 @@ export const postComment = (offerId, comment) => (dispatch, _getState, api) => (
       dispatch(ActionCreator.setFetchedReviews(
           data.map(CommentAdapter.toClient)
       ));
+    })
+    .catch((err) => {
+      handleErrorWithAlert(dispatch, err);
+      throw err;
     })
 );

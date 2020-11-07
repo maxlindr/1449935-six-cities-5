@@ -1,8 +1,10 @@
-import React from 'react';
+import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import {userPropTypes, reviewPropTypes} from '../../prop-types';
 import ReviewForm from '../review-form/review-form';
 import OfferReview from '../offer-review/offer-review';
+import {connect} from 'react-redux';
+import {getUser} from '../../store/selectors';
 
 
 const OfferReviewsSection = (props) => {
@@ -35,4 +37,8 @@ OfferReviewsSection.propTypes = {
   offerId: PropTypes.string.isRequired
 };
 
-export default React.memo(OfferReviewsSection);
+const mapStateToProps = (state) => ({
+  user: getUser(state),
+});
+
+export default connect(mapStateToProps)(memo(OfferReviewsSection));

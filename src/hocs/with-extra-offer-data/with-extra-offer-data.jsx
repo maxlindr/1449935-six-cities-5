@@ -2,69 +2,81 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {StateNameSpace} from '../../store/reducers/root-reducer';
-import {fetchReviewsList, fetchNearbyPlaces} from '../../store/api-actions';
+import {fetchReviewsList, fetchNearbyPlaces, fetchOffer} from '../../store/api-actions';
 import {ActionCreator} from '../../store/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
-import {getUser} from '../../store/selectors';
-import ErrorPage from '../../components/error-page/error-page';
-import {ErrorMessage} from '../../constants';
 
 const withExtraOfferData = (WrappedComponent) => {
   class WithExtraOfferData extends React.PureComponent {
     constructor(props) {
       super(props);
 
-      const {offer, getReviews, getNearbyPlaces} = props;
+      const {offerId, getOffer, reset} = props;
 
-      if (offer) {
-        const offerId = offer.id;
+      reset();
+      getOffer(offerId);
+    }
 
+    componentDidUpdate(prevProps) {
+      const {offer: prevOffer} = prevProps;
+      const {offer, offerId, getReviews, getNearbyPlaces, changeCity} = this.props;
+
+      if (!prevOffer && offer) {
+        changeCity(offer.location.city.name);
         getReviews(offerId);
         getNearbyPlaces(offerId);
       }
     }
 
-    componentWillUnmount() {
-      this.props.reset();
-    }
-
     render() {
-      if (this.props.offer) {
-        return <WrappedComponent {...this.props} offers={this.props.offers || []} />;
-      } else {
-        return <ErrorPage message={ErrorMessage.NOT_FOUND}/>;
-      }
+      const {offer, updateOffer} = this.props;
+
+      return offer
+        ? <WrappedComponent {...this.props} offer={offer} offers={this.props.offers || []} onUpdate={updateOffer}/>
+        : null;
     }
   }
 
   WithExtraOfferData.propTypes = {
-    offer: offerPropTypes.isRequired,
+    offer: offerPropTypes,
+    offerId: PropTypes.string.isRequired,
     reviews: PropTypes.arrayOf(reviewPropTypes),
     offers: PropTypes.arrayOf(offerPropTypes),
     getReviews: PropTypes.func.isRequired,
     getNearbyPlaces: PropTypes.func.isRequired,
     reset: PropTypes.func.isRequired,
+    getOffer: PropTypes.func.isRequired,
+    changeCity: PropTypes.func.isRequired,
+    updateOffer: PropTypes.func.isRequired,
   };
 
   return WithExtraOfferData;
 };
 
 const mapStateToProps = (state) => ({
-  user: getUser(state),
+  offer: state[StateNameSpace.OFFER_PAGE].offer,
   reviews: state[StateNameSpace.OFFER_PAGE].reviews,
   offers: state[StateNameSpace.OFFER_PAGE].nearbyPlaces,
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  getOffer(offerId) {
+    dispatch(fetchOffer(offerId));
+  },
   getReviews(offerId) {
     dispatch(fetchReviewsList(offerId));
   },
   getNearbyPlaces(offerId) {
     dispatch(fetchNearbyPlaces(offerId));
   },
+  changeCity(city) {
+    dispatch(ActionCreator.changeCity(city));
+  },
+  updateOffer(offer) {
+    dispatch(ActionCreator.setFetchedOffer(offer));
+  },
   reset() {
-    dispatch(ActionCreator.setFetchedReviews(null));
-    dispatch(ActionCreator.setFetchedNearbyPlaces(null));
+    dispatch(ActionCreator.resetOfferPageStore());
   }
 });
 

@@ -8,6 +8,7 @@ import withSorting from '../../hocs/with-sorting/with-sorting';
 import CitiesNoPlaces from './cities-no-places/cities-no-places';
 import {connect} from 'react-redux';
 import {getCurrentCity, getCurrentCityOffers} from '../../store/selectors';
+import {withAlertDialog} from '../../hocs/with-alert-dialog/with-alert-dialog';
 
 const CitiesWithSorting = withSorting(Cities);
 
@@ -49,4 +50,4 @@ const mapStateToProps = (state) => {
 };
 
 export {Main};
-export default connect(mapStateToProps)(Main);
+export default connect(mapStateToProps)(withAlertDialog(Main));

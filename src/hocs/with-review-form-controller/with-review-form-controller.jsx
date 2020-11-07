@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {postComment} from '../../store/api-actions';
-import {ActionCreator} from '../../store/action';
 
 const INITIAL_STATE = {
   rating: null,
@@ -36,10 +35,9 @@ const withReviewFormController = (Component) => {
       const submitComment = () => {
         dispatch(postComment(offerId, comment))
           .then(() => this.setState(INITIAL_STATE))
-          .catch((err) => {
-            this.setState({isDisabled: false});
-            dispatch(ActionCreator.showAlert(err.message));
-          });
+          .catch(() => this.setState({
+            isDisabled: false
+          }));
       };
 
       this.setState({isDisabled: true}, submitComment);
