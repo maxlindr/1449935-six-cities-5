@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Alert from '../../components/alert/alert';
 import {getAlertMessage} from '../../store/selectors';
-import {ActionCreator} from '../../store/action';
+import {ActionCreator} from '../../store/actions/action';
 
 const deleteProperties = (from, names) => {
   const entries = Object.entries(from).filter(([key]) =>

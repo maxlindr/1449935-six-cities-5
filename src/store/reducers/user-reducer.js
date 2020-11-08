@@ -1,5 +1,5 @@
 import {AuthorizationStatus} from '../../constants';
-import {ActionType} from '../action';
+import {ActionType} from '../actions/action';
 
 const initialState = {
   user: null,

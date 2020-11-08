@@ -1,4 +1,4 @@
-import {ActionType} from '../action';
+import {ActionType} from '../actions/action';
 
 const initialState = {
   alertMessage: null,

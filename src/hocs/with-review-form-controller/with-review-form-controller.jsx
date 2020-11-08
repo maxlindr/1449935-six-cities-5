@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {postComment} from '../../store/api-actions';
+import {postComment} from '../../store/actions/api-actions';
 
 const INITIAL_STATE = {
   rating: null,

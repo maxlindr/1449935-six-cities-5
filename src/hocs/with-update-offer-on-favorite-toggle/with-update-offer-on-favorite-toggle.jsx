@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import {connect} from 'react-redux';
-import {updateFavoriteStatus} from '../../store/api-actions';
+import {updateFavoriteStatus} from '../../store/actions/api-actions';
 
 const excludeProperty = (from, name) => {
   const cloned = Object.assign({}, from);

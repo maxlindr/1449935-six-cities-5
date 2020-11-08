@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import CityTab from './city-tab/city-tab';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../store/action';
+import {ActionCreator} from '../../../store/actions/action';
 import {cityPropTypes} from '../../../prop-types';
 import {getCities, getCurrentCityName} from '../../../store/selectors';
 

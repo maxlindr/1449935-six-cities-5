@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {StateNameSpace} from '../../store/reducers/root-reducer';
-import {fetchReviewsList, fetchNearbyPlaces, fetchOffer} from '../../store/api-actions';
-import {ActionCreator} from '../../store/action';
+import {fetchReviewsList, fetchNearbyPlaces, fetchOffer} from '../../store/actions/api-actions';
+import {ActionCreator} from '../../store/actions/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 
 const withExtraOfferData = (WrappedComponent) => {

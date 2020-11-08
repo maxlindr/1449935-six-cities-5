@@ -33,7 +33,8 @@ export const APIRoute = {
 };
 
 export const HttpCode = {
-  UNAUTHORIZED: 401
+  UNAUTHORIZED: 401,
+  NOT_FOUND: 404,
 };
 
 export const ErrorMessage = {

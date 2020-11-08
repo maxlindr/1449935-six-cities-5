@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {login} from '../../store/api-actions';
+import {login} from '../../store/actions/api-actions';
 import {getAuthorizationStatus, getIsLoginFailedWithUnauthorized} from '../../store/selectors';
 import {AuthorizationStatus} from '../../constants';
-import {ActionCreator} from '../../store/action';
+import {ActionCreator} from '../../store/actions/action';
 
 const ANIMATION_FINISH_DELAY = 50;
 const ANIMATION_DURATION = 600 + ANIMATION_FINISH_DELAY;
