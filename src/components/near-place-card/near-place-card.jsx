@@ -22,4 +22,5 @@ NearPlaceCard.propTypes = {
   onMouseLeave: PropTypes.func,
 };
 
+export {NearPlaceCard};
 export default React.memo(NearPlaceCard);

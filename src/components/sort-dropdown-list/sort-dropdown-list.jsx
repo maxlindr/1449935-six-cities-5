@@ -18,6 +18,10 @@ const createOptionElement = (value, name, isActive, onClick) => {
 const SortDropdownList = (props) => {
   const {isOpened, options, activeOption, onToggle, onOptionClick} = props;
 
+  const listClassName = isOpened
+    ? `places__options places__options--custom places__options--opened`
+    : `places__options places__options--custom`;
+
   return (
     <form className="places__sorting" action="#" method="get">
       <span className="places__sorting-caption">Sort by </span>
@@ -29,7 +33,7 @@ const SortDropdownList = (props) => {
         </svg>
       </span>
 
-      <ul className={`places__options places__options--custom${isOpened ? ` places__options--opened` : ``}`}>
+      <ul className={listClassName}>
         {Object.entries(options).map(([value, name]) =>
           createOptionElement(value, name, value === activeOption, onOptionClick))}
       </ul>
@@ -40,10 +44,10 @@ const SortDropdownList = (props) => {
 SortDropdownList.propTypes = {
   onToggle: PropTypes.func.isRequired,
   onOptionClick: PropTypes.func.isRequired,
-  onChange: PropTypes.func.isRequired,
   isOpened: PropTypes.bool.isRequired,
   activeOption: PropTypes.string.isRequired,
   options: PropTypes.object.isRequired
 };
 
+export {SortDropdownList};
 export default SortDropdownList;

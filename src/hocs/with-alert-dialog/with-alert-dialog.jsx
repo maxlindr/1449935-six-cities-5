@@ -4,16 +4,9 @@ import {connect} from 'react-redux';
 import Alert from '../../components/alert/alert';
 import {getAlertMessage} from '../../store/selectors';
 import {ActionCreator} from '../../store/actions/action';
+import {omitProperties} from '../../utils';
 
-const deleteProperties = (from, names) => {
-  const entries = Object.entries(from).filter(([key]) =>
-    names.every((name) => key !== name)
-  );
-
-  return Object.fromEntries(entries);
-};
-
-export const withAlertDialog = (WrappedComponent) => {
+const withAlertDialog = (WrappedComponent) => {
   class WithAlertDialog extends React.PureComponent {
     componentWillUnmount() {
       const {alertDialogMessage, closeAlertDialog} = this.props;
@@ -26,7 +19,7 @@ export const withAlertDialog = (WrappedComponent) => {
     render() {
       const {alertDialogMessage, closeAlertDialog} = this.props;
 
-      const wrappedComponentProps = deleteProperties(this.props, [`alertDialogMessage`, `closeAlertDialog`]);
+      const wrappedComponentProps = omitProperties(this.props, [`alertDialogMessage`, `closeAlertDialog`]);
 
       return (
         <React.Fragment>
@@ -39,7 +32,6 @@ export const withAlertDialog = (WrappedComponent) => {
         </React.Fragment>
       );
     }
-
   }
 
   WithAlertDialog.propTypes = {
@@ -47,15 +39,19 @@ export const withAlertDialog = (WrappedComponent) => {
     closeAlertDialog: PropTypes.func.isRequired,
   };
 
-  const mapStateToProps = (state) => ({
-    alertDialogMessage: getAlertMessage(state)
-  });
-
-  const mapDispatchToProps = (dispatch) => ({
-    closeAlertDialog: () => dispatch(ActionCreator.closeAlert()),
-  });
-
-  return connect(mapStateToProps, mapDispatchToProps)(WithAlertDialog);
+  return WithAlertDialog;
 };
 
-export default (WrapperComponent) => withAlertDialog(WrapperComponent);
+const mapStateToProps = (state) => ({
+  alertDialogMessage: getAlertMessage(state)
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  closeAlertDialog: () => dispatch(ActionCreator.closeAlert()),
+});
+
+export {withAlertDialog};
+
+export default (WrappedComponent) => connect(mapStateToProps, mapDispatchToProps)(
+    withAlertDialog(WrappedComponent)
+);

@@ -1,13 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {postComment} from '../../store/actions/api-actions';
+import ApiActions from '../../store/actions/api-actions';
+
+const MIN_COMMENT_LENGTH = 50;
+const MAX_COMMENT_LENGTH = 300;
+
+const checkCommentValidity = (text) => {
+  const trimmedText = text.trim();
+
+  return (
+    trimmedText.length >= MIN_COMMENT_LENGTH &&
+    trimmedText.length <= MAX_COMMENT_LENGTH
+  );
+};
 
 const INITIAL_STATE = {
   rating: null,
   text: ``,
   isValid: false,
-  isDisabled: false,
+  isPending: false,
 };
 
 const withReviewFormController = (Component) => {
@@ -25,22 +37,23 @@ const withReviewFormController = (Component) => {
     handleSubmit(evt) {
       evt.preventDefault();
 
-      const {offerId, dispatch} = this.props;
+      const {offerId, postComment} = this.props;
 
       const comment = {
         text: this.state.text,
         rating: this.state.rating
       };
 
-      const submitComment = () => {
-        dispatch(postComment(offerId, comment))
+      const submitComment = () =>
+        postComment(offerId, comment)
           .then(() => this.setState(INITIAL_STATE))
-          .catch(() => this.setState({
-            isDisabled: false
-          }));
-      };
+          .catch(() =>
+            this.setState({
+              isPending: false,
+            })
+          );
 
-      this.setState({isDisabled: true}, submitComment);
+      this.setState({isPending: true}, submitComment);
     }
 
     handleRatingClick(evt) {
@@ -54,18 +67,20 @@ const withReviewFormController = (Component) => {
     validate() {
       const {rating, text} = this.state;
 
-      this.setState({isValid: Boolean(text.trim() && rating)});
+      this.setState({
+        isValid: checkCommentValidity(text) && rating > 0
+      });
     }
 
     render() {
-      const {text, rating, isValid, isDisabled} = this.state;
+      const {text, rating, isValid, isPending} = this.state;
 
       return (
         <Component
           text={text}
           rating={rating}
           isValid={isValid}
-          disabled={isDisabled}
+          disabled={isPending}
           onTextChange={this.handleTextChange}
           onRatingClick={this.handleRatingClick}
           onSubmit={this.handleSubmit}
@@ -76,10 +91,20 @@ const withReviewFormController = (Component) => {
 
   WithReviewFormController.propTypes = {
     offerId: PropTypes.string.isRequired,
-    dispatch: PropTypes.func.isRequired,
+    postComment: PropTypes.func.isRequired,
   };
 
-  return connect()(WithReviewFormController);
+  return WithReviewFormController;
 };
 
-export default withReviewFormController;
+const mapDispatchToProps = (dispatch) => ({
+  postComment(offerId, comment) {
+    return dispatch(ApiActions.postComment((offerId, comment)));
+  }
+});
+
+export {withReviewFormController};
+
+export default (WrappedComponent) => connect(null, mapDispatchToProps)(
+    withReviewFormController(WrappedComponent)
+);

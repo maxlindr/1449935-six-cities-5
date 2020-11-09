@@ -21,4 +21,5 @@ OfferGallery.propTypes = {
   photos: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
+export {OfferGallery};
 export default React.memo(OfferGallery);

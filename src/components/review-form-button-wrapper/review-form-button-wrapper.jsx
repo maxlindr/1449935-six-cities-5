@@ -20,4 +20,5 @@ ReviewFormButtonWrapper.propTypes = {
   disabled: PropTypes.bool.isRequired
 };
 
+export {ReviewFormButtonWrapper};
 export default React.memo(ReviewFormButtonWrapper);

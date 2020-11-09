@@ -14,4 +14,5 @@ PageFooter.propTypes = {
   container: PropTypes.bool
 };
 
+export {PageFooter};
 export default PageFooter;

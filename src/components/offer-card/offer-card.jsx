@@ -14,7 +14,7 @@ const OfferCard = (props) => {
       onMouseLeave={onMouseLeave}
     >
       <OfferCardImage cardType={OfferCardType.CITIES} offer={offer}/>
-      <OfferCardInfo offer={offer}/>
+      <OfferCardInfo offer={offer} roundRating />
     </article>
   );
 };
@@ -25,4 +25,5 @@ OfferCard.propTypes = {
   onMouseLeave: PropTypes.func.isRequired,
 };
 
+export {OfferCard};
 export default React.memo(OfferCard);

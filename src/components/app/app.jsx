@@ -6,7 +6,7 @@ import {offerPropTypes} from '../../prop-types';
 import Main from '../main/main';
 import Login from '../login/login';
 import FavoritesRouter from '../favorites-router/favorites-router';
-import Room from '../room/room';
+import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../error-page/error-page';
 import {connect} from 'react-redux';
 import PrivateRoute from '../private-route/private-route';
@@ -36,7 +36,7 @@ const App = (props) => {
           exact
           path="/offer/:id"
           render={({match}) => (
-            <Room offerId={match.params.id} />
+            <OfferPage offerId={match.params.id} />
           )}
         />
 

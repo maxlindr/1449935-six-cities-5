@@ -5,12 +5,9 @@ import offerPropTypes from '../../prop-types/offer-prop-types';
 import {generateOfferPageEndpoint, capitalizeFirstLetter} from '../offer-card-utils';
 import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
 import BookmarkToggle, {BookmarkToggleType} from '../bookmark-toggle/bookmark-toggle';
-import withUpdateOfferOnFavoriteToggle from '../../hocs/with-update-offer-on-favorite-toggle/with-update-offer-on-favorite-toggle';
-
-const BookmarkToggleWithUpdateOffer = withUpdateOfferOnFavoriteToggle(BookmarkToggle);
 
 const OfferCardInfo = (props) => {
-  const {offer} = props;
+  const {offer, roundRating} = props;
   const {id, price, title, type, rating, favorite} = offer;
 
   return (
@@ -21,14 +18,14 @@ const OfferCardInfo = (props) => {
           <span className="place-card__price-text">/&nbsp;night</span>
         </div>
 
-        <BookmarkToggleWithUpdateOffer
+        <BookmarkToggle
           type={BookmarkToggleType.CARD}
           offer={offer}
           active={favorite}
         />
       </div>
 
-      <RatingStars type={RatingStarsType.CARD} rating={rating}/>
+      <RatingStars type={RatingStarsType.CARD} rating={rating} round={roundRating}/>
 
       <h2 className="place-card__name">
         <Link to={generateOfferPageEndpoint(id)}>
@@ -44,6 +41,7 @@ const OfferCardInfo = (props) => {
 OfferCardInfo.propTypes = {
   offer: offerPropTypes,
   favorites: PropTypes.bool,
+  roundRating: PropTypes.bool,
 };
 
 export default OfferCardInfo;

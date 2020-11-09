@@ -12,12 +12,14 @@ export const RatingStarsType = {
 const convertRatingToPerc = (rating) => (rating / MAX_RATING) * 100;
 
 const RatingStars = (props) => {
-  const {rating, type} = props;
+  const {rating, type, round} = props;
+
+  const ratingDisplay = round ? Math.round(rating) : rating;
 
   return (
     <div className={`${type}__rating rating`}>
       <div className={`${type}__stars rating__stars`}>
-        <span style={{width: `${convertRatingToPerc(rating)}%`}} />
+        <span style={{width: `${convertRatingToPerc(ratingDisplay)}%`}} />
         <span className="visually-hidden">Rating</span>
       </div>
       {
@@ -31,6 +33,7 @@ const RatingStars = (props) => {
 
 RatingStars.propTypes = {
   rating: PropTypes.number.isRequired,
+  round: PropTypes.bool,
   type: PropTypes.oneOf([
     RatingStarsType.CARD,
     RatingStarsType.OFFER,
@@ -38,4 +41,5 @@ RatingStars.propTypes = {
   ]).isRequired,
 };
 
+export {RatingStars};
 export default React.memo(RatingStars);

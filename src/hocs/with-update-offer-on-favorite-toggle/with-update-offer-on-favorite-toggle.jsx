@@ -3,13 +3,7 @@ import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import {connect} from 'react-redux';
 import {updateFavoriteStatus} from '../../store/actions/api-actions';
-
-const excludeProperty = (from, name) => {
-  const cloned = Object.assign({}, from);
-  delete cloned[name];
-
-  return cloned;
-};
+import {omitProperties} from '../../utils';
 
 const doNothing = () => {};
 
@@ -28,13 +22,13 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
         favorite: !offer.favorite
       });
 
-      updateOffer(newOffer)
+      return updateOffer(newOffer)
         .then(() => onUpdate(newOffer))
         .catch(doNothing);
     }
 
     render() {
-      const componentProps = excludeProperty(this.props, `offer`);
+      const componentProps = omitProperties(this.props, [`offer`, `updateOffer`, `onUpdate`]);
 
       return (
         <Component {...componentProps} onToggle={this.handleToggle}/>
@@ -48,13 +42,17 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
     onUpdate: PropTypes.func,
   };
 
-  const mapDispatchToProps = (dispatch) => ({
-    updateOffer(offer) {
-      return dispatch(updateFavoriteStatus(offer.id, offer.favorite));
-    },
-  });
-
-  return connect(null, mapDispatchToProps)(WithUpdateOfferOnFavoriteToggle);
+  return WithUpdateOfferOnFavoriteToggle;
 };
 
-export default withUpdateOfferOnFavoriteToggle;
+const mapDispatchToProps = (dispatch) => ({
+  updateOffer(offer) {
+    return dispatch(updateFavoriteStatus(offer.id, offer.favorite));
+  },
+});
+
+export {withUpdateOfferOnFavoriteToggle};
+
+export default (WrappedComponent) => connect(null, mapDispatchToProps)(
+    withUpdateOfferOnFavoriteToggle(WrappedComponent)
+);

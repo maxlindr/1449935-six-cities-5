@@ -41,4 +41,5 @@ const mapStateToProps = (state) => ({
   user: getUser(state),
 });
 
+export {OfferReviewsSection};
 export default connect(mapStateToProps)(memo(OfferReviewsSection));

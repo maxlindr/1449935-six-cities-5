@@ -13,7 +13,9 @@ const ErrorPage = (props) => {
       <PageHeader />
 
       <main className="page__main">
-        <h1 className="error-page__message">{message || globalMessage}</h1>
+        <h1 className="error-page__message">
+          {message || globalMessage}
+        </h1>
       </main>
     </div>
   );

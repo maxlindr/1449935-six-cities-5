@@ -26,4 +26,5 @@ OffersList.propTypes = {
   onDeactivate: PropTypes.func.isRequired,
 };
 
+export {OffersList};
 export default OffersList;

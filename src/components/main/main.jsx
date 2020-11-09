@@ -8,13 +8,11 @@ import withSorting from '../../hocs/with-sorting/with-sorting';
 import CitiesNoPlaces from './cities-no-places/cities-no-places';
 import {connect} from 'react-redux';
 import {getCurrentCity, getCurrentCityOffers} from '../../store/selectors';
-import {withAlertDialog} from '../../hocs/with-alert-dialog/with-alert-dialog';
+import withAlertDialog from '../../hocs/with-alert-dialog/with-alert-dialog';
 
 const CitiesWithSorting = withSorting(Cities);
 
-const Main = (props) => {
-  const {currentCityOffers, currentCity} = props;
-
+const Main = ({currentCityOffers, currentCity}) => {
   const mainElementClassname = currentCityOffers.length > 0
     ? `page__main page__main--index`
     : `page__main page__main--index page__main--index-empty`;

@@ -36,4 +36,5 @@ OfferReview.propTypes = {
   review: reviewPropTypes
 };
 
+export {OfferReview};
 export default React.memo(OfferReview);

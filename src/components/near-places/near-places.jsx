@@ -29,4 +29,5 @@ NearPlaces.propTypes = {
   onCardLeave: PropTypes.func,
 };
 
+export {NearPlaces};
 export default React.memo(NearPlaces);

@@ -7,10 +7,14 @@ export const CityMapType = {
 };
 
 const cityMapFactory = (type) => {
-  const CityMap = (props) => <section ref={props.reference} className={`${type}__map map`}/>;
+  const CityMap = (props) => (
+    <section ref={props.reference} className={`${type}__map map`} />
+  );
 
   CityMap.propTypes = {
-    reference: PropTypes.shape({current: PropTypes.instanceOf(Element)}),
+    reference: PropTypes.shape({
+      current: PropTypes.instanceOf(Element)
+    }),
   };
 
   return CityMap;

@@ -31,9 +31,14 @@ const withExtraOfferData = (WrappedComponent) => {
     render() {
       const {offer, updateOffer} = this.props;
 
-      return offer
-        ? <WrappedComponent {...this.props} offer={offer} offers={this.props.offers || []} onUpdate={updateOffer}/>
-        : null;
+      return offer ? (
+        <WrappedComponent
+          {...this.props}
+          offer={offer}
+          offers={this.props.offers || []}
+          onUpdate={updateOffer}
+        />
+      ) : null;
     }
   }
 
@@ -80,4 +85,8 @@ const mapDispatchToProps = (dispatch) => ({
   }
 });
 
-export default (WrapperComponent) => connect(mapStateToProps, mapDispatchToProps)(withExtraOfferData(WrapperComponent));
+export {withExtraOfferData};
+
+export default (WrapperComponent) => connect(mapStateToProps, mapDispatchToProps)(
+    withExtraOfferData(WrapperComponent)
+);

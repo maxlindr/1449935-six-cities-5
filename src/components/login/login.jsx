@@ -2,20 +2,13 @@ import React, {memo} from 'react';
 import PropTypes from 'prop-types';
 import PageHeader from '../page-header/page-header';
 import withLoginFormController from '../../hocs/with-login-form-controller/with-login-form-controller';
-import {getAuthorizationStatus} from '../../store/selectors';
-import {connect} from 'react-redux';
-import {Redirect} from 'react-router-dom';
-import {AppRoute, AuthorizationStatus} from '../../constants';
 import './animation.css';
+import withRedirectAuthorized from '../../hocs/with-redirect-authorized/with-redirect-authorized';
 
 const ANIMATION_CLASSNAME = `shake`;
 
 const Login = (props) => {
-  const {email, password, isValid, isAuthorized, isDisabled, isAnimationPlaying, onEmailChange, onPasswordChange, onSubmit} = props;
-
-  if (isAuthorized) {
-    return <Redirect to={AppRoute.ROOT}/>;
-  }
+  const {email, password, isValid, isDisabled, isAnimationPlaying, onEmailChange, onPasswordChange, onSubmit} = props;
 
   const formClassName = isAnimationPlaying
     ? `login__form form ${ANIMATION_CLASSNAME}`
@@ -88,7 +81,6 @@ const Login = (props) => {
 };
 
 Login.propTypes = {
-  isAuthorized: PropTypes.bool.isRequired,
   email: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired,
   isValid: PropTypes.bool.isRequired,
@@ -99,9 +91,10 @@ Login.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  isAuthorized: getAuthorizationStatus(state) === AuthorizationStatus.AUTHORIZED,
-});
-
 export {Login};
-export default connect(mapStateToProps)(withLoginFormController(memo(Login)));
+
+export default withRedirectAuthorized(
+    withLoginFormController(
+        memo(Login)
+    )
+);

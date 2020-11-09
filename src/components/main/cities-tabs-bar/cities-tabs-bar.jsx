@@ -15,23 +15,14 @@ const CitiesTabsBar = (props) => {
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          {cityNames.map((city) => {
-
-            const tabClickHandler = () => {
-              if (city !== activeCity) {
-                changeCity(city);
-              }
-            };
-
-            return (
-              <CityTab
-                key={city}
-                city={city}
-                active={city === activeCity}
-                onClick={tabClickHandler}
-              />
-            );
-          })}
+          {cityNames.map((city) => (
+            <CityTab
+              key={city}
+              city={city}
+              active={city === activeCity}
+              onActivate={changeCity}
+            />
+          ))}
         </ul>
       </section>
     </div>

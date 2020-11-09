@@ -3,22 +3,21 @@ import PropTypes from 'prop-types';
 import offerPropTypes from '../../prop-types/offer-prop-types';
 
 const withActiveOffer = (Component) => {
-
   class WithActiveOffer extends React.PureComponent {
     constructor(props) {
       super(props);
 
       this.state = {activeOffer: null};
 
-      this.handleCardMouseOver = this.handleCardMouseOver.bind(this);
-      this.handleCardMouseLeave = this.handleCardMouseLeave.bind(this);
+      this.handleActivate = this.handleActivate.bind(this);
+      this.handleDeactivate = this.handleDeactivate.bind(this);
     }
 
-    handleCardMouseOver(activeOffer) {
+    handleActivate(activeOffer) {
       this.setState({activeOffer});
     }
 
-    handleCardMouseLeave() {
+    handleDeactivate() {
       this.setState({activeOffer: null});
     }
 
@@ -27,8 +26,8 @@ const withActiveOffer = (Component) => {
         <Component
           {...this.props}
           activeOffer={this.state.activeOffer}
-          onActivate={this.handleCardMouseOver}
-          onDeactivate={this.handleCardMouseLeave}
+          onActivate={this.handleActivate}
+          onDeactivate={this.handleDeactivate}
         />
       );
     }
@@ -40,6 +39,5 @@ const withActiveOffer = (Component) => {
 
   return WithActiveOffer;
 };
-
 
 export default withActiveOffer;

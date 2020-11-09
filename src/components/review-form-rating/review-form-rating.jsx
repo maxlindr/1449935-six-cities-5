@@ -9,12 +9,14 @@ const starLabelTitle = {
   1: `terribly`
 };
 
+const STAR_VALUES = [5, 4, 3, 2, 1];
+
 function ReviewFormRating(props) {
   const {rating, onClick, disabled} = props;
 
   return (
     <div className="reviews__rating-form form__rating">
-      {Array(5).fill().map((val, i) => i + 1).reverse().map((starValue) => (
+      {STAR_VALUES.map((starValue) => (
         <React.Fragment key={starValue}>
           <input
             className="form__rating-input visually-hidden"
@@ -30,7 +32,8 @@ function ReviewFormRating(props) {
           <label
             htmlFor={`${starValue}-stars`}
             className="reviews__rating-label form__rating-label"
-            title={starLabelTitle[starValue]}>
+            title={starLabelTitle[starValue]}
+          >
             <svg className="form__star-image" width={37} height={33}>
               <use xlinkHref="#icon-star" />
             </svg>
@@ -47,4 +50,5 @@ ReviewFormRating.propTypes = {
   onClick: PropTypes.func.isRequired
 };
 
+export {ReviewFormRating};
 export default React.memo(ReviewFormRating);

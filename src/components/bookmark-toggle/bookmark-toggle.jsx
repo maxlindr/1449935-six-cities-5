@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withUpdateOfferOnFavoriteToggle from '../../hocs/with-update-offer-on-favorite-toggle/with-update-offer-on-favorite-toggle';
 
 export const BookmarkToggleType = {
   OFFER: `property`,
@@ -42,4 +43,5 @@ BookmarkToggle.propTypes = {
   onToggle: PropTypes.func.isRequired
 };
 
-export default BookmarkToggle;
+export {BookmarkToggle};
+export default withUpdateOfferOnFavoriteToggle(BookmarkToggle);

@@ -20,16 +20,20 @@ const DROPDOWN_OPTIONS = {
   [SortType.TOP_RATED]: `Top rated first`,
 };
 
-const sortOffers = (offers, sortType) => {
+const sortByPriceLowToHigh = (offers) => offers.slice().sort((a, b) => a.price - b.price);
+const sortByPriceHighToLow = (offers) => offers.slice().sort((a, b) => b.price - a.price);
+const sortByRatingHighToLow = (offers) => offers.slice().sort((a, b) => b.rating - a.rating);
+
+const sortOffersBy = (offers, sortType) => {
   switch (sortType) {
     case SortType.POPULAR:
       return offers;
     case SortType.TO_HIGH:
-      return offers.slice().sort((a, b) => a.price - b.price);
+      return sortByPriceLowToHigh(offers);
     case SortType.TO_LOW:
-      return offers.slice().sort((a, b) => b.price - a.price);
+      return sortByPriceHighToLow(offers);
     case SortType.TOP_RATED:
-      return offers.slice().sort((a, b) => b.rating - a.rating);
+      return sortByRatingHighToLow(offers);
     default:
       throw new Error(`Bad sort type: ${sortType}`);
   }
@@ -49,7 +53,7 @@ const withSorting = (Component) => {
 
     render() {
       const {sortType} = this.state;
-      const sortedOffers = sortOffers(this.props.offers, sortType);
+      const sortedOffers = sortOffersBy(this.props.offers, sortType);
 
       return (
         <Component {...this.props} offers={sortedOffers} >
@@ -73,4 +77,11 @@ const withSorting = (Component) => {
   return WithSorting;
 };
 
+export const sortOffers = {
+  byPriceLowToHigh: sortByPriceLowToHigh,
+  byPriceHighToLow: sortByPriceHighToLow,
+  byRatingHighToLow: sortByRatingHighToLow,
+};
+
+export {withSorting, SortType};
 export default withSorting;

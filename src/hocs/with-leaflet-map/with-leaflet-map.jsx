@@ -61,37 +61,40 @@ const withLeafletMap = (Component) => {
     }
 
     componentDidUpdate() {
-      const {offers, city, activeOffer, maxOffers} = this.props;
       const map = this.map;
 
-      if (map) {
-        if (this.state.reset) {
-          map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
-          this.clear();
-        }
-
-        const offersToShow = maxOffers ? offers.slice(0, maxOffers) : offers;
-
-        offersToShow.slice(0).forEach((offer) => {
-          const {id, location} = offer;
-
-          const pinActualData = {
-            id,
-            coordinates: location.coordinates,
-            isActive: activeOffer ? (id === activeOffer.id) : false
-          };
-
-          const placedMapPin = this.pins.get(pinActualData.id);
-
-          if (placedMapPin) {
-            if (placedMapPin.isActive !== pinActualData.isActive) {
-              this.updatePin(pinActualData);
-            }
-          } else {
-            this.addPin(pinActualData);
-          }
-        });
+      if (!map) {
+        return;
       }
+
+      const {offers, city, activeOffer, maxOffers} = this.props;
+
+      if (this.state.reset) {
+        map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
+        this.clear();
+      }
+
+      const offersToShow = maxOffers ? offers.slice(0, maxOffers) : offers;
+
+      offersToShow.slice(0).forEach((offer) => {
+        const {id, location} = offer;
+
+        const pinActualData = {
+          id,
+          coordinates: location.coordinates,
+          isActive: activeOffer ? (id === activeOffer.id) : false
+        };
+
+        const placedMapPin = this.pins.get(pinActualData.id);
+
+        if (placedMapPin) {
+          if (placedMapPin.isActive !== pinActualData.isActive) {
+            this.updatePin(pinActualData);
+          }
+        } else {
+          this.addPin(pinActualData);
+        }
+      });
     }
 
     shouldComponentUpdate(nextProps) {
@@ -155,11 +158,15 @@ const withLeafletMap = (Component) => {
     maxOffers: PropTypes.number
   };
 
-  return connect(mapStateToProps)(WithLeafletMap);
+  return WithLeafletMap;
 };
 
 const mapStateToProps = (state) => ({
   city: getCurrentCity(state),
 });
 
-export default withLeafletMap;
+export {withLeafletMap};
+
+export default (WrappedComponent) => connect(mapStateToProps)(
+    withLeafletMap(WrappedComponent)
+);

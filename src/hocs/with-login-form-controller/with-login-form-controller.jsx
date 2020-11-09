@@ -5,6 +5,7 @@ import {login} from '../../store/actions/api-actions';
 import {getAuthorizationStatus, getIsLoginFailedWithUnauthorized} from '../../store/selectors';
 import {AuthorizationStatus} from '../../constants';
 import {ActionCreator} from '../../store/actions/action';
+import {omitProperties} from '../../utils';
 
 const ANIMATION_FINISH_DELAY = 50;
 const ANIMATION_DURATION = 600 + ANIMATION_FINISH_DELAY;
@@ -58,16 +59,25 @@ const withLoginFormController = (Component) => {
     validate() {
       const {email, password} = this.state;
 
-      this.setState({isValid: Boolean(email.trim() && password.trim())});
+      this.setState({
+        isValid: Boolean(email.trim() && password.trim())
+      });
     }
 
     render() {
       const {email, password, isValid, isAnimationPlaying} = this.state;
       const {isPending} = this.props;
 
+      const componentProps = omitProperties(this.props, [
+        `isPending`,
+        `isLoginFailedWithUnauthorized`,
+        `loginToServer`,
+        `setLoginFailed`
+      ]);
+
       return (
         <Component
-          {...this.props}
+          {...componentProps}
           email={email}
           password={password}
           isValid={isValid}

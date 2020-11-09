@@ -12,13 +12,10 @@ import NearPlaces from '../near-places/near-places';
 import OfferHost from '../offer-host/offer-host';
 import withLeafletMap from '../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../city-map-factory/city-map-factory';
-import withUpdateOfferOnFavoriteToggle from '../../hocs/with-update-offer-on-favorite-toggle/with-update-offer-on-favorite-toggle';
 import withExtraOfferData from '../../hocs/with-extra-offer-data/with-extra-offer-data';
-import {withAlertDialog} from '../../hocs/with-alert-dialog/with-alert-dialog';
+import withAlertDialog from '../../hocs/with-alert-dialog/with-alert-dialog';
 
 const MAX_VISIBLE_OFFERS_ON_MAP = 4;
-
-const BookmarkToggleWithUpdateOffer = withUpdateOfferOnFavoriteToggle(BookmarkToggle);
 
 const CityMap = withLeafletMap(cityMapFactory(CityMapType.OFFER));
 
@@ -28,7 +25,7 @@ const PREMIUM_MARK_ELEMENT = (
   </div>
 );
 
-const Room = (props) => {
+const OfferPage = (props) => {
   const {offer, reviews, offers, onUpdate} = props;
   const {photos, premium, title, favorite, rating, price, features, host, description} = offer;
 
@@ -50,7 +47,7 @@ const Room = (props) => {
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <BookmarkToggleWithUpdateOffer offer={offer} type={BookmarkToggleType.OFFER} active={favorite} onUpdate={onUpdate}/>
+                <BookmarkToggle offer={offer} type={BookmarkToggleType.OFFER} active={favorite} onUpdate={onUpdate}/>
               </div>
 
               <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
@@ -82,7 +79,7 @@ const Room = (props) => {
   );
 };
 
-Room.propTypes = {
+OfferPage.propTypes = {
   offer: offerPropTypes.isRequired,
   activeOffer: offerPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
@@ -90,5 +87,5 @@ Room.propTypes = {
   onUpdate: PropTypes.func.isRequired,
 };
 
-export {Room};
-export default withExtraOfferData(withAlertDialog(Room));
+export {OfferPage};
+export default withExtraOfferData(withAlertDialog(OfferPage));

@@ -7,26 +7,38 @@ const withDropdownBehavior = (Component) => {
       super(props);
 
       this.state = {
-        isOpened: false
+        isOpened: false,
+        activeOption: props.activeOption
       };
 
       this.handleOptionClick = this.handleOptionClick.bind(this);
-      this.toggle = () => this.setState({isOpened: !this.state.isOpened});
+
+      this.toggle = () => this.setState({
+        isOpened: !this.state.isOpened
+      });
     }
 
     handleOptionClick(evt) {
       const selectedOption = evt.target.dataset.value;
 
-      if (this.props.activeOption !== selectedOption) {
+      if (this.state.activeOption !== selectedOption) {
         this.props.onChange(selectedOption);
       }
+
+      this.setState({
+        isOpened: false,
+        activeOption: selectedOption
+      });
     }
 
     render() {
+      const {isOpened, activeOption} = this.state;
+
       return (
         <Component
           {...this.props}
-          isOpened={this.state.isOpened}
+          isOpened={isOpened}
+          activeOption={activeOption}
           onToggle={this.toggle}
           onOptionClick={this.handleOptionClick}
         />

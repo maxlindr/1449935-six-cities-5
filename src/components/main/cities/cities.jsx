@@ -21,7 +21,7 @@ const Cities = (props) => {
           {offers.length} places to stay in {currentCity}
         </b>
 
-        {/* sort dropdown list */}
+        {/* place for sort dropdown list */}
         {children}
 
         <OffersList
@@ -39,7 +39,7 @@ const Cities = (props) => {
 };
 
 Cities.propTypes = {
-  offers: PropTypes.arrayOf(offerPropTypes),
+  offers: PropTypes.arrayOf(offerPropTypes).isRequired,
   currentCity: PropTypes.string.isRequired,
   activeOffer: offerPropTypes,
   children: PropTypes.element,
