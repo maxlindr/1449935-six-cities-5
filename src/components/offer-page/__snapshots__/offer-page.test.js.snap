@@ -1,0 +1,360 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferPage должен корректно отображаться 1`] = `
+<div
+  className="page"
+>
+  <Memo(Connect(PageHeader)) />
+  <main
+    className="page__main page__main--property"
+  >
+    <section
+      className="property"
+    >
+      <Memo(OfferGallery)
+        photos={
+          Array [
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/15.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/16.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/9.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/10.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/4.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/19.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/3.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/2.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/11.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/1.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/17.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/5.jpg",
+            "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/13.jpg",
+          ]
+        }
+      />
+      <div
+        className="property__container container"
+      >
+        <div
+          className="property__wrapper"
+        >
+          <div
+            className="property__name-wrapper"
+          >
+            <h1
+              className="property__name"
+            >
+              The house among olive 
+            </h1>
+            <Memo(Connect(WithUpdateOfferOnFavoriteToggle))
+              active={false}
+              offer={
+                Object {
+                  "bedrooms": 3,
+                  "description": "Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.",
+                  "favorite": false,
+                  "features": Array [
+                    "Laptop friendly workspace",
+                    "Washer",
+                    "Towels",
+                    "Fridge",
+                    "Air conditioning",
+                    "Baby seat",
+                    "Breakfast",
+                  ],
+                  "host": Object {
+                    "avatar": "img/avatar-angelina.jpg",
+                    "id": 25,
+                    "name": "Angelina",
+                    "super": true,
+                  },
+                  "id": "1",
+                  "location": Object {
+                    "city": Object {
+                      "coordinates": Array [
+                        50.938361,
+                        6.959974,
+                      ],
+                      "name": "Cologne",
+                      "zoom": 13,
+                    },
+                    "coordinates": Array [
+                      50.957361,
+                      6.9509739999999995,
+                    ],
+                    "zoom": 16,
+                  },
+                  "maxAdults": 4,
+                  "photos": Array [
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/15.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/16.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/9.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/10.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/4.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/19.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/3.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/2.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/11.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/1.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/17.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/5.jpg",
+                    "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/13.jpg",
+                  ],
+                  "premium": false,
+                  "price": 493,
+                  "rating": 3.8,
+                  "thumbnail": "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+                  "title": "The house among olive ",
+                  "type": "house",
+                }
+              }
+              onUpdate={[Function]}
+              type="property"
+            />
+          </div>
+          <Memo(RatingStars)
+            rating={3.8}
+            type="property"
+          />
+          <Memo(OfferEssentials)
+            offer={
+              Object {
+                "bedrooms": 3,
+                "description": "Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.",
+                "favorite": false,
+                "features": Array [
+                  "Laptop friendly workspace",
+                  "Washer",
+                  "Towels",
+                  "Fridge",
+                  "Air conditioning",
+                  "Baby seat",
+                  "Breakfast",
+                ],
+                "host": Object {
+                  "avatar": "img/avatar-angelina.jpg",
+                  "id": 25,
+                  "name": "Angelina",
+                  "super": true,
+                },
+                "id": "1",
+                "location": Object {
+                  "city": Object {
+                    "coordinates": Array [
+                      50.938361,
+                      6.959974,
+                    ],
+                    "name": "Cologne",
+                    "zoom": 13,
+                  },
+                  "coordinates": Array [
+                    50.957361,
+                    6.9509739999999995,
+                  ],
+                  "zoom": 16,
+                },
+                "maxAdults": 4,
+                "photos": Array [
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/15.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/16.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/9.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/10.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/4.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/19.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/3.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/2.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/11.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/1.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/17.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/5.jpg",
+                  "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/13.jpg",
+                ],
+                "premium": false,
+                "price": 493,
+                "rating": 3.8,
+                "thumbnail": "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+                "title": "The house among olive ",
+                "type": "house",
+              }
+            }
+          />
+          <div
+            className="property__price"
+          >
+            <b
+              className="property__price-value"
+            >
+              €
+              493
+            </b>
+            <span
+              className="property__price-text"
+            >
+               night
+            </span>
+          </div>
+          <Memo(OfferFeatures)
+            features={
+              Array [
+                "Laptop friendly workspace",
+                "Washer",
+                "Towels",
+                "Fridge",
+                "Air conditioning",
+                "Baby seat",
+                "Breakfast",
+              ]
+            }
+          />
+          <Memo(OfferHost)
+            description="Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs."
+            host={
+              Object {
+                "avatar": "img/avatar-angelina.jpg",
+                "id": 25,
+                "name": "Angelina",
+                "super": true,
+              }
+            }
+          />
+          <Memo(Connect(Component))
+            offerId="1"
+            reviews={null}
+          />
+        </div>
+      </div>
+      <Memo(Connect(WithLeafletMap))
+        activeOffer={
+          Object {
+            "bedrooms": 3,
+            "description": "Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.",
+            "favorite": false,
+            "features": Array [
+              "Laptop friendly workspace",
+              "Washer",
+              "Towels",
+              "Fridge",
+              "Air conditioning",
+              "Baby seat",
+              "Breakfast",
+            ],
+            "host": Object {
+              "avatar": "img/avatar-angelina.jpg",
+              "id": 25,
+              "name": "Angelina",
+              "super": true,
+            },
+            "id": "1",
+            "location": Object {
+              "city": Object {
+                "coordinates": Array [
+                  50.938361,
+                  6.959974,
+                ],
+                "name": "Cologne",
+                "zoom": 13,
+              },
+              "coordinates": Array [
+                50.957361,
+                6.9509739999999995,
+              ],
+              "zoom": 16,
+            },
+            "maxAdults": 4,
+            "photos": Array [
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/15.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/16.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/9.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/10.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/4.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/19.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/3.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/2.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/11.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/1.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/17.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/5.jpg",
+              "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/13.jpg",
+            ],
+            "premium": false,
+            "price": 493,
+            "rating": 3.8,
+            "thumbnail": "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+            "title": "The house among olive ",
+            "type": "house",
+          }
+        }
+        maxOffers={4}
+        offers={
+          Array [
+            Object {
+              "bedrooms": 3,
+              "description": "Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.",
+              "favorite": false,
+              "features": Array [
+                "Laptop friendly workspace",
+                "Washer",
+                "Towels",
+                "Fridge",
+                "Air conditioning",
+                "Baby seat",
+                "Breakfast",
+              ],
+              "host": Object {
+                "avatar": "img/avatar-angelina.jpg",
+                "id": 25,
+                "name": "Angelina",
+                "super": true,
+              },
+              "id": "1",
+              "location": Object {
+                "city": Object {
+                  "coordinates": Array [
+                    50.938361,
+                    6.959974,
+                  ],
+                  "name": "Cologne",
+                  "zoom": 13,
+                },
+                "coordinates": Array [
+                  50.957361,
+                  6.9509739999999995,
+                ],
+                "zoom": 16,
+              },
+              "maxAdults": 4,
+              "photos": Array [
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/15.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/16.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/9.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/10.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/4.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/19.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/3.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/2.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/11.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/1.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/17.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/5.jpg",
+                "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/13.jpg",
+              ],
+              "premium": false,
+              "price": 493,
+              "rating": 3.8,
+              "thumbnail": "https://assets.htmlacademy.ru/intensives/javascript-3/hotel/14.jpg",
+              "title": "The house among olive ",
+              "type": "house",
+            },
+          ]
+        }
+      />
+    </section>
+    <div
+      className="container"
+    />
+  </main>
+</div>
+`;

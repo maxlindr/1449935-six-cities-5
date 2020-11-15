@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferEssentials должен корректно отображаться 1`] = `
+<ul
+  className="property__features"
+>
+  <li
+    className="property__feature property__feature--entire"
+  >
+    House
+  </li>
+  <li
+    className="property__feature property__feature--bedrooms"
+  >
+    3
+     Bedrooms
+  </li>
+  <li
+    className="property__feature property__feature--adults"
+  >
+    Max 
+    4
+     adults
+  </li>
+</ul>
+`;

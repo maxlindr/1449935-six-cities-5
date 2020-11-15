@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ErrorPage Должен отображать глобальное сообщение 1`] = `
+<div
+  className="page error-page"
+>
+  <Memo(Connect(PageHeader)) />
+  <main
+    className="page__main"
+  >
+    <h1
+      className="error-page__message"
+    >
+      I am a global message
+    </h1>
+  </main>
+</div>
+`;
+
+exports[`ErrorPage Должен отображать приоритетное сообщение 1`] = `
+<div
+  className="page error-page"
+>
+  <Memo(Connect(PageHeader)) />
+  <main
+    className="page__main"
+  >
+    <h1
+      className="error-page__message"
+    >
+      I am a priority message
+    </h1>
+  </main>
+</div>
+`;

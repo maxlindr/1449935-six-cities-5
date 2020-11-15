@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert должен корректно отображаться 1`] = `
+<aside
+  className="alert"
+>
+  <div
+    className="alert__window"
+  >
+    <div
+      className="alert__container"
+    >
+      <p
+        className="alert__message"
+      >
+        Hello Jest!
+      </p>
+    </div>
+    <button
+      className="button alert__button"
+      onClick={[Function]}
+      type="button"
+    >
+      OK
+    </button>
+  </div>
+</aside>
+`;

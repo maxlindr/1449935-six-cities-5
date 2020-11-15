@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withRedirectAuthorized должен корректно отображаться если проп isAuthorized=false 1`] = `
+<div>
+  WrappedComponent component
+</div>
+`;
+
+exports[`withRedirectAuthorized должен редиректить на маршрут '/' если isAuthorized=true 1`] = `
+<div>
+  Redirect component
+</div>
+`;

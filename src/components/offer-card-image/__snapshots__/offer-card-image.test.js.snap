@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferCardImage должен корректно отображаться 1`] = `
+<React.Fragment>
+  <div
+    className="cities__image-wrapper place-card__image-wrapper"
+  >
+    <Link
+      to="/offer/1"
+    >
+      <img
+        alt="Place image"
+        className="place-card__image"
+        height={200}
+        src="https://assets.htmlacademy.ru/intensives/javascript-3/hotel/15.jpg"
+        width={260}
+      />
+    </Link>
+  </div>
+</React.Fragment>
+`;

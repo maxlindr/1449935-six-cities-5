@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PrivateRoute должен корректно отображаться Должен корректно отображаться при authorizationStatus=AuthorizationStatus.AUTHORIZED 1`] = `
+<div>
+  Mock component
+</div>
+`;
+
+exports[`PrivateRoute должен корректно отображаться Должен редиректить на маршрут /login при authorizationStatus=AuthorizationStatus.NOT_AUTHORIZED 1`] = `
+<div>
+  Redirect component
+</div>
+`;

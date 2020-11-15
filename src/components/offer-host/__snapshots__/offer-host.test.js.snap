@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OfferHost должен корректно отображаться 1`] = `
+<div
+  className="property__host"
+>
+  <h2
+    className="property__host-title"
+  >
+    Meet the host
+  </h2>
+  <div
+    className="property__host-user user"
+  >
+    <div
+      className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper"
+    >
+      <img
+        alt="Host avatar"
+        className="property__avatar user__avatar"
+        height={74}
+        src="img/avatar-angelina.jpg"
+        width={74}
+      />
+    </div>
+    <span
+      className="property__user-name"
+    >
+      Host Name
+    </span>
+  </div>
+  <div
+    className="property__description"
+  >
+    <p
+      className="property__text"
+    >
+      Description
+    </p>
+  </div>
+</div>
+`;

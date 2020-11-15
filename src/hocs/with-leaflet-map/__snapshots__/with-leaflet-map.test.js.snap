@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withLeafletMap Map should render map component with pins 1`] = `
+<div>
+  Mock Component
+</div>
+`;

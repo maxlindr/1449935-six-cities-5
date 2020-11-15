@@ -1,0 +1,77 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`withAlertDialog Не подключенный к store должен добавлять компонент Alert при наличии пропа alertDialogMessage 1`] = `
+Array [
+  <div>
+    Mock component
+  </div>,
+  <aside
+    className="alert"
+  >
+    <div
+      className="alert__window"
+    >
+      <div
+        className="alert__container"
+      >
+        <p
+          className="alert__message"
+        >
+          Message
+        </p>
+      </div>
+      <button
+        className="button alert__button"
+        onClick={[Function]}
+        type="button"
+      >
+        OK
+      </button>
+    </div>
+  </aside>,
+]
+`;
+
+exports[`withAlertDialog Не подключенный к store не должен добавлять компонент Alert при отсутствии пропа alertDialogMessage 1`] = `
+<div>
+  Mock component
+</div>
+`;
+
+exports[`withAlertDialog Подключенный к store должен добавлять компонент Alert при наличии данных в store.APP.alertMessage 1`] = `
+Array [
+  <div>
+    Mock component
+  </div>,
+  <aside
+    className="alert"
+  >
+    <div
+      className="alert__window"
+    >
+      <div
+        className="alert__container"
+      >
+        <p
+          className="alert__message"
+        >
+          Message
+        </p>
+      </div>
+      <button
+        className="button alert__button"
+        onClick={[Function]}
+        type="button"
+      >
+        OK
+      </button>
+    </div>
+  </aside>,
+]
+`;
+
+exports[`withAlertDialog Подключенный к store не должен добавлять компонент Alert при отсутствии данных в store.APP.alertMessage 1`] = `
+<div>
+  Mock component
+</div>
+`;
