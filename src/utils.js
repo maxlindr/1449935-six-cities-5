@@ -13,5 +13,8 @@ export const omitProperties = (from, names) => {
     names.every((name) => key !== name)
   );
 
-  return Object.fromEntries(entries);
+  return entries.reduce((acc, [key, value]) => {
+    acc[key] = value;
+    return acc;
+  }, {});
 };
