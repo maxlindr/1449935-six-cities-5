@@ -16,11 +16,6 @@ export default (state = initialState, action) => {
         currentCity: action.payload
       });
 
-    case ActionType.UPDATE_LOCAL_OFFERS:
-      return Object.assign({}, state, {
-        localOffers: action.payload
-      });
-
     case ActionType.UPDATE_OFFER:
       return Object.assign({}, state, {
         offers: replaceOffer(state.offers, action.payload)

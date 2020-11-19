@@ -1,12 +1,12 @@
-import {AuthorizationStatus} from '../../constants';
-import {ActionType} from '../actions/action';
+import {AuthorizationStatus} from '../../../constants';
+import {ActionType} from '../../actions/action';
 
 const initialState = {
   user: null,
   authorizationStatus: AuthorizationStatus.NOT_AUTHORIZED,
 };
 
-const reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case ActionType.SET_AUTHORIZATION_STATUS:
       return Object.assign({}, state, {
@@ -21,5 +21,3 @@ const reducer = (state = initialState, action) => {
 
   return state;
 };
-
-export default reducer;

@@ -1,4 +1,4 @@
-import {ActionType} from '../actions/action';
+import {ActionType} from '../../actions/action';
 
 const initialState = {
   isLoginFailedWithUnauthorized: false,

@@ -26,5 +26,7 @@ export const getCitiesLocationData = (offers, orderedCityNames) => {
     }
   }
 
-  return orderedCityNames.map((city) => citiesLocationData.get(city));
+  return orderedCityNames
+    .map((city) => citiesLocationData.get(city))
+    .filter((obj) => obj);
 };

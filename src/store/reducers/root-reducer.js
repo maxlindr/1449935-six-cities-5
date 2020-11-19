@@ -1,10 +1,10 @@
 import {combineReducers} from 'redux';
 import dataReducer from './data-reducer/data-reducer';
-import userReducer from './user-reducer';
-import offerPageReducer from './offer-page-reducer';
-import loginReducer from './login-reducer';
-import errorPageReducer from './error-page-reducer';
-import appReducer from './app-reducer';
+import userReducer from './user-reducer/user-reducer';
+import offerPageReducer from './offer-page-reducer/offer-page-reducer';
+import loginReducer from './login-reducer/login-reducer';
+import errorPageReducer from './error-page-reducer/error-page-reducer';
+import appReducer from './app-reducer/app-reducer';
 
 export const StateNameSpace = {
   DATA: `DATA`,
