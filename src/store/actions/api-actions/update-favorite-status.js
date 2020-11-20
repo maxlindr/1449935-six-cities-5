@@ -12,6 +12,5 @@ export const updateFavoriteStatus = (offerId, status) => (dispatch, _getState, a
     })
     .catch((err) => {
       handleErrorWithAlert(dispatch, err);
-      throw err;
     })
 );

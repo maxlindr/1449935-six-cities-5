@@ -54,17 +54,18 @@ describe(`Offer page reducer`, () => {
     );
   });
 
-  it(`должен сохранять nearby places в стейт`, () => {
-    const PLACES = [{id: `1`}, {id: `2`}];
-
+  it(`должен сохранять nearby places id в стейт`, () => {
     expect(
         reducer(BLANK_STATE, {
           type: ActionType.SET_FETCHED_NEARBY_PLACES,
-          payload: PLACES
+          payload: [
+            {id: `1`},
+            {id: `2`}
+          ]
         })
     ).toEqual(
         Object.assign({}, BLANK_STATE, {
-          nearbyPlaces: PLACES
+          nearbyPlaces: [`1`, `2`]
         })
     );
   });

@@ -32,13 +32,4 @@ describe(`withUpdateOfferOnFavoriteToggle`, () => {
     wrapper.props().onToggle();
     expect(updateOffer).toHaveBeenNthCalledWith(1, offerWithInversedFavoriteState);
   });
-
-  it(`должен вызывать onUpdate при вызове onToggle`, () => {
-    return wrapper
-      .props()
-      .onToggle()
-      .then(() =>
-        expect(onUpdate).toHaveBeenNthCalledWith(1, offerWithInversedFavoriteState)
-      );
-  });
 });

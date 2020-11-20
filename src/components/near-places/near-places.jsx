@@ -4,13 +4,13 @@ import NearPlaceCard from '../near-place-card/near-place-card';
 import {offerPropTypes} from '../../prop-types';
 
 const NearPlaces = (props) => {
-  const {onCardOver, onCardLeave} = props;
+  const {onCardOver, onCardLeave, offers} = props;
 
   return (
     <section className="near-places places">
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
-        {props.offers.map((offer) => (
+        {offers.map((offer) => (
           <NearPlaceCard
             key={offer.id}
             offer={offer}

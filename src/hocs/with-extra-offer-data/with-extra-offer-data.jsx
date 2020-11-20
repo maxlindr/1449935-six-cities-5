@@ -5,6 +5,7 @@ import {StateNameSpace} from '../../store/reducers/root-reducer';
 import {fetchReviewsList, fetchNearbyPlaces, fetchOffer} from '../../store/actions/api-actions';
 import {ActionCreator} from '../../store/actions/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
+import {getNearbyOffers} from '../../store/selectors';
 
 const withExtraOfferData = (WrappedComponent) => {
   class WithExtraOfferData extends React.PureComponent {
@@ -61,7 +62,7 @@ const withExtraOfferData = (WrappedComponent) => {
 const mapStateToProps = (state) => ({
   offer: state[StateNameSpace.OFFER_PAGE].offer,
   reviews: state[StateNameSpace.OFFER_PAGE].reviews,
-  offers: state[StateNameSpace.OFFER_PAGE].nearbyPlaces,
+  offers: getNearbyOffers(state)
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -20,7 +20,12 @@ export default (state = initialState, action) => {
 
     case ActionType.SET_FETCHED_NEARBY_PLACES:
       return Object.assign({}, state, {
-        nearbyPlaces: action.payload
+        nearbyPlaces: action.payload.map((offer) => offer.id)
+      });
+
+    case ActionType.UPDATE_OFFER:
+      return Object.assign({}, state, {
+        offer: action.payload
       });
 
     case ActionType.RESET_OFFER_PAGE_STORE:

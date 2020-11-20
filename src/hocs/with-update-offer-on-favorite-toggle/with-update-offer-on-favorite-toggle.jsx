@@ -5,8 +5,6 @@ import {connect} from 'react-redux';
 import {updateFavoriteStatus} from '../../store/actions/api-actions';
 import {omitProperties} from '../../utils';
 
-const doNothing = () => {};
-
 const withUpdateOfferOnFavoriteToggle = (Component) => {
   class WithUpdateOfferOnFavoriteToggle extends React.PureComponent {
     constructor(props) {
@@ -16,15 +14,13 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
     }
 
     handleToggle() {
-      const {updateOffer, offer, onUpdate = doNothing} = this.props;
+      const {updateOffer, offer} = this.props;
 
-      const newOffer = Object.assign({}, offer, {
-        favorite: !offer.favorite
-      });
-
-      return updateOffer(newOffer)
-        .then(() => onUpdate(newOffer))
-        .catch(doNothing);
+      updateOffer(
+          Object.assign({}, offer, {
+            favorite: !offer.favorite
+          })
+      );
     }
 
     render() {
@@ -47,7 +43,7 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
 
 const mapDispatchToProps = (dispatch) => ({
   updateOffer(offer) {
-    return dispatch(updateFavoriteStatus(offer.id, offer.favorite));
+    dispatch(updateFavoriteStatus(offer.id, offer.favorite));
   },
 });
 

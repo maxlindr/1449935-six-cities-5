@@ -108,7 +108,6 @@ exports[`OfferPage должен корректно отображаться 1`] 
                   "type": "house",
                 }
               }
-              onUpdate={[Function]}
               type="property"
             />
           </div>

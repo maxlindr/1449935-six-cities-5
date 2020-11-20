@@ -26,7 +26,7 @@ const PREMIUM_MARK_ELEMENT = (
 );
 
 const OfferPage = (props) => {
-  const {offer, reviews, offers, onUpdate} = props;
+  const {offer, reviews, offers} = props;
   const {photos, premium, title, favorite, rating, price, features, host, description} = offer;
 
   const offerReviews = reviews
@@ -47,7 +47,11 @@ const OfferPage = (props) => {
 
               <div className="property__name-wrapper">
                 <h1 className="property__name">{title}</h1>
-                <BookmarkToggle offer={offer} type={BookmarkToggleType.OFFER} active={favorite} onUpdate={onUpdate}/>
+                <BookmarkToggle
+                  offer={offer}
+                  type={BookmarkToggleType.OFFER}
+                  active={favorite}
+                />
               </div>
 
               <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
@@ -84,7 +88,6 @@ OfferPage.propTypes = {
   activeOffer: offerPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewPropTypes),
-  onUpdate: PropTypes.func.isRequired,
 };
 
 export {OfferPage};

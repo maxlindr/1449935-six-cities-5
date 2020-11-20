@@ -27,3 +27,12 @@ export const getFavoriteOffers = createSelector(
     getOffers,
     (offers) => offers.filter((offer) => offer.favorite)
 );
+
+const getNearbyPlacesIds = (state) => state[StateNameSpace.OFFER_PAGE].nearbyPlaces;
+
+export const getNearbyOffers = createSelector(
+    [getOffers, getNearbyPlacesIds],
+    (offers, ids) => ids
+      ? ids.map((id) => offers.find((offer) => offer.id === id))
+      : null
+);

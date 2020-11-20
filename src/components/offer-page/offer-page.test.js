@@ -12,7 +12,6 @@ test(`OfferPage должен корректно отображаться`, () =>
         activeOffer={null}
         offers={[]}
         reviews={null}
-        onUpdate={() => {}}
       />
   );
 
