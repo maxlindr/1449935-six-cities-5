@@ -12,21 +12,29 @@ const withExtraOfferData = (WrappedComponent) => {
     constructor(props) {
       super(props);
 
-      const {offerId, getOffer, reset} = props;
+      const {offerId, getOffer} = props;
 
-      reset();
       getOffer(offerId);
     }
 
     componentDidUpdate(prevProps) {
-      const {offer: prevOffer} = prevProps;
-      const {offer, offerId, getReviews, getNearbyPlaces, changeCity} = this.props;
+      const {offer: prevOffer, offerId: prevOfferId} = prevProps;
+      const {offer, offerId, getOffer, getReviews, getNearbyPlaces, changeCity, reset} = this.props;
+
+      if (prevOfferId !== offerId) {
+        reset();
+        getOffer(offerId);
+      }
 
       if (!prevOffer && offer) {
         changeCity(offer.location.city.name);
         getReviews(offerId);
         getNearbyPlaces(offerId);
       }
+    }
+
+    componentWillUnmount() {
+      this.props.reset();
     }
 
     render() {
