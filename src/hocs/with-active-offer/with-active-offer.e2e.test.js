@@ -15,19 +15,21 @@ beforeEach(() => {
 });
 
 describe(`withActiveOffer`, () => {
-  it(`должен при вызове колбэка onActivate записывать в стейт активный offer`, () => {
+  it(`должен при вызове колбэка onActivate менять проп activeOffer`, () => {
     wrapper.props().onActivate(activeOffer);
-    expect(wrapper.state().activeOffer).toEqual(activeOffer);
+    expect(wrapper.props().activeOffer).toEqual(activeOffer);
   });
 
-  it(`должен при вызове колбэка onDeactivate обнулять активный offer`, () => {
-    const instance = wrapper.instance();
+  it(`должен при вызове колбэка onDeactivate обнулять проп activeOffer`, () => {
+    // Для выполнения данного теста требуется устанивить состояние компонента.
+    // Поскольку реализация состояния компонента основана на хуках, прямого доступа к состоянию нет.
+    // Придется устанавливать это состояние с помощью побочного эффекта, используя onActivate.
+    wrapper.props().onActivate(activeOffer);
+    // Убедимся, что состояние установлено корректно.
+    expect(wrapper.props().activeOffer).toEqual(activeOffer);
 
-    instance.state = {
-      activeOffer
-    };
-
+    // Основной тест
     wrapper.props().onDeactivate();
-    expect(wrapper.state().activeOffer).toBeNull();
+    expect(wrapper.props().activeOffer).toBeNull();
   });
 });

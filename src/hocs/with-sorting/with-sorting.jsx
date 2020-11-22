@@ -40,35 +40,25 @@ const sortOffersBy = (offers, sortType) => {
 };
 
 const withSorting = (Component) => {
-  class WithSorting extends React.PureComponent {
-    constructor(props) {
-      super(props);
+  const WithSorting = (props) => {
+    const [sortType, setSortType] = React.useState(SortType.POPULAR);
+    const handleSortOptionChange = React.useCallback((option) => setSortType(option), []);
 
-      this.state = {
-        sortType: SortType.POPULAR,
-      };
+    const sortedOffers = sortOffersBy(props.offers, sortType);
 
-      this.handleSortOptionChange = (option) => this.setState({sortType: option});
-    }
-
-    render() {
-      const {sortType} = this.state;
-      const sortedOffers = sortOffersBy(this.props.offers, sortType);
-
-      return (
-        <Component {...this.props} offers={sortedOffers} >
-          {/* При каждом рендере SortDropdownList должен закрываться, а для этого нужно сбрасывать его текущее состояние.
-          Это решается с помощью генерации нового 'key' */}
-          <OffersSortDropdownList
-            key={Math.random()}
-            activeOption={sortType}
-            options={DROPDOWN_OPTIONS}
-            onChange={this.handleSortOptionChange}
-          />
-        </Component>
-      );
-    }
-  }
+    return (
+      <Component {...props} offers={sortedOffers} >
+        {/* При каждом рендере SortDropdownList должен закрываться, а для этого нужно сбрасывать его текущее состояние.
+        Это решается с помощью генерации нового 'key' */}
+        <OffersSortDropdownList
+          key={Math.random()}
+          activeOption={sortType}
+          options={DROPDOWN_OPTIONS}
+          onChange={handleSortOptionChange}
+        />
+      </Component>
+    );
+  };
 
   WithSorting.propTypes = {
     offers: PropTypes.arrayOf(offerPropTypes),

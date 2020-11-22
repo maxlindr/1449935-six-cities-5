@@ -1,5 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import {withHooks} from 'jest-react-hooks-shallow';
 import {withExtraOfferData} from './with-extra-offer-data';
 import offer from '../../../__mocks__/offer-mock';
 
@@ -35,6 +36,20 @@ beforeEach(() => {
 
 describe(`withExtraOfferData`, () => {
   it(`должен вызывать при загрузке getOffer с аргументом в виде offer id`, () => {
+    withHooks(() => {
+      wrapper = shallow(
+          <MockComponentWrapped
+            offerId={`1`}
+            getReviews={getReviews}
+            getNearbyPlaces={getNearbyPlaces}
+            reset={() => {}}
+            getOffer={getOffer}
+            changeCity={changeCity}
+            updateOffer={updateOffer}
+          />
+      );
+    });
+
     expect(getOffer).toHaveBeenCalledTimes(1);
   });
 
@@ -42,17 +57,26 @@ describe(`withExtraOfferData`, () => {
     const setOfferProp = () => wrapper.setProps({offer});
 
     it(`должен вызывать changeCity с аргументом в виде названия города`, () => {
-      setOfferProp();
+      withHooks(() => {
+        setOfferProp();
+      });
+
       expect(changeCity).toHaveBeenNthCalledWith(1, offer.location.city.name);
     });
 
     it(`должен вызывать getReviews с аргументом в виде offer id`, () => {
-      setOfferProp();
+      withHooks(() => {
+        setOfferProp();
+      });
+
       expect(getReviews).toHaveBeenNthCalledWith(1, offer.id);
     });
 
     it(`должен вызывать getNearbyPlaces с аргументом в виде offer id`, () => {
-      setOfferProp();
+      withHooks(() => {
+        setOfferProp();
+      });
+
       expect(getNearbyPlaces).toHaveBeenNthCalledWith(1, offer.id);
     });
   });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
 import {cityPropTypes, offerPropTypes} from '../../prop-types';
 import leaflet from 'leaflet';
@@ -27,88 +27,95 @@ const checkOffersListsEquals = (offers1, offers2) => {
   return offers1.every((offer) => offers2.includes(offer));
 };
 
+const usePrevious = (value) => {
+  const ref = useRef();
+
+  useEffect(() => {
+    ref.current = value;
+  });
+
+  return ref.current;
+};
+
 const withLeafletMap = (Component) => {
-  class WithLeafletMap extends React.Component {
-    constructor(props) {
-      super(props);
+  const WithLeafletMap = (props) => {
+    const {offers, city, activeOffer, maxOffers} = props;
 
-      this.state = {
-        prevCity: null,
-        reset: true
+    const mapRef = useRef(null);
+    const [map, setMap] = useState(null);
+    const [pinsGroup, setPinsGroup] = useState(null);
+    const [mapPins] = useState(new Map());
+    const [pinsData, setPinsData] = useState(new Map());
+    const prevOffers = usePrevious(offers);
+    const prevActiveOffer = usePrevious(activeOffer);
+
+    useEffect(() => {
+      return () => {
+        mapPins.clear();
       };
+    }, []);
 
-      this.map = null;
-      this.mapRef = React.createRef();
-      this.pinsGroup = null;
-      this.pins = new Map();
-    }
-
-    static getDerivedStateFromProps(props, state) {
-      if (props.city !== state.prevCity) {
-        return {
-          prevCity: props.city,
-          reset: true,
-        };
+    // reset map if city changed
+    useEffect(() => {
+      if (map) {
+        map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
+        clear();
       }
 
-      return {
-        reset: false,
-      };
-    }
+    }, [city]);
 
-    componentWillUnmount() {
-      this.pins.clear();
-    }
+    // update pins data
+    useEffect(() => {
+      if (
+        activeOffer === prevActiveOffer &&
+        checkOffersListsEquals(offers, prevOffers)
+      ) {
+        return;
+      }
 
-    componentDidUpdate() {
-      const map = this.map;
+      const offersToShow = maxOffers
+        ? offers.slice(0, maxOffers)
+        : offers.slice();
 
+      const newPinsData = new Map(
+          offersToShow.map((offer) => {
+            const {id, location} = offer;
+
+            const data = {
+              id,
+              coordinates: location.coordinates,
+              isActive: activeOffer ? (id === activeOffer.id) : false
+            };
+
+            return [id, data];
+          })
+      );
+
+      setPinsData(newPinsData);
+    }, [offers, activeOffer]);
+
+    // draw pins
+    useEffect(() => {
       if (!map) {
         return;
       }
 
-      const {offers, city, activeOffer, maxOffers} = this.props;
-
-      if (this.state.reset) {
-        map.setView(city.coordinates, DEFAULT_ZOOM_LEVEL);
-        this.clear();
-      }
-
-      const offersToShow = maxOffers ? offers.slice(0, maxOffers) : offers;
-
-      offersToShow.slice(0).forEach((offer) => {
-        const {id, location} = offer;
-
-        const pinActualData = {
-          id,
-          coordinates: location.coordinates,
-          isActive: activeOffer ? (id === activeOffer.id) : false
-        };
-
-        const placedMapPin = this.pins.get(pinActualData.id);
+      pinsData.forEach((pinData) => {
+        const placedMapPin = mapPins.get(pinData.id);
 
         if (placedMapPin) {
-          if (placedMapPin.isActive !== pinActualData.isActive) {
-            this.updatePin(pinActualData);
+          if (placedMapPin.isActive !== pinData.isActive) {
+            updatePin(pinData);
           }
         } else {
-          this.addPin(pinActualData);
+          addPin(pinData);
         }
       });
-    }
+    }, [map, pinsData]);
 
-    shouldComponentUpdate(nextProps) {
-      const {offers, city, activeOffer} = this.props;
-
-      return nextProps.city !== city
-        || nextProps.activeOffer !== activeOffer
-        || !checkOffersListsEquals(nextProps.offers, offers);
-    }
-
-    componentDidMount() {
-      const {city} = this.props;
-
-      const map = this.map = leaflet.map(this.mapRef.current, {
+    // creating map
+    useEffect(() => {
+      const leafletMap = leaflet.map(mapRef.current, {
         center: city.coordinates,
         zoom: DEFAULT_ZOOM_LEVEL,
         zoomControl: false,
@@ -119,37 +126,53 @@ const withLeafletMap = (Component) => {
         .tileLayer(`https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png`, {
           attribution: `&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>`
         })
-        .addTo(map);
+        .addTo(leafletMap);
 
-      this.pinsGroup = leaflet.layerGroup();
-      this.pinsGroup.addTo(map);
+      const leafletPinsGroup = leaflet.layerGroup();
+      leafletPinsGroup.addTo(leafletMap);
+      setPinsGroup(leafletPinsGroup);
 
-      this.forceUpdate();
-    }
+      setMap(leafletMap);
+    }, []);
 
-    addPin(pin) {
-      const {coordinates, isActive, id} = pin;
+    const addPin = useCallback(
+        (pin) => {
+          const {coordinates, isActive, id} = pin;
 
-      const marker = leaflet.marker(coordinates, {icon: isActive ? PIN_ACTIVE : PIN});
-      this.pinsGroup.addLayer(marker);
-      this.pins.set(id, {pin, marker});
-    }
+          const marker = leaflet.marker(coordinates, {
+            icon: isActive ? PIN_ACTIVE : PIN
+          });
 
-    clear() {
-      this.pins.clear();
-      this.pinsGroup.clearLayers();
-    }
+          pinsGroup.addLayer(marker);
 
-    updatePin(pin) {
-      const oldPin = this.pins.get(pin.id);
-      const icon = pin.isActive ? PIN_ACTIVE : PIN;
-      oldPin.marker.setIcon(icon);
-    }
+          mapPins.set(id, {
+            pin,
+            marker
+          });
+        },
+        [pinsGroup, mapPins]
+    );
 
-    render() {
-      return <Component reference={this.mapRef}/>;
-    }
-  }
+    const clear = useCallback(
+        () => {
+          mapPins.clear();
+          pinsData.clear();
+          pinsGroup.clearLayers();
+        },
+        [mapPins, pinsData, pinsGroup]
+    );
+
+    const updatePin = useCallback(
+        (pin) => {
+          const oldPin = mapPins.get(pin.id);
+          const icon = pin.isActive ? PIN_ACTIVE : PIN;
+          oldPin.marker.setIcon(icon);
+        },
+        [mapPins]
+    );
+
+    return <Component reference={mapRef}/>;
+  };
 
   WithLeafletMap.propTypes = {
     city: cityPropTypes.isRequired,

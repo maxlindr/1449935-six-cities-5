@@ -2,49 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const withDropdownBehavior = (Component) => {
-  class WithDropdownBehavior extends React.PureComponent {
-    constructor(props) {
-      super(props);
+  const WithDropdownBehavior = (props) => {
+    const [isOpened, setOpened] = React.useState(false);
+    const [activeOption, setActiveOption] = React.useState(props.activeOption);
+    const handleToggle = React.useCallback(() => setOpened(!isOpened));
 
-      this.state = {
-        isOpened: false,
-        activeOption: props.activeOption
-      };
-
-      this.handleOptionClick = this.handleOptionClick.bind(this);
-
-      this.toggle = () => this.setState({
-        isOpened: !this.state.isOpened
-      });
-    }
-
-    handleOptionClick(evt) {
+    const handleOptionClick = React.useCallback((evt) => {
       const selectedOption = evt.target.dataset.value;
 
-      if (this.state.activeOption !== selectedOption) {
-        this.props.onChange(selectedOption);
+      if (activeOption !== selectedOption) {
+        props.onChange(selectedOption);
+        setActiveOption(selectedOption);
       }
 
-      this.setState({
-        isOpened: false,
-        activeOption: selectedOption
-      });
-    }
+      setOpened(false);
+    });
 
-    render() {
-      const {isOpened, activeOption} = this.state;
-
-      return (
-        <Component
-          {...this.props}
-          isOpened={isOpened}
-          activeOption={activeOption}
-          onToggle={this.toggle}
-          onOptionClick={this.handleOptionClick}
-        />
-      );
-    }
-  }
+    return (
+      <Component
+        {...props}
+        isOpened={isOpened}
+        activeOption={activeOption}
+        onToggle={handleToggle}
+        onOptionClick={handleOptionClick}
+      />
+    );
+  };
 
   WithDropdownBehavior.propTypes = {
     onChange: PropTypes.func.isRequired,

@@ -6,6 +6,72 @@ import ApiActions from '../../store/actions/api-actions';
 const MIN_COMMENT_LENGTH = 50;
 const MAX_COMMENT_LENGTH = 300;
 
+const INITIAL_STATE = {
+  rating: null,
+  text: ``,
+  isValid: false,
+  isPending: false,
+};
+
+const ActionType = {
+  SET_RATING: `SET_RATING`,
+  SET_TEXT: `SET_TEXT`,
+  SET_VALID: `SET_VALID`,
+  SET_PENDING: `SET_PENDING`,
+  VALIDATE: `VALIDATE`,
+  RESET: `RESET`,
+};
+
+const ActionCreator = {
+  setRating: (rating) => ({
+    type: ActionType.SET_RATING,
+    payload: rating
+  }),
+  setText: (text) => ({
+    type: ActionType.SET_TEXT,
+    payload: text
+  }),
+  setPending: (value) => ({
+    type: ActionType.SET_PENDING,
+    payload: value
+  }),
+  validate: () => ({
+    type: ActionType.VALIDATE
+  }),
+  reset: () => ({
+    type: ActionType.RESET
+  }),
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case ActionType.SET_RATING:
+      return Object.assign({}, state, {
+        rating: action.payload
+      });
+    case ActionType.SET_TEXT:
+      return Object.assign({}, state, {
+        text: action.payload
+      });
+    case ActionType.SET_VALID:
+      return Object.assign({}, state, {
+        isValid: action.payload
+      });
+    case ActionType.SET_PENDING:
+      return Object.assign({}, state, {
+        isPending: action.payload
+      });
+    case ActionType.RESET:
+      return INITIAL_STATE;
+    case ActionType.VALIDATE:
+      return Object.assign({}, state, {
+        isValid: checkCommentValidity(state.text) && state.rating > 0
+      });
+    default:
+      throw new Error(`Action with type "${action.type}" not exists`);
+  }
+}
+
 const checkCommentValidity = (text) => {
   const trimmedText = text.trim();
 
@@ -15,79 +81,66 @@ const checkCommentValidity = (text) => {
   );
 };
 
-const INITIAL_STATE = {
-  rating: null,
-  text: ``,
-  isValid: false,
-  isPending: false,
-};
-
 const withReviewFormController = (Component) => {
-  class WithReviewFormController extends React.PureComponent {
-    constructor(props) {
-      super(props);
+  const WithReviewFormController = (props) => {
+    const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
 
-      this.state = INITIAL_STATE;
-
-      this.handleSubmit = this.handleSubmit.bind(this);
-      this.handleRatingClick = this.handleRatingClick.bind(this);
-      this.handleTextChange = this.handleTextChange.bind(this);
-    }
-
-    handleSubmit(evt) {
+    const handleSubmit = React.useCallback((evt) => {
       evt.preventDefault();
 
-      const {offerId, postComment} = this.props;
+      const {offerId, postComment} = props;
 
       const comment = {
-        text: this.state.text,
-        rating: this.state.rating
+        text: state.text,
+        rating: state.rating
       };
 
       const submitComment = () =>
         postComment(offerId, comment)
-          .then(() => this.setState(INITIAL_STATE))
-          .catch(() =>
-            this.setState({
-              isPending: false,
-            })
-          );
+          .then(() => dispatch(
+              ActionCreator.reset()
+          ))
+          .catch(() => dispatch(
+              ActionCreator.setPending(false)
+          ));
 
-      this.setState({isPending: true}, submitComment);
-    }
-
-    handleRatingClick(evt) {
-      this.setState({rating: Number(evt.target.value)}, this.validate);
-    }
-
-    handleTextChange(evt) {
-      this.setState({text: evt.target.value}, this.validate);
-    }
-
-    validate() {
-      const {rating, text} = this.state;
-
-      this.setState({
-        isValid: checkCommentValidity(text) && rating > 0
-      });
-    }
-
-    render() {
-      const {text, rating, isValid, isPending} = this.state;
-
-      return (
-        <Component
-          text={text}
-          rating={rating}
-          isValid={isValid}
-          disabled={isPending}
-          onTextChange={this.handleTextChange}
-          onRatingClick={this.handleRatingClick}
-          onSubmit={this.handleSubmit}
-        />
+      dispatch(
+          ActionCreator.setPending(true)
       );
-    }
-  }
+
+      submitComment();
+    }, []);
+
+    const handleRatingClick = React.useCallback((evt) => {
+      dispatch(ActionCreator.setRating(
+          Number(evt.target.value)
+      ));
+
+      dispatch(ActionCreator.validate());
+    }, []);
+
+    const handleTextChange = React.useCallback((evt) => {
+      dispatch(
+          ActionCreator.setText(evt.target.value)
+      );
+
+      dispatch(ActionCreator.validate());
+    }, []);
+
+    const {text, rating, isValid, isPending} = state;
+
+    return (
+      <Component
+        text={text}
+        rating={rating}
+        isValid={isValid}
+        disabled={isPending}
+        onTextChange={handleTextChange}
+        onRatingClick={handleRatingClick}
+        onSubmit={handleSubmit}
+      />
+    );
+  };
 
   WithReviewFormController.propTypes = {
     offerId: PropTypes.string.isRequired,

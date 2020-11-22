@@ -37,22 +37,23 @@ describe(`withDropdownBehavior`, () => {
   });
 
   it(`должен закрываться при клике на шапку`, () => {
-    const instance = wrapper.instance();
+    // установка начального состояния
+    wrapper.props().onToggle();
+    // проверка корректности установки начального состояния
+    expect(wrapper.props().isOpened).toEqual(true);
 
-    instance.state = {
-      isOpened: true
-    };
-
+    // основной тест
     wrapper.props().onToggle();
     expect(wrapper.props().isOpened).toEqual(false);
   });
 
   it(`должен закрываться при клике на item`, () => {
-    const instance = wrapper.instance();
+    // установка начального состояния
+    wrapper.props().onToggle();
+    // проверка корректности установки начального состояния
+    expect(wrapper.props().isOpened).toEqual(true);
 
-    instance.state = {
-      isOpened: true
-    };
+    // основной тест
 
     wrapper.props().onOptionClick(
         createOptionClickEvent(ACTIVE_OPTION_VALUE)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import {connect} from 'react-redux';
@@ -6,31 +6,23 @@ import {updateFavoriteStatus} from '../../store/actions/api-actions';
 import {omitProperties} from '../../utils';
 
 const withUpdateOfferOnFavoriteToggle = (Component) => {
-  class WithUpdateOfferOnFavoriteToggle extends React.PureComponent {
-    constructor(props) {
-      super(props);
+  const WithUpdateOfferOnFavoriteToggle = (props) => {
+    const {updateOffer, offer} = props;
 
-      this.handleToggle = this.handleToggle.bind(this);
-    }
-
-    handleToggle() {
-      const {updateOffer, offer} = this.props;
-
+    const handleToggle = useCallback(() => {
       updateOffer(
           Object.assign({}, offer, {
             favorite: !offer.favorite
           })
       );
-    }
+    }, [offer]);
 
-    render() {
-      const componentProps = omitProperties(this.props, [`offer`, `updateOffer`, `onUpdate`]);
+    const componentProps = omitProperties(props, [`offer`, `updateOffer`, `onUpdate`]);
 
-      return (
-        <Component {...componentProps} onToggle={this.handleToggle}/>
-      );
-    }
-  }
+    return (
+      <Component {...componentProps} onToggle={handleToggle}/>
+    );
+  };
 
   WithUpdateOfferOnFavoriteToggle.propTypes = {
     offer: offerPropTypes.isRequired,

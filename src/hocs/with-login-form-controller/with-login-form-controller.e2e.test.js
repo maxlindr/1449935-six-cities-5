@@ -1,6 +1,14 @@
 import React from 'react';
 import {shallow} from 'enzyme';
+import {withHooks} from 'jest-react-hooks-shallow';
 import {withLoginFormController} from './with-login-form-controller';
+
+const createEvent = (value) => ({
+  target: {
+    value
+  },
+  preventDefault: () => {}
+});
 
 const MockComponent = () => <div />;
 const MockComponentWrapped = withLoginFormController(MockComponent);
@@ -24,12 +32,6 @@ beforeEach(() => {
 });
 
 describe(`withLoginFormController`, () => {
-  const createEvent = (value) => ({
-    target: {
-      value
-    },
-    preventDefault: () => {}
-  });
 
   it(`должен быть разблокирован если проп isPending=false`, () => {
     expect(wrapper.props().isDisabled).toEqual(false);
@@ -55,9 +57,13 @@ describe(`withLoginFormController`, () => {
     const PASSWORD = `password`;
 
     it(`должен установить проп isValid=true при валидных данных`, () => {
-      wrapper.props().onEmailChange(createEvent(LOGIN));
-      wrapper.props().onPasswordChange(createEvent(PASSWORD));
-      expect(wrapper.props().isValid).toEqual(true);
+      const runTestWithHooksSupport = (test) => withHooks(test);
+
+      runTestWithHooksSupport(() => {
+        wrapper.props().onEmailChange(createEvent(LOGIN));
+        wrapper.props().onPasswordChange(createEvent(PASSWORD));
+        expect(wrapper.props().isValid).toEqual(true);
+      });
     });
 
     it(`должен установить проп isValid=false при невалидном логине`, () => {

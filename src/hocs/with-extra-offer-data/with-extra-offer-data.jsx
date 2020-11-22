@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {StateNameSpace} from '../../store/reducers/root-reducer';
@@ -8,48 +8,32 @@ import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import {getNearbyOffers} from '../../store/selectors';
 
 const withExtraOfferData = (WrappedComponent) => {
-  class WithExtraOfferData extends React.PureComponent {
-    constructor(props) {
-      super(props);
+  const WithExtraOfferData = (props) => {
+    const {offers, offer, offerId, getOffer, getReviews, getNearbyPlaces, changeCity, reset, updateOffer} = props;
 
-      const {offerId, getOffer} = props;
-
+    useEffect(() => {
       getOffer(offerId);
-    }
 
-    componentDidUpdate(prevProps) {
-      const {offer: prevOffer, offerId: prevOfferId} = prevProps;
-      const {offer, offerId, getOffer, getReviews, getNearbyPlaces, changeCity, reset} = this.props;
+      return () => reset();
+    }, [offerId]);
 
-      if (prevOfferId !== offerId) {
-        reset();
-        getOffer(offerId);
-      }
-
-      if (!prevOffer && offer) {
+    useEffect(() => {
+      if (offer) {
         changeCity(offer.location.city.name);
         getReviews(offerId);
         getNearbyPlaces(offerId);
       }
-    }
+    }, [offer]);
 
-    componentWillUnmount() {
-      this.props.reset();
-    }
-
-    render() {
-      const {offer, updateOffer} = this.props;
-
-      return offer ? (
-        <WrappedComponent
-          {...this.props}
-          offer={offer}
-          offers={this.props.offers || []}
-          onUpdate={updateOffer}
-        />
-      ) : null;
-    }
-  }
+    return offer ? (
+      <WrappedComponent
+        {...props}
+        offer={offer}
+        offers={offers || []}
+        onUpdate={updateOffer}
+      />
+    ) : null;
+  };
 
   WithExtraOfferData.propTypes = {
     offer: offerPropTypes,

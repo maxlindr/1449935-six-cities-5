@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import Alert from '../../components/alert/alert';
@@ -7,32 +7,30 @@ import {ActionCreator} from '../../store/actions/action';
 import {omitProperties} from '../../utils';
 
 const withAlertDialog = (WrappedComponent) => {
-  class WithAlertDialog extends React.PureComponent {
-    componentWillUnmount() {
-      const {alertDialogMessage, closeAlertDialog} = this.props;
+  const WithAlertDialog = (props) => {
+    const {alertDialogMessage, closeAlertDialog} = props;
 
-      if (alertDialogMessage) {
-        closeAlertDialog();
-      }
-    }
+    useEffect(() => {
+      return () => {
+        if (alertDialogMessage) {
+          closeAlertDialog();
+        }
+      };
+    }, []);
 
-    render() {
-      const {alertDialogMessage, closeAlertDialog} = this.props;
+    const wrappedComponentProps = omitProperties(props, [`alertDialogMessage`, `closeAlertDialog`]);
 
-      const wrappedComponentProps = omitProperties(this.props, [`alertDialogMessage`, `closeAlertDialog`]);
-
-      return (
-        <React.Fragment>
-          <WrappedComponent {...wrappedComponentProps} />
-          {
-            alertDialogMessage
-              ? <Alert message={alertDialogMessage} onClose={closeAlertDialog} />
-              : null
-          }
-        </React.Fragment>
-      );
-    }
-  }
+    return (
+      <React.Fragment>
+        <WrappedComponent {...wrappedComponentProps} />
+        {
+          alertDialogMessage
+            ? <Alert message={alertDialogMessage} onClose={closeAlertDialog} />
+            : null
+        }
+      </React.Fragment>
+    );
+  };
 
   WithAlertDialog.propTypes = {
     alertDialogMessage: PropTypes.string,
