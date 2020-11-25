@@ -34,5 +34,19 @@ describe(`OfferCard должен корректно отображаться`, (
     const result = renderer.getRenderOutput();
     expect(result).toMatchSnapshot();
   });
+
+  it(`Тип OfferCardType.FAVORITE`, () => {
+    renderer.render(
+        <OfferCard
+          type={OfferCardType.FAVORITE}
+          offer={offer}
+          onMouseOver={() => {}}
+          onMouseLeave={() => {}}
+        />
+    );
+
+    const result = renderer.getRenderOutput();
+    expect(result).toMatchSnapshot();
+  });
 });
 

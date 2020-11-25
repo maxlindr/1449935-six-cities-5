@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
 import PageHeader from '../page-header/page-header';
-import FavoritesOfferCard from '../favorites-offer-card/favorites-offer-card';
 import PageFooter from '../page-footer/page-footer';
+import OfferCard from '../offer-card/offer-card';
+import {OfferCardType} from '../../constants';
 
 const collectOffersByCity = (offers) => {
   const offersByCity = {};
@@ -42,7 +43,13 @@ const FavoritesPage = (props) => {
                       </div>
                     </div>
                     <div className="favorites__places">
-                      {cityOffers.map((offer) => <FavoritesOfferCard key={offer.id} offer={offer} />)}
+                      {cityOffers.map((offer) => (
+                        <OfferCard
+                          key={offer.id}
+                          type={OfferCardType.FAVORITE}
+                          offer={offer}
+                        />
+                      ))}
                     </div>
                   </li>
                 ))
