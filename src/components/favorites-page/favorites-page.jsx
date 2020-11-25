@@ -18,7 +18,7 @@ const collectOffersByCity = (offers) => {
   return offersByCity;
 };
 
-const Favorites = (props) => {
+const FavoritesPage = (props) => {
   const {offers} = props;
 
   const offersByCity = collectOffersByCity(offers);
@@ -56,8 +56,8 @@ const Favorites = (props) => {
   );
 };
 
-Favorites.propTypes = {
+FavoritesPage.propTypes = {
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
 };
 
-export default Favorites;
+export default FavoritesPage;
