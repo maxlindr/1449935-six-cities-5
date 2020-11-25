@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import offerPropTypes from '../../prop-types/offer-prop-types';
 import OfferCard from '../offer-card/offer-card';
+import {OfferCardType} from '../../constants';
 
 const OffersList = (props) => {
   const {offers, onActivate, onDeactivate} = props;
@@ -11,6 +12,7 @@ const OffersList = (props) => {
       {offers.map((offer) => (
         <OfferCard
           key={offer.id}
+          type={OfferCardType.CITIES}
           offer={offer}
           onMouseOver={onActivate}
           onMouseLeave={onDeactivate}

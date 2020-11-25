@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow} from 'enzyme';
 import {OfferCard} from './offer-card';
 import offer from '../../../__mocks__/offer-mock';
+import {OfferCardType} from '../../constants';
 
 describe(`OfferCard`, () => {
   it(`должен отрабатывать события mouseover/mouseleave`, () => {
@@ -10,6 +11,7 @@ describe(`OfferCard`, () => {
 
     const wrapper = shallow(
         <OfferCard
+          type={OfferCardType.CITIES}
           offer={offer}
           onMouseOver={onMouseOver}
           onMouseLeave={onMouseLeave}

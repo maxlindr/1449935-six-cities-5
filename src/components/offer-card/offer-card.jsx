@@ -5,24 +5,44 @@ import OfferCardInfo from '../offer-card-info/offer-card-info';
 import OfferCardImage from '../offer-card-image/offer-card-image';
 import {OfferCardType} from '../../constants';
 
-const OfferCard = (props) => {
-  const {offer, onMouseOver, onMouseLeave} = props;
+const OfferCard = ({type, offer, onMouseOver, onMouseLeave}) => {
+  let rootClassName;
+
+  switch (type) {
+    case OfferCardType.CITIES:
+      rootClassName = `cities__place-card place-card`;
+      break;
+    case OfferCardType.NEAR_PLACE:
+      rootClassName = `near-places__card place-card`;
+      break;
+    default:
+      throw new Error(`Invalid card type: "${type}"`);
+  }
 
   return (
-    <article className="cities__place-card place-card"
-      onMouseOver={() => onMouseOver(offer)}
+    <article
+      className={rootClassName}
+      onMouseOver={onMouseOver ? () => onMouseOver(offer) : null}
       onMouseLeave={onMouseLeave}
     >
-      <OfferCardImage cardType={OfferCardType.CITIES} offer={offer}/>
-      <OfferCardInfo offer={offer} roundRating />
+      <OfferCardImage cardType={type} offer={offer}/>
+
+      <OfferCardInfo
+        offer={offer}
+        roundRating={type === OfferCardType.CITIES}
+      />
     </article>
   );
 };
 
 OfferCard.propTypes = {
+  type: PropTypes.oneOf([
+    OfferCardType.CITIES,
+    OfferCardType.NEAR_PLACE]
+  ).isRequired,
   offer: offerPropTypes,
-  onMouseOver: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };
 
 export {OfferCard};

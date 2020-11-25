@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow} from 'enzyme';
 import {NearPlaces} from './near-places';
-import {NearPlaceCard} from '../near-place-card/near-place-card';
+import {OfferCard} from '../offer-card/offer-card';
 import offers from '../../../__mocks__/offer-mocks';
 
 describe(`NearPlaces`, () => {
@@ -18,7 +18,7 @@ describe(`NearPlaces`, () => {
     );
 
     const cardWrapper = wrapper
-      .find(NearPlaceCard)
+      .find(OfferCard)
       .first();
 
     cardWrapper.simulate(`mouseover`);
