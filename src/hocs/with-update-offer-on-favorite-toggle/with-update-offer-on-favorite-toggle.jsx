@@ -7,17 +7,17 @@ import {omitProperties} from '../../utils';
 
 const withUpdateOfferOnFavoriteToggle = (Component) => {
   const WithUpdateOfferOnFavoriteToggle = (props) => {
-    const {updateOffer, offer} = props;
+    const {onUpdateOffer, offer} = props;
 
     const handleToggle = useCallback(() => {
-      updateOffer(
+      onUpdateOffer(
           Object.assign({}, offer, {
             favorite: !offer.favorite
           })
       );
     }, [offer]);
 
-    const componentProps = omitProperties(props, [`offer`, `updateOffer`, `onUpdate`]);
+    const componentProps = omitProperties(props, [`offer`, `onUpdateOffer`, `onUpdate`]);
 
     return (
       <Component {...componentProps} onToggle={handleToggle}/>
@@ -26,7 +26,7 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
 
   WithUpdateOfferOnFavoriteToggle.propTypes = {
     offer: offerPropTypes.isRequired,
-    updateOffer: PropTypes.func.isRequired,
+    onUpdateOffer: PropTypes.func.isRequired,
     onUpdate: PropTypes.func,
   };
 
@@ -34,7 +34,7 @@ const withUpdateOfferOnFavoriteToggle = (Component) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  updateOffer(offer) {
+  onUpdateOffer(offer) {
     dispatch(updateFavoriteStatus(offer.id, offer.favorite));
   },
 });

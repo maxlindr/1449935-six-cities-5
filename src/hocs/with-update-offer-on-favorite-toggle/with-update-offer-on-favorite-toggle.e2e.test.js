@@ -7,17 +7,17 @@ const MockComponent = () => <div />;
 const MockComponentWrapped = withUpdateOfferOnFavoriteToggle(MockComponent);
 
 let wrapper;
-let updateOffer;
+let onUpdateOffer;
 let onUpdate;
 
 beforeEach(() => {
-  updateOffer = jest.fn().mockImplementation(() => Promise.resolve());
+  onUpdateOffer = jest.fn().mockImplementation(() => Promise.resolve());
   onUpdate = jest.fn();
 
   wrapper = shallow(
       <MockComponentWrapped
         offer={offer}
-        updateOffer={updateOffer}
+        onUpdateOffer={onUpdateOffer}
         onUpdate={onUpdate}
       />
   );
@@ -28,8 +28,8 @@ const offerWithInversedFavoriteState = Object.assign({}, offer, {
 });
 
 describe(`withUpdateOfferOnFavoriteToggle`, () => {
-  it(`должен вызывать updateOffer при вызове onToggle`, () => {
+  it(`должен вызывать onUpdateOffer при вызове onToggle`, () => {
     wrapper.props().onToggle();
-    expect(updateOffer).toHaveBeenNthCalledWith(1, offerWithInversedFavoriteState);
+    expect(onUpdateOffer).toHaveBeenNthCalledWith(1, offerWithInversedFavoriteState);
   });
 });

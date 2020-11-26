@@ -8,99 +8,99 @@ const MockComponent = () => <div />;
 const MockComponentWrapped = withExtraOfferData(MockComponent);
 
 let wrapper;
-let getReviews;
-let getNearbyPlaces;
-let getOffer;
-let changeCity;
-let updateOffer;
+let onFetchReviews;
+let onFetchNearbyPlaces;
+let onFetchOffer;
+let onChangeCity;
+let onUpdateOffer;
 
 beforeEach(() => {
-  getReviews = jest.fn();
-  getNearbyPlaces = jest.fn();
-  getOffer = jest.fn();
-  changeCity = jest.fn();
-  updateOffer = jest.fn();
+  onFetchReviews = jest.fn();
+  onFetchNearbyPlaces = jest.fn();
+  onFetchOffer = jest.fn();
+  onChangeCity = jest.fn();
+  onUpdateOffer = jest.fn();
 
   wrapper = shallow(
       <MockComponentWrapped
         offerId={`1`}
-        getReviews={getReviews}
-        getNearbyPlaces={getNearbyPlaces}
-        reset={() => {}}
-        getOffer={getOffer}
-        changeCity={changeCity}
-        updateOffer={updateOffer}
+        onFetchReviews={onFetchReviews}
+        onFetchNearbyPlaces={onFetchNearbyPlaces}
+        onReset={() => {}}
+        onFetchOffer={onFetchOffer}
+        onChangeCity={onChangeCity}
+        onUpdateOffer={onUpdateOffer}
       />
   );
 });
 
 describe(`withExtraOfferData`, () => {
-  it(`должен вызывать при загрузке getOffer с аргументом в виде offer id`, () => {
+  it(`должен вызывать при загрузке onFetchOffer с аргументом в виде offer id`, () => {
     withHooks(() => {
       wrapper = shallow(
           <MockComponentWrapped
             offerId={`1`}
-            getReviews={getReviews}
-            getNearbyPlaces={getNearbyPlaces}
-            reset={() => {}}
-            getOffer={getOffer}
-            changeCity={changeCity}
-            updateOffer={updateOffer}
+            onFetchReviews={onFetchReviews}
+            onFetchNearbyPlaces={onFetchNearbyPlaces}
+            onReset={() => {}}
+            onFetchOffer={onFetchOffer}
+            onChangeCity={onChangeCity}
+            onUpdateOffer={onUpdateOffer}
           />
       );
     });
 
-    expect(getOffer).toHaveBeenCalledTimes(1);
+    expect(onFetchOffer).toHaveBeenCalledTimes(1);
   });
 
   describe(`при появлении пропа offer`, () => {
     const setOfferProp = () => wrapper.setProps({offer});
 
-    it(`должен вызывать changeCity с аргументом в виде названия города`, () => {
+    it(`должен вызывать onChangeCity с аргументом в виде названия города`, () => {
       withHooks(() => {
         setOfferProp();
       });
 
-      expect(changeCity).toHaveBeenNthCalledWith(1, offer.location.city.name);
+      expect(onChangeCity).toHaveBeenNthCalledWith(1, offer.location.city.name);
     });
 
-    it(`должен вызывать getReviews с аргументом в виде offer id`, () => {
+    it(`должен вызывать onFetchReviews с аргументом в виде offer id`, () => {
       withHooks(() => {
         setOfferProp();
       });
 
-      expect(getReviews).toHaveBeenNthCalledWith(1, offer.id);
+      expect(onFetchReviews).toHaveBeenNthCalledWith(1, offer.id);
     });
 
-    it(`должен вызывать getNearbyPlaces с аргументом в виде offer id`, () => {
+    it(`должен вызывать onFetchNearbyPlaces с аргументом в виде offer id`, () => {
       withHooks(() => {
         setOfferProp();
       });
 
-      expect(getNearbyPlaces).toHaveBeenNthCalledWith(1, offer.id);
+      expect(onFetchNearbyPlaces).toHaveBeenNthCalledWith(1, offer.id);
     });
   });
 
   describe(`при отсутствии пропа offer`, () => {
     const setOfferPropUndefined = () => wrapper.setProps({offer: undefined});
 
-    it(`не должен вызывать changeCity`, () => {
+    it(`не должен вызывать onChangeCity`, () => {
       setOfferPropUndefined();
-      expect(changeCity).not.toHaveBeenCalled();
+      expect(onChangeCity).not.toHaveBeenCalled();
     });
 
-    it(`не должен вызывать getReviews`, () => {
+    it(`не должен вызывать onFetchReviews`, () => {
       setOfferPropUndefined();
-      expect(getReviews).not.toHaveBeenCalled();
+      expect(onFetchReviews).not.toHaveBeenCalled();
     });
 
-    it(`не должен вызывать getNearbyPlaces`, () => {
+    it(`не должен вызывать onFetchNearbyPlaces`, () => {
       setOfferPropUndefined();
-      expect(getNearbyPlaces).not.toHaveBeenCalled();
+      expect(onFetchNearbyPlaces).not.toHaveBeenCalled();
     });
   });
 
-  it(`должен вызывать updateOffer при вызове onUpdate`, () => {
+  it(`должен вызывать onUpdateOffer при вызове onUpdate`, () => {
     wrapper.setProps({offer});
 
     const newOffer = Object.assign({}, {
@@ -108,6 +108,6 @@ describe(`withExtraOfferData`, () => {
     });
 
     wrapper.props().onUpdate(newOffer);
-    expect(updateOffer).toHaveBeenNthCalledWith(1, newOffer);
+    expect(onUpdateOffer).toHaveBeenNthCalledWith(1, newOffer);
   });
 });

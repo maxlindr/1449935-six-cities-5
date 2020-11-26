@@ -16,7 +16,7 @@ test(`withUpdateOfferOnFavoriteToggle должен корректно отобр
   const tree = renderer.create((
     <MockComponentWrapped
       offer={offer}
-      updateOffer={() => {}}
+      onUpdateOffer={() => {}}
     />
   )).toJSON();
 

@@ -20,7 +20,7 @@ const usePrevious = (value) => {
 
 const withLoginFormController = (Component) => {
   const WithLoginFormController = (props) => {
-    const {isPending, isLoginFailedWithUnauthorized, setLoginFailed, loginToServer} = props;
+    const {isPending, isLoginFailedWithUnauthorized, onSetLoginFailed, onLoginToServer} = props;
 
     const prevIsLoginFailedWithUnauthorized = usePrevious(isLoginFailedWithUnauthorized);
 
@@ -30,7 +30,7 @@ const withLoginFormController = (Component) => {
     const [isAnimationPlaying, setAnimationPlaying] = useState(false);
 
     const handleUnauthorizedResponse = useCallback(() => {
-      setLoginFailed(false);
+      onSetLoginFailed(false);
       setAnimationPlaying(true);
 
       setTimeout(() => {
@@ -40,7 +40,7 @@ const withLoginFormController = (Component) => {
 
     const handleSubmit = useCallback((evt) => {
       evt.preventDefault();
-      loginToServer(email, password);
+      onLoginToServer(email, password);
     }, [email, password]);
 
     const handleEmailChange = useCallback((evt) => {
@@ -64,8 +64,8 @@ const withLoginFormController = (Component) => {
     const componentProps = omitProperties(props, [
       `isPending`,
       `isLoginFailedWithUnauthorized`,
-      `loginToServer`,
-      `setLoginFailed`
+      `onLoginToServer`,
+      `onSetLoginFailed`
     ]);
 
     return (
@@ -86,8 +86,8 @@ const withLoginFormController = (Component) => {
   WithLoginFormController.propTypes = {
     isPending: PropTypes.bool.isRequired,
     isLoginFailedWithUnauthorized: PropTypes.bool.isRequired,
-    loginToServer: PropTypes.func.isRequired,
-    setLoginFailed: PropTypes.func.isRequired,
+    onLoginToServer: PropTypes.func.isRequired,
+    onSetLoginFailed: PropTypes.func.isRequired,
   };
 
   return WithLoginFormController;
@@ -99,10 +99,10 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  loginToServer(email, password) {
+  onLoginToServer(email, password) {
     dispatch(login(email, password));
   },
-  setLoginFailed(value) {
+  onSetLoginFailed(value) {
     dispatch(ActionCreator.setLoginFailed(value));
   }
 });

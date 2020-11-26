@@ -21,20 +21,20 @@ const usePrevious = (value) => {
 
 const withExtraOfferData = (WrappedComponent) => {
   const WithExtraOfferData = (props) => {
-    const {offers, offer, offerId, getOffer, getReviews, getNearbyPlaces, changeCity, reset, updateOffer} = props;
+    const {offers, offer, offerId, onFetchOffer, onFetchReviews, onFetchNearbyPlaces, onChangeCity, onReset, onUpdateOffer} = props;
     const prevOffer = usePrevious(offer);
 
     useEffect(() => {
-      getOffer(offerId);
+      onFetchOffer(offerId);
 
-      return () => reset();
+      return () => onReset();
     }, [offerId]);
 
     useEffect(() => {
       if (!prevOffer && offer) {
-        changeCity(offer.location.city.name);
-        getReviews(offerId);
-        getNearbyPlaces(offerId);
+        onChangeCity(offer.location.city.name);
+        onFetchReviews(offerId);
+        onFetchNearbyPlaces(offerId);
       }
     }, [offer, prevOffer]);
 
@@ -43,7 +43,7 @@ const withExtraOfferData = (WrappedComponent) => {
         {...props}
         offer={offer}
         offers={offers || []}
-        onUpdate={updateOffer}
+        onUpdate={onUpdateOffer}
       />
     ) : null;
   };
@@ -53,12 +53,12 @@ const withExtraOfferData = (WrappedComponent) => {
     offerId: PropTypes.string.isRequired,
     reviews: PropTypes.arrayOf(reviewPropTypes),
     offers: PropTypes.arrayOf(offerPropTypes),
-    getReviews: PropTypes.func.isRequired,
-    getNearbyPlaces: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    getOffer: PropTypes.func.isRequired,
-    changeCity: PropTypes.func.isRequired,
-    updateOffer: PropTypes.func.isRequired,
+    onFetchReviews: PropTypes.func.isRequired,
+    onFetchNearbyPlaces: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired,
+    onFetchOffer: PropTypes.func.isRequired,
+    onChangeCity: PropTypes.func.isRequired,
+    onUpdateOffer: PropTypes.func.isRequired,
   };
 
   return WithExtraOfferData;
@@ -71,22 +71,22 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getOffer(offerId) {
+  onFetchOffer(offerId) {
     dispatch(fetchOffer(offerId));
   },
-  getReviews(offerId) {
+  onFetchReviews(offerId) {
     dispatch(fetchReviewsList(offerId));
   },
-  getNearbyPlaces(offerId) {
+  onFetchNearbyPlaces(offerId) {
     dispatch(fetchNearbyPlaces(offerId));
   },
-  changeCity(city) {
+  onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
   },
-  updateOffer(offer) {
+  onUpdateOffer(offer) {
     dispatch(ActionCreator.setFetchedOffer(offer));
   },
-  reset() {
+  onReset() {
     dispatch(ActionCreator.resetOfferPageStore());
   }
 });

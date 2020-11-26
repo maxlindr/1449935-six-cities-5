@@ -14,19 +14,19 @@ const MockComponent = () => <div />;
 const MockComponentWrapped = withLoginFormController(MockComponent);
 
 let wrapper;
-let loginToServer;
-let setLoginFailed;
+let onLoginToServer;
+let onSetLoginFailed;
 
 beforeEach(() => {
-  loginToServer = jest.fn();
-  setLoginFailed = jest.fn();
+  onLoginToServer = jest.fn();
+  onSetLoginFailed = jest.fn();
 
   wrapper = shallow(
       <MockComponentWrapped
         isPending={false}
         isLoginFailedWithUnauthorized={false}
-        loginToServer={loginToServer}
-        setLoginFailed={setLoginFailed}
+        onLoginToServer={onLoginToServer}
+        onSetLoginFailed={onSetLoginFailed}
       />
   );
 });
@@ -42,14 +42,14 @@ describe(`withLoginFormController`, () => {
     expect(wrapper.props().isDisabled).toEqual(true);
   });
 
-  it(`должен при вызове onSubmit вызвать loginToServer с данными в аргументах`, () => {
+  it(`должен при вызове onSubmit вызвать onLoginToServer с данными в аргументах`, () => {
     const LOGIN = `login`;
     const PASSWORD = `password`;
 
     wrapper.props().onEmailChange(createEvent(LOGIN));
     wrapper.props().onPasswordChange(createEvent(PASSWORD));
     wrapper.props().onSubmit(createEvent());
-    expect(loginToServer).toHaveBeenNthCalledWith(1, LOGIN, PASSWORD);
+    expect(onLoginToServer).toHaveBeenNthCalledWith(1, LOGIN, PASSWORD);
   });
 
   describe(`Валидация`, () => {

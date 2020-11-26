@@ -8,7 +8,7 @@ test(`CitiesTabsBar должен корректно отображаться`, (
       <CitiesTabsBar
         cities={cities}
         activeCity={`Paris`}
-        changeCity={() => {}}
+        onChangeCity={() => {}}
       />
   );
 
