@@ -6,11 +6,13 @@ import OfferReview from '../offer-review/offer-review';
 import {connect} from 'react-redux';
 import {getUser} from '../../store/selectors';
 
+const MAX_REVIEWS = 10;
 
 const OfferReviewsSection = (props) => {
   const {user, reviews, offerId} = props;
 
-  const reviewsAmountString = reviews ? reviews.length : `...`;
+  const reviewsForDisplay = reviews ? reviews.slice(0, MAX_REVIEWS) : null;
+  const reviewsAmountString = reviewsForDisplay ? reviewsForDisplay.length : `...`;
 
   return (
     <section className="property__reviews reviews">
@@ -20,8 +22,8 @@ const OfferReviewsSection = (props) => {
 
       <ul className="reviews__list">
         {
-          reviews
-            ? reviews.map((review) => <OfferReview key={review.id} review={review}/>)
+          reviewsForDisplay
+            ? reviewsForDisplay.map((review) => <OfferReview key={review.id} review={review}/>)
             : null
         }
       </ul>

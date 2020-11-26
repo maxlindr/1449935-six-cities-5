@@ -5,24 +5,46 @@ import OfferCardInfo from '../offer-card-info/offer-card-info';
 import OfferCardImage from '../offer-card-image/offer-card-image';
 import {OfferCardType} from '../../constants';
 
-const OfferCard = (props) => {
-  const {offer, onMouseOver, onMouseLeave} = props;
+const selectRootClassName = (type) => {
+  switch (type) {
+    case OfferCardType.CITIES:
+      return `cities__place-card place-card`;
+    case OfferCardType.NEAR_PLACE:
+      return `near-places__card place-card`;
+    case OfferCardType.FAVORITE:
+      return `favorites__card place-card`;
+    default:
+      throw new Error(`Invalid card type: "${type}"`);
+  }
+};
 
+const OfferCard = ({type, offer, onMouseOver, onMouseLeave}) => {
   return (
-    <article className="cities__place-card place-card"
-      onMouseOver={() => onMouseOver(offer)}
+    <article
+      className={selectRootClassName(type)}
+      onMouseOver={onMouseOver ? () => onMouseOver(offer) : null}
       onMouseLeave={onMouseLeave}
     >
-      <OfferCardImage cardType={OfferCardType.CITIES} offer={offer}/>
-      <OfferCardInfo offer={offer} roundRating />
+      <OfferCardImage cardType={type} offer={offer}/>
+
+      <OfferCardInfo
+        offer={offer}
+        roundRating={type === OfferCardType.CITIES}
+        favorites={type === OfferCardType.FAVORITE}
+      />
     </article>
   );
 };
 
 OfferCard.propTypes = {
-  offer: offerPropTypes,
-  onMouseOver: PropTypes.func.isRequired,
-  onMouseLeave: PropTypes.func.isRequired,
+  type: PropTypes.oneOf([
+    OfferCardType.CITIES,
+    OfferCardType.NEAR_PLACE,
+    OfferCardType.FAVORITE
+  ]).isRequired,
+  offer: offerPropTypes.isRequired,
+  onMouseOver: PropTypes.func,
+  onMouseLeave: PropTypes.func,
 };
 
 export {OfferCard};

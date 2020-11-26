@@ -10,7 +10,7 @@ export const checkAuth = () => (dispatch, _getState, api) => {
       dispatch(ActionCreator.setUserData(data));
     })
     .catch((err) => {
-      if (err.response.status !== HttpCode.UNAUTHORIZED) {
+      if (!err.response || err.response.status !== HttpCode.UNAUTHORIZED) {
         dispatch(ActionCreator.setErrorMessage(ErrorMessage.GENERAL));
         dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
       }

@@ -23,8 +23,8 @@ test(`withLoginFormController должен корректно отображат
     <MockComponentWrapped
       isPending={false}
       isLoginFailedWithUnauthorized={false}
-      loginToServer={() => {}}
-      setLoginFailed={() => {}}
+      onLoginToServer={() => {}}
+      onSetLoginFailed={() => {}}
     />
   )).toJSON();
 

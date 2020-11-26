@@ -24,9 +24,19 @@ export default (state = initialState, action) => {
       });
 
     case ActionType.UPDATE_OFFER:
-      return Object.assign({}, state, {
-        offer: action.payload
-      });
+      const updatedOffer = action.payload;
+      const currentOffer = state.offer;
+
+      if (
+        currentOffer &&
+        updatedOffer.id === currentOffer.id
+      ) {
+        return Object.assign({}, state, {
+          offer: updatedOffer
+        });
+      }
+
+      return state;
 
     case ActionType.RESET_OFFER_PAGE_STORE:
       return initialState;

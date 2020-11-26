@@ -13,7 +13,7 @@ describe(`CitiesTabsBar`, () => {
     const wrapper = mount(
         <CitiesTabsBar
           cities={cities}
-          changeCity={onChangeCity}
+          onChangeCity={onChangeCity}
           activeCity={ACTIVE_TAB_CITY_NAME}
         />
     );

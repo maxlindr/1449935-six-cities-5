@@ -68,6 +68,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -136,6 +137,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -199,6 +201,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -266,6 +269,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -327,6 +331,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -394,6 +399,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -459,6 +465,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -524,6 +531,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -588,6 +596,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
   <Memo(OfferCard)
     offer={
@@ -650,6 +659,7 @@ exports[`OffersList должен корректно отображаться 1`]
     }
     onMouseLeave={[Function]}
     onMouseOver={[Function]}
+    type="cities"
   />
 </div>
 `;

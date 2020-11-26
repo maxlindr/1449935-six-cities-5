@@ -1,13 +1,13 @@
 import React from 'react';
 import ShallowRenderer from 'react-test-renderer/shallow';
-import Favorites from './favorites';
+import FavoritesPage from './favorites-page';
 import offers from '../../../__mocks__/offer-mocks';
 
 const renderer = new ShallowRenderer();
 
-test(`Favorites должен корректно отображаться`, () => {
+test(`FavoritesPage должен корректно отображаться`, () => {
   renderer.render(
-      <Favorites offers={offers} />
+      <FavoritesPage offers={offers} />
   );
 
   const result = renderer.getRenderOutput();

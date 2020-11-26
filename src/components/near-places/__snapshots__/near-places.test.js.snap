@@ -12,7 +12,7 @@ exports[`NearPlaces должен корректно отображаться 1`]
   <div
     className="near-places__list places__list"
   >
-    <Memo(NearPlaceCard)
+    <Memo(OfferCard)
       offer={
         Object {
           "bedrooms": 3,
@@ -74,8 +74,9 @@ exports[`NearPlaces должен корректно отображаться 1`]
           "type": "house",
         }
       }
+      type="near_place"
     />
-    <Memo(NearPlaceCard)
+    <Memo(OfferCard)
       offer={
         Object {
           "bedrooms": 3,
@@ -140,8 +141,9 @@ exports[`NearPlaces должен корректно отображаться 1`]
           "type": "apartment",
         }
       }
+      type="near_place"
     />
-    <Memo(NearPlaceCard)
+    <Memo(OfferCard)
       offer={
         Object {
           "bedrooms": 4,
@@ -201,6 +203,7 @@ exports[`NearPlaces должен корректно отображаться 1`]
           "type": "apartment",
         }
       }
+      type="near_place"
     />
   </div>
 </section>

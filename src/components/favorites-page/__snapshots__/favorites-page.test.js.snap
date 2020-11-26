@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Favorites должен корректно отображаться 1`] = `
+exports[`FavoritesPage должен корректно отображаться 1`] = `
 <div
   className="page"
 >
@@ -44,7 +44,7 @@ exports[`Favorites должен корректно отображаться 1`] 
             <div
               className="favorites__places"
             >
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 3,
@@ -106,8 +106,9 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "house",
                   }
                 }
+                type="favorite"
               />
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 3,
@@ -168,6 +169,7 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "hotel",
                   }
                 }
+                type="favorite"
               />
             </div>
           </li>
@@ -193,7 +195,7 @@ exports[`Favorites должен корректно отображаться 1`] 
             <div
               className="favorites__places"
             >
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 3,
@@ -258,8 +260,9 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "apartment",
                   }
                 }
+                type="favorite"
               />
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 4,
@@ -319,6 +322,7 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "apartment",
                   }
                 }
+                type="favorite"
               />
             </div>
           </li>
@@ -344,7 +348,7 @@ exports[`Favorites должен корректно отображаться 1`] 
             <div
               className="favorites__places"
             >
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 3,
@@ -408,8 +412,9 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "house",
                   }
                 }
+                type="favorite"
               />
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 1,
@@ -467,6 +472,7 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "room",
                   }
                 }
+                type="favorite"
               />
             </div>
           </li>
@@ -492,7 +498,7 @@ exports[`Favorites должен корректно отображаться 1`] 
             <div
               className="favorites__places"
             >
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 5,
@@ -556,6 +562,7 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "apartment",
                   }
                 }
+                type="favorite"
               />
             </div>
           </li>
@@ -581,7 +588,7 @@ exports[`Favorites должен корректно отображаться 1`] 
             <div
               className="favorites__places"
             >
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 2,
@@ -643,6 +650,7 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "hotel",
                   }
                 }
+                type="favorite"
               />
             </div>
           </li>
@@ -668,7 +676,7 @@ exports[`Favorites должен корректно отображаться 1`] 
             <div
               className="favorites__places"
             >
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 1,
@@ -730,8 +738,9 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "room",
                   }
                 }
+                type="favorite"
               />
-              <FavoritesOfferCard
+              <Memo(OfferCard)
                 offer={
                   Object {
                     "bedrooms": 1,
@@ -790,6 +799,7 @@ exports[`Favorites должен корректно отображаться 1`] 
                     "type": "apartment",
                   }
                 }
+                type="favorite"
               />
             </div>
           </li>

@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {StateNameSpace} from '../../store/reducers/root-reducer';
@@ -7,30 +7,43 @@ import {ActionCreator} from '../../store/actions/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import {getNearbyOffers} from '../../store/selectors';
 
+const usePrevious = (value) => {
+  const ref = useRef();
+
+  // в оригинале здесь использовлся useEffect, но он заменен на setTimeout из-за проблемы тестирования,
+  // поскольку в текущей версии Enzyme useEffect за пределами тестируемой функции не работает корректно
+  setTimeout(() => {
+    ref.current = value;
+  }, 0);
+
+  return ref.current;
+};
+
 const withExtraOfferData = (WrappedComponent) => {
   const WithExtraOfferData = (props) => {
-    const {offers, offer, offerId, getOffer, getReviews, getNearbyPlaces, changeCity, reset, updateOffer} = props;
+    const {offers, offer, offerId, onFetchOffer, onFetchReviews, onFetchNearbyPlaces, onChangeCity, onReset, onUpdateOffer} = props;
+    const prevOffer = usePrevious(offer);
 
     useEffect(() => {
-      getOffer(offerId);
+      onFetchOffer(offerId);
 
-      return () => reset();
+      return () => onReset();
     }, [offerId]);
 
     useEffect(() => {
-      if (offer) {
-        changeCity(offer.location.city.name);
-        getReviews(offerId);
-        getNearbyPlaces(offerId);
+      if (!prevOffer && offer) {
+        onChangeCity(offer.location.city.name);
+        onFetchReviews(offerId);
+        onFetchNearbyPlaces(offerId);
       }
-    }, [offer]);
+    }, [offer, prevOffer]);
 
     return offer ? (
       <WrappedComponent
         {...props}
         offer={offer}
         offers={offers || []}
-        onUpdate={updateOffer}
+        onUpdate={onUpdateOffer}
       />
     ) : null;
   };
@@ -40,12 +53,12 @@ const withExtraOfferData = (WrappedComponent) => {
     offerId: PropTypes.string.isRequired,
     reviews: PropTypes.arrayOf(reviewPropTypes),
     offers: PropTypes.arrayOf(offerPropTypes),
-    getReviews: PropTypes.func.isRequired,
-    getNearbyPlaces: PropTypes.func.isRequired,
-    reset: PropTypes.func.isRequired,
-    getOffer: PropTypes.func.isRequired,
-    changeCity: PropTypes.func.isRequired,
-    updateOffer: PropTypes.func.isRequired,
+    onFetchReviews: PropTypes.func.isRequired,
+    onFetchNearbyPlaces: PropTypes.func.isRequired,
+    onReset: PropTypes.func.isRequired,
+    onFetchOffer: PropTypes.func.isRequired,
+    onChangeCity: PropTypes.func.isRequired,
+    onUpdateOffer: PropTypes.func.isRequired,
   };
 
   return WithExtraOfferData;
@@ -58,22 +71,22 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getOffer(offerId) {
+  onFetchOffer(offerId) {
     dispatch(fetchOffer(offerId));
   },
-  getReviews(offerId) {
+  onFetchReviews(offerId) {
     dispatch(fetchReviewsList(offerId));
   },
-  getNearbyPlaces(offerId) {
+  onFetchNearbyPlaces(offerId) {
     dispatch(fetchNearbyPlaces(offerId));
   },
-  changeCity(city) {
+  onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
   },
-  updateOffer(offer) {
+  onUpdateOffer(offer) {
     dispatch(ActionCreator.setFetchedOffer(offer));
   },
-  reset() {
+  onReset() {
     dispatch(ActionCreator.resetOfferPageStore());
   }
 });

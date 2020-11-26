@@ -17,12 +17,12 @@ test(`withExtraOfferData должен корректно отображатьс�
     <MockComponentWrapped
       offerId={`1`}
       offer={offer}
-      getReviews={() => {}}
-      getNearbyPlaces={() => {}}
-      reset={() => {}}
-      getOffer={() => {}}
-      changeCity={() => {}}
-      updateOffer={() => {}}
+      onFetchReviews={() => {}}
+      onFetchNearbyPlaces={() => {}}
+      onReset={() => {}}
+      onFetchOffer={() => {}}
+      onChangeCity={() => {}}
+      onUpdateOffer={() => {}}
     />
   )).toJSON();
 

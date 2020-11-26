@@ -39,7 +39,7 @@ const OfferPage = (props) => {
 
       <main className="page__main page__main--property">
         <section className="property">
-          <OfferGallery photos={photos}/>
+          <OfferGallery photos={photos} />
 
           <div className="property__container container">
             <div className="property__wrapper">
@@ -54,27 +54,31 @@ const OfferPage = (props) => {
                 />
               </div>
 
-              <RatingStars type={RatingStarsType.OFFER} rating={rating}/>
-              <OfferEssentials offer={offer}/>
+              <RatingStars type={RatingStarsType.OFFER} rating={rating} />
+              <OfferEssentials offer={offer} />
 
               <div className="property__price">
                 <b className="property__price-value">€{price}</b>
                 <span className="property__price-text">&nbsp;night</span>
               </div>
 
-              <OfferFeatures features={features}/>
-              <OfferHost host={host} description={description}/>
-              <OfferReviewsSection offerId={offer.id} reviews={offerReviews}/>
+              <OfferFeatures features={features} />
+              <OfferHost host={host} description={description} />
+              <OfferReviewsSection offerId={offer.id} reviews={offerReviews} />
             </div>
           </div>
 
-          <CityMap activeOffer={offer} offers={[offer, ...offers]} maxOffers={MAX_VISIBLE_OFFERS_ON_MAP}/>
+          <CityMap
+            activeOffer={offer}
+            offers={[offer, ...offers]}
+            maxOffers={MAX_VISIBLE_OFFERS_ON_MAP}
+          />
         </section>
 
         <div className="container">
           {
             offers.length > 0
-              ? <NearPlaces offers={offers}/>
+              ? <NearPlaces offers={offers} />
               : null
           }
         </div>
@@ -85,7 +89,6 @@ const OfferPage = (props) => {
 
 OfferPage.propTypes = {
   offer: offerPropTypes.isRequired,
-  activeOffer: offerPropTypes,
   offers: PropTypes.arrayOf(offerPropTypes).isRequired,
   reviews: PropTypes.arrayOf(reviewPropTypes),
 };

@@ -7,7 +7,7 @@ import {cityPropTypes} from '../../../prop-types';
 import {getCities, getCurrentCityName} from '../../../store/selectors';
 
 const CitiesTabsBar = (props) => {
-  const {activeCity, changeCity, cities} = props;
+  const {activeCity, onChangeCity, cities} = props;
 
   const cityNames = cities.map((city) => city.name);
 
@@ -20,7 +20,7 @@ const CitiesTabsBar = (props) => {
               key={city}
               city={city}
               active={city === activeCity}
-              onActivate={changeCity}
+              onActivate={onChangeCity}
             />
           ))}
         </ul>
@@ -31,7 +31,7 @@ const CitiesTabsBar = (props) => {
 
 CitiesTabsBar.propTypes = {
   cities: PropTypes.arrayOf(cityPropTypes).isRequired,
-  changeCity: PropTypes.func.isRequired,
+  onChangeCity: PropTypes.func.isRequired,
   activeCity: PropTypes.string,
 };
 
@@ -41,7 +41,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  changeCity(city) {
+  onChangeCity(city) {
     dispatch(ActionCreator.changeCity(city));
   },
 });

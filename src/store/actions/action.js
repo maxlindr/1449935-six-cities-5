@@ -4,6 +4,7 @@ export const ActionType = {
   SET_AUTHORIZATION_STATUS: `SET_AUTHORIZATION_STATUS`,
   SET_USER_DATA: `SET_USER_DATA`,
   REDIRECT_TO_ROUTE: `REDIRECT_TO_ROUTE`,
+  GO_TO_ROUTE: `FORWARD_TO_ROUTE`,
   LOAD_OFFERS: `LOAD_OFFERS`,
   INIT_CITIES: `INIT_CITIES`,
   SET_FETCHED_OFFER: `SET_FETCHED_OFFER`,
@@ -31,6 +32,10 @@ export const ActionCreator = {
   }),
   redirectToRoute: (url) => ({
     type: ActionType.REDIRECT_TO_ROUTE,
+    payload: url,
+  }),
+  goToRoute: (url) => ({
+    type: ActionType.GO_TO_ROUTE,
     payload: url,
   }),
   loadOffers: (offers) => ({

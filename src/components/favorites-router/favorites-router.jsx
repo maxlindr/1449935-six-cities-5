@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {offerPropTypes} from '../../prop-types';
-import Favorites from '../favorites/favorites';
+import FavoritesPage from '../favorites-page/favorites-page';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 
 const FavoritesRouter = (props) => props.offers.length > 0
-  ? <Favorites {...props} />
+  ? <FavoritesPage {...props} />
   : <FavoritesEmpty {...props} />;
 
 FavoritesRouter.propTypes = {

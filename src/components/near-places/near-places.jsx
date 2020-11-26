@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import NearPlaceCard from '../near-place-card/near-place-card';
+import OfferCard from '../offer-card/offer-card';
 import {offerPropTypes} from '../../prop-types';
+import {OfferCardType} from '../../constants';
 
 const NearPlaces = (props) => {
   const {onCardOver, onCardLeave, offers} = props;
@@ -11,8 +12,9 @@ const NearPlaces = (props) => {
       <h2 className="near-places__title">Other places in the neighbourhood</h2>
       <div className="near-places__list places__list">
         {offers.map((offer) => (
-          <NearPlaceCard
+          <OfferCard
             key={offer.id}
+            type={OfferCardType.NEAR_PLACE}
             offer={offer}
             onMouseOver={onCardOver}
             onMouseLeave={onCardLeave}

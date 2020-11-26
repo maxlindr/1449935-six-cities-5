@@ -13,11 +13,14 @@ export const login = (email, password) => (dispatch, _getState, api) => {
     .catch((err) => {
       dispatch(ActionCreator.setAuthorizationStatus(AuthorizationStatus.NOT_AUTHORIZED));
 
-      if (err.response.status === HttpCode.NOT_AUTHORIZED) {
+      if (
+        err.response &&
+        err.response.status === HttpCode.NOT_AUTHORIZED
+      ) {
         dispatch(ActionCreator.setLoginFailed(true));
       } else {
         dispatch(ActionCreator.setErrorMessage(ErrorMessage.GENERAL));
-        dispatch(ActionCreator.redirectToRoute(AppRoute.ERROR));
+        dispatch(ActionCreator.goToRoute(AppRoute.ERROR));
       }
     });
 };
