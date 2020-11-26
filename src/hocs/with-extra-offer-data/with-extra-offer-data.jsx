@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {StateNameSpace} from '../../store/reducers/root-reducer';
@@ -7,9 +7,22 @@ import {ActionCreator} from '../../store/actions/action';
 import {offerPropTypes, reviewPropTypes} from '../../prop-types';
 import {getNearbyOffers} from '../../store/selectors';
 
+const usePrevious = (value) => {
+  const ref = useRef();
+
+  // в оригинале здесь использовлся useEffect, но он заменен на setTimeout из-за проблемы тестирования,
+  // поскольку в текущей версии Enzyme useEffect за пределами тестируемой функции не работает корректно
+  setTimeout(() => {
+    ref.current = value;
+  }, 0);
+
+  return ref.current;
+};
+
 const withExtraOfferData = (WrappedComponent) => {
   const WithExtraOfferData = (props) => {
     const {offers, offer, offerId, getOffer, getReviews, getNearbyPlaces, changeCity, reset, updateOffer} = props;
+    const prevOffer = usePrevious(offer);
 
     useEffect(() => {
       getOffer(offerId);
@@ -18,12 +31,12 @@ const withExtraOfferData = (WrappedComponent) => {
     }, [offerId]);
 
     useEffect(() => {
-      if (offer) {
+      if (!prevOffer && offer) {
         changeCity(offer.location.city.name);
         getReviews(offerId);
         getNearbyPlaces(offerId);
       }
-    }, [offer]);
+    }, [offer, prevOffer]);
 
     return offer ? (
       <WrappedComponent
