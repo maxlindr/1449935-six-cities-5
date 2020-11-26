@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import ApiActions from '../../store/actions/api-actions';
@@ -84,16 +84,13 @@ const checkCommentValidity = (text) => {
 const withReviewFormController = (Component) => {
   const WithReviewFormController = (props) => {
     const [state, dispatch] = React.useReducer(reducer, INITIAL_STATE);
+    const {text, rating, isValid, isPending} = state;
 
-    const handleSubmit = React.useCallback((evt) => {
+    const handleSubmit = useCallback((evt) => {
       evt.preventDefault();
 
       const {offerId, postComment} = props;
-
-      const comment = {
-        text: state.text,
-        rating: state.rating
-      };
+      const comment = {text, rating};
 
       const submitComment = () =>
         postComment(offerId, comment)
@@ -109,25 +106,29 @@ const withReviewFormController = (Component) => {
       );
 
       submitComment();
+    }, [text, rating]);
+
+    const handleRatingClick = useCallback((evt) => {
+      dispatch(
+          ActionCreator.setRating(
+              Number(evt.target.value)
+          )
+      );
+
+      dispatch(
+          ActionCreator.validate()
+      );
     }, []);
 
-    const handleRatingClick = React.useCallback((evt) => {
-      dispatch(ActionCreator.setRating(
-          Number(evt.target.value)
-      ));
-
-      dispatch(ActionCreator.validate());
-    }, []);
-
-    const handleTextChange = React.useCallback((evt) => {
+    const handleTextChange = useCallback((evt) => {
       dispatch(
           ActionCreator.setText(evt.target.value)
       );
 
-      dispatch(ActionCreator.validate());
+      dispatch(
+          ActionCreator.validate()
+      );
     }, []);
-
-    const {text, rating, isValid, isPending} = state;
 
     return (
       <Component
@@ -152,7 +153,9 @@ const withReviewFormController = (Component) => {
 
 const mapDispatchToProps = (dispatch) => ({
   postComment(offerId, comment) {
-    return dispatch(ApiActions.postComment((offerId, comment)));
+    return dispatch(
+        ApiActions.postComment(offerId, comment)
+    );
   }
 });
 
