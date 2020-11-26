@@ -4,7 +4,9 @@ exports[`ErrorPage Должен отображать глобальное соо
 <div
   className="page error-page"
 >
-  <Memo(Connect(PageHeader)) />
+  <PageHeader
+    interactive={false}
+  />
   <main
     className="page__main"
   >
@@ -21,7 +23,9 @@ exports[`ErrorPage Должен отображать приоритетное с
 <div
   className="page error-page"
 >
-  <Memo(Connect(PageHeader)) />
+  <PageHeader
+    interactive={false}
+  />
   <main
     className="page__main"
   >

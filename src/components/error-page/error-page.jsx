@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import PageHeader from '../page-header/page-header';
+import {PageHeader} from '../page-header/page-header';
 import './style.css';
 import {connect} from 'react-redux';
 import {getErrorMessage} from '../../store/selectors';
@@ -10,7 +10,7 @@ const ErrorPage = (props) => {
 
   return (
     <div className="page error-page">
-      <PageHeader />
+      <PageHeader interactive={false}/>
 
       <main className="page__main">
         <h1 className="error-page__message">

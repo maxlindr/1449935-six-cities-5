@@ -13,7 +13,10 @@ export const updateFavoriteStatus = (offerId, status) => (dispatch, _getState, a
       );
     })
     .catch((err) => {
-      if (err.response.status === HttpCode.UNAUTHORIZED) {
+      if (
+        err.response &&
+        err.response.status === HttpCode.UNAUTHORIZED
+      ) {
         dispatch(
             ActionCreator.goToRoute(AppRoute.LOGIN)
         );
