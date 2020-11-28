@@ -1,5 +1,5 @@
 import {ActionCreator} from '../action';
-import {OfferAdapter} from '../../../services/api-data-adapters';
+import {OfferAdapter} from '../../../services/api-data-adapters/api-data-adapters';
 import {APIRoute} from '../../../constants';
 
 export const fetchOffers = () => (dispatch, _getState, api) => (

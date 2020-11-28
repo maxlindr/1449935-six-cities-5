@@ -20,19 +20,6 @@ describe(`App reducer`, () => {
     );
   });
 
-  it(`должен возвращать `, () => {
-    const MESSAGE = `Message`;
-
-    expect(
-        reducer(BLANK_STATE, {
-          type: ActionType.SHOW_ALERT,
-          payload: MESSAGE
-        })
-    ).toEqual(
-        createState(MESSAGE)
-    );
-  });
-
   it(`должен записывать сообщение в стейт`, () => {
     const MESSAGE = `Message`;
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types/prop-types';
 import FavoritesPage from '../favorites-page/favorites-page';
 import FavoritesEmpty from '../favorites-empty/favorites-empty';
 

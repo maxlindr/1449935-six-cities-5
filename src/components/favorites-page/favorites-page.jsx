@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types/prop-types';
 import PageHeader from '../page-header/page-header';
 import PageFooter from '../page-footer/page-footer';
 import OfferCard from '../offer-card/offer-card';

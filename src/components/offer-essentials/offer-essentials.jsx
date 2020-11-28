@@ -1,6 +1,6 @@
 import React from 'react';
 import {capitalizeFirstLetter} from '../offer-card-utils';
-import {offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types/prop-types';
 
 function OfferEssentials(props) {
   const {type, bedrooms, maxAdults} = props.offer;

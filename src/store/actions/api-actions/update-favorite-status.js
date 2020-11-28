@@ -1,5 +1,5 @@
 import {handleErrorWithAlert} from './error-handlers';
-import {OfferAdapter} from '../../../services/api-data-adapters';
+import {OfferAdapter} from '../../../services/api-data-adapters/api-data-adapters';
 import {ActionCreator} from '../action';
 import {AppRoute, HttpCode} from '../../../constants';
 
@@ -8,7 +8,7 @@ export const updateFavoriteStatus = (offerId, status) => (dispatch, _getState, a
     .then(({data}) => {
       dispatch(
           ActionCreator.updateOffer(
-              OfferAdapter.toClient(data)
+              OfferAdapter.adaptToClient(data)
           )
       );
     })

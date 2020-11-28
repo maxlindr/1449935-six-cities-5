@@ -1,4 +1,4 @@
-import {CommentAdapter} from '../../../services/api-data-adapters';
+import {CommentAdapter} from '../../../services/api-data-adapters/api-data-adapters';
 import {ActionCreator} from '../action';
 import {handleErrorWithAlert} from './error-handlers';
 
@@ -9,10 +9,10 @@ import {handleErrorWithAlert} from './error-handlers';
  * @return {Promise}
  */
 export const postComment = (offerId, comment) => (dispatch, _getState, api) => (
-  api.post(`/comments/${offerId}`, CommentAdapter.toServer(comment))
+  api.post(`/comments/${offerId}`, CommentAdapter.adaptToServer(comment))
     .then(({data}) => {
       dispatch(ActionCreator.setFetchedReviews(
-          data.map(CommentAdapter.toClient)
+          data.map(CommentAdapter.adaptToClient)
       ));
     })
     .catch((err) => {

@@ -1,6 +1,6 @@
 import React, {useCallback} from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types/prop-types';
 import {connect} from 'react-redux';
 import {updateFavoriteStatus} from '../../store/actions/api-actions';
 import {omitProperties} from '../../utils';

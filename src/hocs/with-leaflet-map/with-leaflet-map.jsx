@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import PropTypes from 'prop-types';
-import {cityPropTypes, offerPropTypes} from '../../prop-types';
+import {cityPropTypes, offerPropTypes} from '../../prop-types/prop-types';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import {connect} from 'react-redux';

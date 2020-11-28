@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import {StateNameSpace} from '../../store/reducers/root-reducer';
 import {fetchReviewsList, fetchNearbyPlaces, fetchOffer} from '../../store/actions/api-actions';
 import {ActionCreator} from '../../store/actions/action';
-import {offerPropTypes, reviewPropTypes} from '../../prop-types';
+import {offerPropTypes, reviewPropTypes} from '../../prop-types/prop-types';
 import {getNearbyOffers} from '../../store/selectors';
 
 const usePrevious = (value) => {

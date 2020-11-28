@@ -1,4 +1,4 @@
-export const toServer = (comment) => {
+export const adaptToServer = (comment) => {
   const {rating, text} = comment;
 
   return {
@@ -7,7 +7,7 @@ export const toServer = (comment) => {
   };
 };
 
-export const toClient = (comment) => {
+export const adaptToClient = (comment) => {
   const {comment: text, date, id, rating, user} = comment;
   const {avatar_url: avatar, is_pro: pro, name} = user;
 
@@ -22,4 +22,4 @@ export const toClient = (comment) => {
   };
 };
 
-export default {toServer, toClient};
+export default {adaptToServer, adaptToClient};

@@ -1,6 +1,6 @@
 import React, {memo} from 'react';
 import PropTypes from 'prop-types';
-import {userPropTypes, reviewPropTypes} from '../../prop-types';
+import {userPropTypes, reviewPropTypes} from '../../prop-types/prop-types';
 import ReviewForm from '../review-form/review-form';
 import OfferReview from '../offer-review/offer-review';
 import {connect} from 'react-redux';
