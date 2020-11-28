@@ -59,7 +59,7 @@ describe(`Offer page reducer`, () => {
     );
   });
 
-  it(`должен обновлять offer в стейте, если если он имеет id, не соответствующий id обновляемого offer`, () => {
+  it(`не должен обновлять offer в стейте, если он имеет id, не соответствующий id обновляемого offer`, () => {
     const INITIAL_OFFER = {id: `1`, data: `initial data`};
     const UPDATED_OFFER = {id: `2`, data: `updated data`};
 
