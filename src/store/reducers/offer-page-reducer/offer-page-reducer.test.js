@@ -39,6 +39,42 @@ describe(`Offer page reducer`, () => {
     );
   });
 
+  it(`должен обновлять offer в стейте, если если он имеет тот же id, что и обновляемый offer`, () => {
+    const INITIAL_OFFER = {id: `1`, data: `initial data`};
+    const UPDATED_OFFER = {id: `1`, data: `updated data`};
+
+    const WITH_OFFER_STATE = Object.assign({}, BLANK_STATE, {
+      offer: INITIAL_OFFER
+    });
+
+    expect(
+        reducer(WITH_OFFER_STATE, {
+          type: ActionType.UPDATE_OFFER,
+          payload: UPDATED_OFFER
+        })
+    ).toEqual(
+        Object.assign({}, BLANK_STATE, {
+          offer: UPDATED_OFFER
+        })
+    );
+  });
+
+  it(`должен обновлять offer в стейте, если если он имеет id, не соответствующий id обновляемого offer`, () => {
+    const INITIAL_OFFER = {id: `1`, data: `initial data`};
+    const UPDATED_OFFER = {id: `2`, data: `updated data`};
+
+    const WITH_OFFER_STATE = Object.assign({}, BLANK_STATE, {
+      offer: INITIAL_OFFER
+    });
+
+    expect(
+        reducer(WITH_OFFER_STATE, {
+          type: ActionType.UPDATE_OFFER,
+          payload: UPDATED_OFFER
+        })
+    ).toEqual(WITH_OFFER_STATE);
+  });
+
   it(`должен сохранять отзывы в стейт`, () => {
     const REVIEWS = [{id: `1`}, {id: `2`}];
 

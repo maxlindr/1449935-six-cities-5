@@ -7,7 +7,7 @@ export const BookmarkToggleType = {
   CARD: `place-card`
 };
 
-const bookmarkSize = {
+const BookmarkSize = {
   [BookmarkToggleType.OFFER]: {width: 31, height: 33},
   [BookmarkToggleType.CARD]: {width: 18, height: 19},
 };
@@ -19,7 +19,7 @@ const BookmarkToggle = (props) => {
     ? `${type}__bookmark-button ${type}__bookmark-button--active button`
     : `${type}__bookmark-button button`;
 
-  const {width, height} = bookmarkSize[type];
+  const {width, height} = BookmarkSize[type];
 
   return (
     <button className={bookmarkBtnClassname} type="button" onClick={onToggle}>

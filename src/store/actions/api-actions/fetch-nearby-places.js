@@ -1,5 +1,5 @@
 import {ActionCreator} from '../action';
-import {OfferAdapter} from '../../../services/api-data-adapters';
+import {OfferAdapter} from '../../../services/api-data-adapters/api-data-adapters';
 
 export const fetchNearbyPlaces = (id) => (dispatch, _getState, api) => (
   api.get(`/hotels/${id}/nearby`)

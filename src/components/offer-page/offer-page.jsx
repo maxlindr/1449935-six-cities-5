@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes, reviewPropTypes} from '../../prop-types';
+import {offerPropTypes, reviewPropTypes} from '../../prop-types/prop-types';
 import PageHeader from '../page-header/page-header';
 import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
 import BookmarkToggle, {BookmarkToggleType} from '../bookmark-toggle/bookmark-toggle';

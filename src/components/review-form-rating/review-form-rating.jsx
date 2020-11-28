@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const starLabelTitle = {
+const StarLabelTitle = {
   5: `perfect`,
   4: `good`,
   3: `not bad`,
@@ -32,7 +32,7 @@ function ReviewFormRating(props) {
           <label
             htmlFor={`${starValue}-stars`}
             className="reviews__rating-label form__rating-label"
-            title={starLabelTitle[starValue]}
+            title={StarLabelTitle[starValue]}
           >
             <svg className="form__star-image" width={37} height={33}>
               <use xlinkHref="#icon-star" />

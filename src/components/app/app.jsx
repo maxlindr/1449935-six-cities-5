@@ -2,7 +2,7 @@ import React from 'react';
 import {Switch, Route, Router as BrowserRouter} from 'react-router-dom';
 import browserHistory from '../../browser-history';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types/prop-types';
 import Main from '../main/main';
 import Login from '../login/login';
 import FavoritesRouter from '../favorites-router/favorites-router';
@@ -11,6 +11,7 @@ import ErrorPage from '../error-page/error-page';
 import {connect} from 'react-redux';
 import PrivateRoute from '../private-route/private-route';
 import {getFavoriteOffers} from '../../store/selectors';
+import {AppRoute} from '../../constants';
 
 const App = (props) => {
   const {favoriteOffers} = props;
@@ -22,13 +23,13 @@ const App = (props) => {
           <Main />
         </Route>
 
-        <Route exact path="/login">
+        <Route exact path={AppRoute.LOGIN}>
           <Login />
         </Route>
 
         <PrivateRoute
           exact
-          path="/favorites"
+          path={AppRoute.FAVORITES}
           render={() => <FavoritesRouter offers={favoriteOffers} />}
         />
 
@@ -40,7 +41,7 @@ const App = (props) => {
           )}
         />
 
-        <Route exact path="/error">
+        <Route exact path={AppRoute.ERROR}>
           <ErrorPage />
         </Route>
 

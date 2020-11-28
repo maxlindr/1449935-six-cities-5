@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {hostPropTypes} from '../../prop-types';
+import {hostPropTypes} from '../../prop-types/prop-types';
 
 function OfferHost(props) {
   const {host, description} = props;

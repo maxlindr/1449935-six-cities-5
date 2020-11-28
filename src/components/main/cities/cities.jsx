@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../../prop-types';
+import {offerPropTypes} from '../../../prop-types/prop-types';
 import OffersList from '../../offers-list/offers-list';
 import withLeafletMap from '../../../hocs/with-leaflet-map/with-leaflet-map';
 import cityMapFactory, {CityMapType} from '../../city-map-factory/city-map-factory';

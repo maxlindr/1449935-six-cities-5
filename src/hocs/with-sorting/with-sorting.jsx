@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {offerPropTypes} from '../../prop-types';
+import {offerPropTypes} from '../../prop-types/prop-types';
 import SortDropdownList from '../../components/sort-dropdown-list/sort-dropdown-list';
 import withDropdownBehavior from '../with-dropdown-behavior/with-dropdown-behavior';
 
@@ -13,7 +13,7 @@ const SortType = {
   TOP_RATED: `top-rated`
 };
 
-const DROPDOWN_OPTIONS = {
+const DropdownOptions = {
   [SortType.POPULAR]: `Popular`,
   [SortType.TO_HIGH]: `Price: low to high`,
   [SortType.TO_LOW]: `Price: high to low`,
@@ -53,7 +53,7 @@ const withSorting = (Component) => {
         <OffersSortDropdownList
           key={Math.random()}
           activeOption={sortType}
-          options={DROPDOWN_OPTIONS}
+          options={DropdownOptions}
           onChange={handleSortOptionChange}
         />
       </Component>

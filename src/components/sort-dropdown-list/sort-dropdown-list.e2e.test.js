@@ -9,7 +9,7 @@ const SortType = {
   TOP_RATED: `top-rated`
 };
 
-const OPTIONS = {
+const Options = {
   [SortType.POPULAR]: `Popular`,
   [SortType.TO_HIGH]: `Price: low to high`,
   [SortType.TO_LOW]: `Price: high to low`,
@@ -28,7 +28,7 @@ describe(`SortDropdownList`, () => {
     wrapper = mount(
         <SortDropdownList
           isOpened={true}
-          options={OPTIONS}
+          options={Options}
           activeOption={SortType.POPULAR}
           onToggle={onToggle}
           onOptionClick={onOptionClick}

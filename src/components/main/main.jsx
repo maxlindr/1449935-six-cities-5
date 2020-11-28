@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {cityPropTypes, offerPropTypes} from '../../prop-types';
+import {cityPropTypes, offerPropTypes} from '../../prop-types/prop-types';
 import PageHeader from '../page-header/page-header';
 import CitiesTabsBar from './cities-tabs-bar/cities-tabs-bar';
 import Cities from './cities/cities';

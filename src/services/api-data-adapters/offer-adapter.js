@@ -41,6 +41,6 @@ export const adaptOfferToClient = (offer) => {
 export const adaptOffersToClient = (offers) => offers.map(adaptOfferToClient);
 
 export default {
-  toClient: adaptOfferToClient,
+  adaptToClient: adaptOfferToClient,
   arrayToClient: adaptOffersToClient
 };

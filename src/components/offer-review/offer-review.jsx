@@ -1,5 +1,5 @@
 import React from 'react';
-import {reviewPropTypes} from '../../prop-types';
+import {reviewPropTypes} from '../../prop-types/prop-types';
 import RatingStars, {RatingStarsType} from '../rating-stars/rating-stars';
 
 const formatDate = (date) => date.toLocaleDateString(`en-US`, {month: `long`, year: `numeric`});
