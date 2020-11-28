@@ -9,6 +9,16 @@ const BLANK_STATE = {
 };
 
 describe(`withReviewFormController reducer`, () => {
+  it(`должен возвращать текущий state при несуществующем action`, () => {
+    expect(
+        reducer(BLANK_STATE, {
+          type: ``
+        })
+    ).toEqual(
+        BLANK_STATE
+    );
+  });
+
   it(`должен записывать rating в стейт`, () => {
     const RATING = 5;
 

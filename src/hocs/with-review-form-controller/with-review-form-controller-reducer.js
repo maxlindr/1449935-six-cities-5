@@ -44,6 +44,6 @@ export default (state, action) => {
         isValid: checkCommentValidity(state.text) && state.rating > 0
       });
     default:
-      throw new Error(`Action with type "${action.type}" not exists`);
+      return state;
   }
 };
