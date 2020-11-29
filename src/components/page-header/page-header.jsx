@@ -8,9 +8,7 @@ import {getUser} from '../../store/selectors';
 
 const LOGO_ELEMENT = <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width={81} height={41} />;
 
-const PageHeader = (props) => {
-  const {user, interactive = true} = props;
-
+const PageHeader = ({user, interactive}) => {
   return (
     <header className="header">
       <div className="container">
@@ -18,7 +16,7 @@ const PageHeader = (props) => {
           <div className="header__left">
             {interactive
               ? (
-                <Link to="/" className="header__logo-link">
+                <Link to={AppRoute.ROOT} className="header__logo-link">
                   {LOGO_ELEMENT}
                 </Link>
               )
@@ -54,6 +52,10 @@ const PageHeader = (props) => {
 PageHeader.propTypes = {
   user: userPropTypes,
   interactive: PropTypes.bool,
+};
+
+PageHeader.defaultProps = {
+  interactive: true,
 };
 
 const mapStateToProps = (state) => ({

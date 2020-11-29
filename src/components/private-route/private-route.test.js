@@ -11,7 +11,7 @@ const renderComponent = (authorizationStatus) => (
   renderer.create((
     <BrowserRouter>
       <PrivateRoute
-        path="/"
+        path={AppRoute.ROOT}
         authorizationStatus={authorizationStatus}
         render={MockComponent}
       />
