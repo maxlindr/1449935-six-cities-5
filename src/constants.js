@@ -23,7 +23,8 @@ export const AppRoute = {
   LOGIN: `/login`,
   ROOT: `/`,
   FAVORITES: `/favorites`,
-  ERROR: `/error`
+  ERROR: `/error`,
+  OFFER: `/offer/:id`,
 };
 
 export const APIRoute = {

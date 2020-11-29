@@ -19,7 +19,7 @@ const App = (props) => {
   return (
     <BrowserRouter history={browserHistory}>
       <Switch>
-        <Route exact path="/">
+        <Route exact path={AppRoute.ROOT}>
           <Main />
         </Route>
 
@@ -35,7 +35,7 @@ const App = (props) => {
 
         <Route
           exact
-          path="/offer/:id"
+          path={AppRoute.OFFER}
           render={({match}) => (
             <OfferPage offerId={match.params.id} />
           )}
