@@ -76,11 +76,7 @@ const OfferPage = (props) => {
         </section>
 
         <div className="container">
-          {
-            offers.length > 0
-              ? <NearPlaces offers={offers} />
-              : null
-          }
+          {offers.length > 0 ? <NearPlaces offers={offers} /> : null}
         </div>
       </main>
     </div>

@@ -10,7 +10,8 @@ const ReviewFormButtonWrapper = ({disabled}) => (
     <button
       className="reviews__submit form__submit button"
       type="submit"
-      disabled={disabled}>
+      disabled={disabled}
+    >
       Submit
     </button>
   </div>

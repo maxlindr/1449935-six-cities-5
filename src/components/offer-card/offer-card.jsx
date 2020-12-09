@@ -5,27 +5,23 @@ import OfferCardInfo from '../offer-card-info/offer-card-info';
 import OfferCardImage from '../offer-card-image/offer-card-image';
 import {OfferCardType} from '../../constants';
 
-const selectRootClassName = (type) => {
-  switch (type) {
-    case OfferCardType.CITIES:
-      return `cities__place-card place-card`;
-    case OfferCardType.NEAR_PLACE:
-      return `near-places__card place-card`;
-    case OfferCardType.FAVORITE:
-      return `favorites__card place-card`;
-    default:
-      throw new Error(`Invalid card type: "${type}"`);
-  }
+const RootClassName = {
+  [OfferCardType.CITIES]: `cities__place-card place-card`,
+  [OfferCardType.NEAR_PLACE]: `near-places__card place-card`,
+  [OfferCardType.FAVORITE]: `favorites__card place-card`,
 };
 
 const OfferCard = ({type, offer, onMouseOver, onMouseLeave}) => {
   return (
     <article
-      className={selectRootClassName(type)}
-      onMouseOver={onMouseOver ? () => onMouseOver(offer) : null}
+      className={RootClassName[type]}
+      onMouseOver={() => onMouseOver(offer)}
       onMouseLeave={onMouseLeave}
     >
-      <OfferCardImage cardType={type} offer={offer}/>
+      <OfferCardImage
+        cardType={type}
+        offer={offer}
+      />
 
       <OfferCardInfo
         offer={offer}
@@ -34,6 +30,10 @@ const OfferCard = ({type, offer, onMouseOver, onMouseLeave}) => {
       />
     </article>
   );
+};
+
+OfferCard.defaultProps = {
+  onMouseOver: () => {}
 };
 
 OfferCard.propTypes = {

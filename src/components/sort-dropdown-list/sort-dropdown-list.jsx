@@ -1,20 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const createOptionElement = (value, name, isActive, onClick) => {
-  return (
-    <li
-      key={value}
-      className={isActive ? `places__option places__option--active` : `places__option`}
-      tabIndex="0"
-      data-value={value}
-      onClick={onClick}
-    >
-      {name}
-    </li>
-  );
-};
-
 const SortDropdownList = (props) => {
   const {isOpened, options, activeOption, onToggle, onOptionClick} = props;
 
@@ -34,8 +20,17 @@ const SortDropdownList = (props) => {
       </span>
 
       <ul className={listClassName}>
-        {Object.entries(options).map(([value, name]) =>
-          createOptionElement(value, name, value === activeOption, onOptionClick))}
+        {Object.entries(options).map(([value, name]) => (
+          <li
+            key={value}
+            className={value === activeOption ? `places__option places__option--active` : `places__option`}
+            tabIndex="0"
+            data-value={value}
+            onClick={onOptionClick}
+          >
+            {name}
+          </li>
+        ))}
       </ul>
     </form>
   );

@@ -8,7 +8,16 @@ import withRedirectAuthorized from '../../hocs/with-redirect-authorized/with-red
 const ANIMATION_CLASSNAME = `shake`;
 
 const Login = (props) => {
-  const {email, password, isValid, isDisabled, isAnimationPlaying, onEmailChange, onPasswordChange, onSubmit} = props;
+  const {
+    email,
+    password,
+    isValid,
+    isDisabled,
+    isAnimationPlaying,
+    onEmailChange,
+    onPasswordChange,
+    onSubmit,
+  } = props;
 
   const formClassName = isAnimationPlaying
     ? `login__form form ${ANIMATION_CLASSNAME}`

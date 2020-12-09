@@ -11,7 +11,11 @@ const ReviewForm = (props) => {
     <form className="reviews__form form" action="#" method="post" onSubmit={onSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
 
-      <ReviewFormRating rating={rating} onClick={onRatingClick} disabled={disabled} />
+      <ReviewFormRating
+        rating={rating}
+        onClick={onRatingClick}
+        disabled={disabled}
+      />
 
       <textarea
         className="reviews__textarea form__textarea"

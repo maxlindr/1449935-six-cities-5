@@ -21,7 +21,18 @@ const usePrevious = (value) => {
 
 const withExtraOfferData = (WrappedComponent) => {
   const WithExtraOfferData = (props) => {
-    const {offers, offer, offerId, onFetchOffer, onFetchReviews, onFetchNearbyPlaces, onChangeCity, onReset, onUpdateOffer} = props;
+    const {
+      offers,
+      offer,
+      offerId,
+      onFetchOffer,
+      onFetchReviews,
+      onFetchNearbyPlaces,
+      onChangeCity,
+      onReset,
+      onUpdateOffer,
+    } = props;
+
     const prevOffer = usePrevious(offer);
 
     useEffect(() => {

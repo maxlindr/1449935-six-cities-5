@@ -25,7 +25,11 @@ const OfferCardInfo = (props) => {
         />
       </div>
 
-      <RatingStars type={RatingStarsType.CARD} rating={rating} round={roundRating}/>
+      <RatingStars
+        type={RatingStarsType.CARD}
+        rating={rating}
+        round={roundRating}
+      />
 
       <h2 className="place-card__name">
         <Link to={generateOfferPageEndpoint(id)}>

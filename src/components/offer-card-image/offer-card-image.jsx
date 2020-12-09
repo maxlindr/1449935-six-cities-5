@@ -28,9 +28,7 @@ const OfferCardImage = (props) => {
   const {cardType, offer} = props;
   const {id, thumbnail, photos, premium} = offer;
 
-  const image = (cardType === OfferCardType.FAVORITE)
-    ? thumbnail
-    : photos[0];
+  const image = (cardType === OfferCardType.FAVORITE) ? thumbnail : photos[0];
 
   const imageSize = (cardType === OfferCardType.FAVORITE)
     ? {width: 150, height: 110}

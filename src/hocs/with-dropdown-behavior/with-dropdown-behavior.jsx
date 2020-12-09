@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 const withDropdownBehavior = (Component) => {
   const WithDropdownBehavior = (props) => {
+    const {onChange} = props;
     const [isOpened, setOpened] = React.useState(false);
     const [activeOption, setActiveOption] = React.useState(props.activeOption);
     const handleToggle = React.useCallback(() => setOpened(!isOpened));
@@ -11,7 +12,7 @@ const withDropdownBehavior = (Component) => {
       const selectedOption = evt.target.dataset.value;
 
       if (activeOption !== selectedOption) {
-        props.onChange(selectedOption);
+        onChange(selectedOption);
         setActiveOption(selectedOption);
       }
 
